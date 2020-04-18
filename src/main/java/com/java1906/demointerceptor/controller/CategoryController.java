@@ -1,5 +1,6 @@
 package com.java1906.demointerceptor.controller;
 
+import com.java1906.demointerceptor.data.model.Category;
 import com.java1906.demointerceptor.interceptor.HasRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestBody
+@ResponseBody
 public class CategoryController {
     //@Autowired
 
@@ -47,8 +48,8 @@ public class CategoryController {
         //body
 
         //model.addAttribute();
-        return "category-action";
-    }
+
+
         return "redirect:/category/list";
     }
 
@@ -58,8 +59,7 @@ public class CategoryController {
         //body
 
         // model.addAttribute();
-            return "category-action";
-        }
+
         return "redirect:/category/list";
     }
 
