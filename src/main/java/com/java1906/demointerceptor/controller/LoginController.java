@@ -22,8 +22,7 @@ public class LoginController {
     @Autowired
     private UserRepository userRepository;
 
-    public String login(
-    ) {
+    public String login() {
         return "login";
     }
 
