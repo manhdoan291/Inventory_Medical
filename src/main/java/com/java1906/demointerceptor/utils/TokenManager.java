@@ -3,6 +3,7 @@ package com.java1906.demointerceptor.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.java1906.demointerceptor.interceptor.HasRole;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ public class TokenManager {
 
     public static TokenManager tokenManager;
     private Map<String, String> storedTokens = new HashMap<>();
-    private Map<String, List<String>> storedRoles = new HashMap<>();
+
     @Autowired
     private ObjectMapper mapper;
 
@@ -26,12 +27,7 @@ public class TokenManager {
     @PostConstruct
     public void setup() {
         tokenManager = this;
-        ArrayList<String> users = new ArrayList<>();
-        users.add("Casper");
-        ArrayList<String> adminUsers = new ArrayList<>();
-        adminUsers.add("Admin");
-        storedRoles.put("USER", users);
-        storedRoles.put("ADMIN", adminUsers);
+
     }
 
     public String createToken(String sessionId) {
@@ -54,15 +50,17 @@ public class TokenManager {
 
     public boolean hasRole(HttpServletRequest request, HasRole hasRole) throws JsonProcessingException {
         System.out.println(mapper.writeValueAsString(storedTokens));
-        String username = (String) request.getSession().getAttribute("Username");
-        for (Map.Entry<String, List<String>> roleEntry : storedRoles.entrySet()) {
-            for (String usernameHasRole : roleEntry.getValue()) {
-                if (usernameHasRole.equals(username) && checkExistedInArray(roleEntry.getKey(), hasRole.value())) {
-                    return true;
-                }
-            }
+        Object role = request.getSession().getAttribute("role");
+        if ((role != null) && (ArrayUtils.contains(hasRole.value(), role.toString())))
+        {
+
+            return true;
         }
-        return false;
+        else
+        {
+            return false;
+        }
+
     }
 
     private boolean checkExistedInArray(String value, String[] array) {

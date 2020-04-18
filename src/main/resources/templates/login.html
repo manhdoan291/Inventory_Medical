@@ -34,7 +34,13 @@
 		<script src="assets/js/respond.min.js"></script>
 		<![endif]-->
 	</head>
-
+<!-- viet 1 jquery trong 1 block: xu li event cho 1 button (login)
+	-> dung jquery ajax trigger de goi len server controller doLogin(success, failure)
+	if success -> category-list ( jquery direct )
+	if failure -> ban ra 1 toast "Login fail"
+		! success -> category-list.jsp
+		xhr request = ajax
+-->
 	<body class="login-layout">
 		<div class="main-container">
 			<div class="main-content">
