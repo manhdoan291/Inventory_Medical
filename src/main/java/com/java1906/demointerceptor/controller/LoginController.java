@@ -21,9 +21,8 @@ public class LoginController {
 
     @Autowired
     private UserRepository userRepository;
-
-    public String login(
-    ) {
+    @RequestMapping(value = "/login")
+    public String login() {
         return "login";
     }
 
@@ -32,6 +31,9 @@ public class LoginController {
             HttpServletRequest request,
             @RequestParam("username") String username,
             @RequestParam("password") String password) {
+        // kiểm tra user và password
+        // nếu nhập đúng cấp quyền cho user
+        // nếu sai redirect lại trang login
 
         Optional<User> user = userRepository.findByUsername("Casper");
         if (user.isPresent()) {

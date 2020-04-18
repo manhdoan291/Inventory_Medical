@@ -7,9 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryRepository extends CrudRepository<Category, String> {
-    public Optional<Category> findCategoryById(int id);
-    public List<Optional<Category>> findAllBy();
-    public Optional<Category> save(Category category);
-    public Optional<Category> edit(Category category);
-    public Optional<Category> deleteById(int id);
+    
 }
