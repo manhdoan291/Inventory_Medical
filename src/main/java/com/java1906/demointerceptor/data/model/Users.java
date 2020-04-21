@@ -5,7 +5,7 @@ import org.apache.tomcat.util.security.MD5Encoder;
 import javax.persistence.*;
 
 @Entity // This tells Hibernate to make a table out of this class
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
