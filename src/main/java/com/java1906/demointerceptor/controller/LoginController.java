@@ -11,11 +11,13 @@ import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
@@ -42,9 +44,6 @@ public class LoginController {
             HttpServletRequest request,
             @RequestBody AuthenticationRequest authenticationRequest
             ) throws LogicException {
-        // kiểm tra user và password
-        // nếu nhập đúng cấp quyền cho user
-        // nếu sai redirect lại trang login
         Optional<Users> user = userRepository.findByUsername(authenticationRequest.getUserName());
         if (user.isPresent()) {
             Users user1 = user.get();
@@ -55,6 +54,7 @@ public class LoginController {
                 request.getSession().setAttribute("Username", authenticationRequest.getUserName());
                 Optional<UserInfo> userInfo =userInfoRepository.findById(user1.getId());
                 userInfo.get().setToken(token);
+
                 return userInfo.get();
 
             }
@@ -62,7 +62,14 @@ public class LoginController {
             // throw ma exception dang ma http ok: 200, not found: 40..
         }
         throw new LogicException("Invalid login", HttpStatus.NOT_FOUND);
+    }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("role");
+        session.removeAttribute("AuthToken");
+        session.removeAttribute("Username");
+        return "redirect:/login";
     }
 }
 // set session co 3 thu: role la gi, auth cho user da dang nhap hay chua,
