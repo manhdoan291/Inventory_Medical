@@ -54,4 +54,38 @@ public class AppController {
 		service.delete(id);
 		return "redirect:/";		
 	}
+
+//	@RequestMapping("/save-product")
+//	public String uploadResources( HttpServletRequest servletRequest,
+//								   @ModelAttribute Product product,
+//								   Model model)
+//	{
+//		//Get the uploaded files and store them
+//		List<MultipartFile> files = product.getImages();
+//		List<String> fileNames = new ArrayList<String>();
+//		if (null != files && files.size() > 0)
+//		{
+//			for (MultipartFile multipartFile : files) {
+//
+//				String fileName = multipartFile.getOriginalFilename();
+//				fileNames.add(fileName);
+//
+//				File imageFile = new File(servletRequest.getServletContext().getRealPath("/image"), fileName);
+//				try
+//				{
+//					multipartFile.transferTo(imageFile);
+//				} catch (IOException e)
+//				{
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+//
+//		// Here, you can save the product details in database
+//
+//		model.addAttribute("product", product);
+//		return "viewProductDetail";
+//	}
+
 }
+
