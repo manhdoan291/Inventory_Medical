@@ -15,6 +15,8 @@ public class Product {
 	private String brand;
 	private String madein;
 	private float price;
+	private String createdate;
+	private String updatedate;
 	public Product() {	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,7 +50,9 @@ public class Product {
 	public void setPrice(float price) {
 		this.price = price;
 	}
-	
-	
-	
+	public String getCreatedate(){return createdate;}
+	public void setCreatedate(String createdate){this.createdate = createdate;}
+	public String getUpdatedate(){return updatedate;}
+	public void setUpdatedate(String updatedate){this.updatedate=updatedate;}
+
 }
