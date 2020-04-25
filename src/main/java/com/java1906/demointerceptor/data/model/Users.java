@@ -3,12 +3,15 @@ package com.java1906.demointerceptor.data.model;
 import org.apache.tomcat.util.security.MD5Encoder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity // This tells Hibernate to make a table out of this class
-public class Users {
+@IdClass(UserInfo.class)
+public class Users implements Serializable {
+    @OneToOne
+    @JoinColumn(name = "id")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private UserInfo id;
     private String username;
     private String email;
     private String password;
@@ -36,11 +39,11 @@ public class Users {
         password = MD5Encoder.encode((password + "this is a salt 3l;3k;j08293nu9p2g5n").getBytes());
     }
 
-    public Integer getId() {
+    public UserInfo getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UserInfo id) {
         this.id = id;
     }
 

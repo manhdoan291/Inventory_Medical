@@ -1,10 +1,11 @@
 package com.java1906.demointerceptor.data.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-public class UserInfo {
+public class UserInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -35,6 +36,24 @@ public class UserInfo {
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof UserInfo)) {
+            return false;
+        }
+        UserInfo castedObject = (UserInfo) obj;
+        if (castedObject.getId() == this.getId()) {
+            return true;
+        }
+        return false;
+    }
+
+
+    @Override
+    public int hashCode() {
+        return getId().hashCode();
     }
 
     public void setEmail(String email) {

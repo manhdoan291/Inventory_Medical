@@ -10,6 +10,7 @@ import com.java1906.demointerceptor.utils.TokenManager;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,7 +22,6 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
-@ResponseBody
 public class LoginController {
 
     @Autowired
@@ -47,12 +47,12 @@ public class LoginController {
         Optional<Users> user = userRepository.findByUsername(authenticationRequest.getUserName());
         if (user.isPresent()) {
             Users user1 = user.get();
-            if (user1.getPassword().equals(MD5Encoder.encode((authenticationRequest.getPassWord() + "this is a salt 3l;3k;j08293nu9p2g5n").getBytes()))) {
+            if (user1.getPassword().equals(MD5Encoder.encode((authenticationRequest.getPassWord()).getBytes()))) {
                 String token = tokenManager.createToken(request.getSession().getId());
                 request.getSession().setAttribute("role", user1.getRole());
                 request.getSession().setAttribute("AuthToken", token);
                 request.getSession().setAttribute("Username", authenticationRequest.getUserName());
-                Optional<UserInfo> userInfo =userInfoRepository.findById(user1.getId());
+                Optional<UserInfo> userInfo =userInfoRepository.findById(user1);
                 userInfo.get().setToken(token);
 
                 return userInfo.get();
@@ -65,11 +65,11 @@ public class LoginController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session) {
+    public ResponseEntity logout(HttpSession session) {
         session.removeAttribute("role");
         session.removeAttribute("AuthToken");
         session.removeAttribute("Username");
-        return "redirect:/login";
+        return ResponseEntity.ok(" ") ;
     }
 }
 // set session co 3 thu: role la gi, auth cho user da dang nhap hay chua,

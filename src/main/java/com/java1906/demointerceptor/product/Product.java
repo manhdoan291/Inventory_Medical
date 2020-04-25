@@ -1,4 +1,4 @@
-package com.java1906.demointerceptor.com.example.Product;
+package com.java1906.demointerceptor.product;
 
 import javax.persistence.Entity;
 

@@ -1,4 +1,4 @@
-package com.java1906.demointerceptor.com.example.Product;
+package com.java1906.demointerceptor.product;
 
 import java.util.List;
 
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/product")
 public class AppController {
 
 	@Autowired
