@@ -6,12 +6,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity // This tells Hibernate to make a table out of this class
-@IdClass(UserInfo.class)
+//@IdClass(UserInfo.class)
 public class Users implements Serializable {
-    @OneToOne
-    @JoinColumn(name = "id")
+//    @OneToOne
+//    @JoinColumn(name = "id")
     @Id
-    private UserInfo id;
+    private int id;
+    @Column(name = "username")
     private String username;
     private String email;
     private String password;
@@ -36,14 +37,14 @@ public class Users implements Serializable {
     @PrePersist
     @PreUpdate
     public void preSave() {
-        password = MD5Encoder.encode((password + "this is a salt 3l;3k;j08293nu9p2g5n").getBytes());
+        password = MD5Encoder.encode((password).getBytes());
     }
 
-    public UserInfo getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(UserInfo id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -51,8 +52,8 @@ public class Users implements Serializable {
         return username;
     }
 
-    public void setUsername(String name) {
-        this.username = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
