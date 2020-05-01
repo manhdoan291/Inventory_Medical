@@ -1,85 +1,78 @@
 package com.java1906.demointerceptor.controller;
 
 import com.java1906.demointerceptor.data.model.Category;
+import com.java1906.demointerceptor.data.repo.CategoryRepository;
 import com.java1906.demointerceptor.interceptor.HasRole;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Optional;
 
-@Controller
-@ResponseBody
+@RestController
 public class CategoryController {
-    //@Autowired
+    @Autowired
+    private CategoryRepository categoryRepository;
 
-    //@InitBinder
-
-    @RequestMapping(value= {"/category/list","/category/list/"})
-
-    public String redirect() {
-        return "redirect:/category/list/1";
-    }
-
-    @RequestMapping(value="/category/list/{page}")
+    //Get all category
+    @GetMapping("/category/list")
     @HasRole({"USER", "ADMIN"})
-    public String showCategoryList(Model model, HttpSession session , @ModelAttribute("searchForm") Category category, @PathVariable("page") int page) {
-        //body
-
-        //model.addAttribute();
-        return "category-list";
+    public ResponseEntity<List<Category>> showCategoryList() {
+        List<Category> categoryList = (List<Category>) categoryRepository.findAll();
+        if (categoryList.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(categoryList, HttpStatus.OK);
     }
 
-    @GetMapping("/category/add")
+    //Get category by id
+    @GetMapping("/category/{id}")
     @HasRole({"USER", "ADMIN"})
-    public String add(Model model) {
-        //body
-
-        //model.addAttribute();
-        return "category-action";
+    public ResponseEntity<Object> getCategoryById(@PathVariable("id") Integer id) {
+        System.out.println("Fetching category with id " + id);
+        Optional<Category> category = categoryRepository.findById(id);
+        if (category == null){
+            return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<Object>(category,HttpStatus.OK);
     }
 
-    @GetMapping("/category/edit/{id}")
-    @HasRole({"USER", "ADMIN"})
-    public String edit(Model model , @PathVariable("id") int id) {
-        //body
-
-        //model.addAttribute();
-
-
-        return "redirect:/category/list";
-    }
-
-    @GetMapping("/category/view/{id}")
-    @HasRole({"USER", "ADMIN"})
-    public String view(Model model , @PathVariable("id") int id) {
-        //body
-
-        // model.addAttribute();
-
-        return "redirect:/category/list";
-    }
-
+    // Create category
     @PostMapping("/category/save")
     @HasRole({"USER", "ADMIN"})
-    public String save(Model model, @ModelAttribute("modelForm") @Validated Category category, BindingResult result, HttpSession session) {
-        //body
-
-        // model.addAttribute();
-
-        return "redirect:/category/list";
-
+    public ResponseEntity<String> createCategory(@RequestBody Category category ) {
+        if(category == null){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        categoryRepository.save(category);
+        return new ResponseEntity<>("created!", HttpStatus.CREATED);
     }
 
-    @GetMapping("/category/delete/{id}")
+    // Update category
+    @PutMapping("/category/update/{id}")
     @HasRole({"USER", "ADMIN"})
-    public String delete(Model model , @PathVariable("id") int id,HttpSession session) {
-        //body
+    public ResponseEntity<String> updateCategory(@PathVariable("id") Integer id,
+                                                   @RequestBody Category category){
+        System.out.println("Updating Category " + id);
+        Optional<Category> currentCategory = categoryRepository.findById(id);
+        if (currentCategory == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        categoryRepository.save(category);
+        return new ResponseEntity<>("Updated!", HttpStatus.OK);
+    }
 
-        // model.addAttribute();
-        return "redirect:/category/list";
+    // Delete category
+    @DeleteMapping("/category/delete/{id}")
+    @HasRole({"USER", "ADMIN"})
+    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) {
+        Optional<Category> category = categoryRepository.findById(id);
+        if(category == null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        categoryRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

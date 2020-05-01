@@ -47,7 +47,8 @@ public class LoginController {
         Optional<Users> user = userRepository.findByUsername(authenticationRequest.getUserName());
         if (user.isPresent()) {
             Users user1 = user.get();
-            if (user1.getPassword().equals(MD5Encoder.encode((authenticationRequest.getPassWord()).getBytes()))) {
+            String md5  = MD5Encoder.encode((authenticationRequest.getPassWord()).getBytes());
+            if (user1.getPassword().equals(md5)) {
                 String token = tokenManager.createToken(request.getSession().getId());
                 request.getSession().setAttribute("role", user1.getRole());
                 request.getSession().setAttribute("AuthToken", token);
