@@ -54,9 +54,7 @@ public class LoginController {
                 request.getSession().setAttribute("Username", authenticationRequest.getUserName());
                 Optional<UserInfo> userInfo =userInfoRepository.findById(user1);
                 userInfo.get().setToken(token);
-
                 return userInfo.get();
-
             }
             throw new LogicException("Invalid login", HttpStatus.NOT_FOUND);
             // throw ma exception dang ma http ok: 200, not found: 40..
