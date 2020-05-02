@@ -1,7 +1,7 @@
 package com.java1906.demointerceptor.services;
 
 
-import com.java1906.demointerceptor.models.Product;
+import com.java1906.demointerceptor.data.model.Product;
 
 import java.util.List;
 

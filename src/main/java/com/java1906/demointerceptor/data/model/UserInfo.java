@@ -7,7 +7,6 @@ import java.util.Date;
 @Entity
 public class UserInfo implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String name;
     private String email;

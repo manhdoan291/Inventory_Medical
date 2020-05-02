@@ -7,6 +7,7 @@ import com.java1906.demointerceptor.data.repo.UserRepository;
 import com.java1906.demointerceptor.dto.AuthenticationRequest;
 import com.java1906.demointerceptor.exception.LogicException;
 import com.java1906.demointerceptor.utils.TokenManager;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +48,10 @@ public class LoginController {
         Optional<Users> user = userRepository.findByUsername(authenticationRequest.getUserName());
         if (user.isPresent()) {
             Users user1 = user.get();
-            if (user1.getPassword().equals(MD5Encoder.encode((authenticationRequest.getPassWord()).getBytes()))) {
+
+            String md5Hex = DigestUtils
+                    .md5Hex(authenticationRequest.getPassWord()).toUpperCase();
+            if (user1.getPassword().toUpperCase().equals(md5Hex)) {
                 String token = tokenManager.createToken(request.getSession().getId());
                 request.getSession().setAttribute("role", user1.getRole());
                 request.getSession().setAttribute("AuthToken", token);

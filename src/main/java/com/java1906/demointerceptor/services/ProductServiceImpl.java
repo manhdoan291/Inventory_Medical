@@ -1,7 +1,7 @@
 package com.java1906.demointerceptor.services;
 
 import com.java1906.demointerceptor.dao.IProductDao;
-import com.java1906.demointerceptor.models.Product;
+import com.java1906.demointerceptor.data.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

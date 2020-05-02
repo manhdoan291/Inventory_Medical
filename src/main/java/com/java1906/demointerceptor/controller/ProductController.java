@@ -1,7 +1,7 @@
 package com.java1906.demointerceptor.controller;
 
 
-import com.java1906.demointerceptor.models.Product;
+import com.java1906.demointerceptor.data.model.Product;
 import com.java1906.demointerceptor.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
