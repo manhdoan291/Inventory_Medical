@@ -1,5 +1,6 @@
 package com.java1906.demointerceptor.data.model;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.tomcat.util.security.MD5Encoder;
 
 import javax.persistence.*;
@@ -37,7 +38,8 @@ public class Users implements Serializable {
     @PrePersist
     @PreUpdate
     public void preSave() {
-        password = MD5Encoder.encode((password).getBytes());
+        password =  DigestUtils
+                .md5Hex(password).toUpperCase();
     }
 
     public int getId() {
