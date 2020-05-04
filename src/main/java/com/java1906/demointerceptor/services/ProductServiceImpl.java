@@ -1,7 +1,7 @@
 package com.java1906.demointerceptor.services;
 
-import com.java1906.demointerceptor.dao.IProductDao;
 import com.java1906.demointerceptor.data.model.Product;
+import com.java1906.demointerceptor.data.repo.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class ProductServiceImpl implements IProductService {
 
 	@Autowired
-	private IProductDao bicycleDao;
+	private ProductRepository bicycleDao;
 
 	@Override
 	public Product get(long id) {
