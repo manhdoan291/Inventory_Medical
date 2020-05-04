@@ -55,7 +55,7 @@ public class LoginController {
                 request.getSession().setAttribute("role", user1.getRole());
                 request.getSession().setAttribute("AuthToken", token);
                 request.getSession().setAttribute("Username", authenticationRequest.getUserName());
-                Optional<UserInfo> userInfo =userInfoRepository.findById(user1);
+                Optional<UserInfo> userInfo =userInfoRepository.findById(user1.getId());
                 userInfo.get().setToken(token);
 
                 return userInfo.get();

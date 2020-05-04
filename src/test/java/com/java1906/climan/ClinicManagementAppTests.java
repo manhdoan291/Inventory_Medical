@@ -31,7 +31,6 @@ class ClinicManagementAppTests {
 
         user = userRepository.save(user);
 
-
         UserInfo userInfo = new UserInfo();
         userInfo.setId(user.getId());
         userInfo.setEmail("casper@gmail.com");

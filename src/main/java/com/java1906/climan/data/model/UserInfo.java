@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table
 public class UserInfo implements Serializable {
     @Id
     private Integer id;

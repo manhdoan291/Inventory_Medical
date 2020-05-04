@@ -5,14 +5,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity // This tells Hibernate to make a table out of this class
-//@IdClass(UserInfo.class)
-@Table
+@Entity
 public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
     @Column(name = "username")
     private String username;
     private String password;
@@ -42,11 +40,11 @@ public class User implements Serializable {
                 .md5Hex(password).toUpperCase();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
