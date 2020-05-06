@@ -25,7 +25,7 @@ public class Product implements Serializable {
 	private String img_url;
 	
 	@NotNull
-	private String active_flag;
+	private Boolean active_flag;
 	
 	@NotNull
 	private String create_date;
@@ -64,11 +64,11 @@ public class Product implements Serializable {
 		this.img_url = img_url;
 	}
 
-	public String getActive_flag() {
+	public Boolean getActive_flag() {
 		return active_flag;
 	}
 
-	public void setActive_flag(String active_flag) {
+	public void setActive_flag(Boolean active_flag) {
 		this.active_flag = active_flag;
 	}
 
@@ -88,7 +88,7 @@ public class Product implements Serializable {
 		this.update_date = update_date;
 	}
 
-	public Product(@NotEmpty String name, @NotNull String description, @NotNull String img_url, @NotNull String active_flag,
+	public Product(@NotEmpty String name, @NotNull String description, @NotNull String img_url, @NotNull Boolean active_flag,
 				   @NotNull String create_date, @NotNull String update_date) {
 		super();
 		this.name = name;

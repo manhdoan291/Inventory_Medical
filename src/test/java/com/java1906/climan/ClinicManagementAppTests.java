@@ -1,8 +1,6 @@
 package com.java1906.climan;
 
-import com.java1906.climan.data.model.RoleType;
-import com.java1906.climan.data.model.User;
-import com.java1906.climan.data.model.UserInfo;
+import com.java1906.climan.data.model.*;
 import com.java1906.climan.data.repo.UserInfoRepository;
 import com.java1906.climan.data.repo.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -38,6 +36,20 @@ class ClinicManagementAppTests {
         userInfo.setPhone("0398902420");
 
         userInfo = userInfoRepository.save(userInfo);
+    }
+
+    @Test
+    void createCategorysAndProducts(){
+        Category category = new Category();
+        category.setName("dong-y");
+        category.setDescription("chua-benh");
+
+        Product product = new Product();
+        product.setId(category.getId());
+        product.setName("thuoc dong y");
+        product.setDescription("chua benh");
+        product.setImg_url("huy.jpg");
+        product.setActive_flag(true);
     }
 
 }

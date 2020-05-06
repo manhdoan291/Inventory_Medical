@@ -1,13 +1,16 @@
-package com.java1906.climan.services;
+package com.java1906.climan.services.impl;
 
 
 import com.java1906.climan.data.model.Product;
 import com.java1906.climan.data.repo.ProductRepository;
+import com.java1906.climan.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service
 public class ProductServiceImpl implements IProductService {
 
@@ -31,12 +34,13 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public void put(Product product, long id) {
+	public Product put(Product product, long id) {
 		productRepository.findById(id).ifPresent((x)->{
 			product.setId(id);
 			productRepository.save(product);
 		});
-	}
+        return product;
+    }
 
 	@Override
 	public void delete(long id) {

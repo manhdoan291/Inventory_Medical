@@ -3,9 +3,10 @@ package com.java1906.climan.controller;
 import com.java1906.climan.data.model.UserInfo;
 import com.java1906.climan.data.model.User;
 import com.java1906.climan.data.repo.UserInfoRepository;
-import com.java1906.climan.data.repo.UserRepository;
 import com.java1906.climan.dto.AuthenticationRequest;
 import com.java1906.climan.exception.LogicException;
+import com.java1906.climan.services.IUserInfoService;
+import com.java1906.climan.services.IUserService;
 import com.java1906.climan.utils.TokenManager;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +29,10 @@ public class LoginController {
     private TokenManager tokenManager;
 
     @Autowired
-    private UserRepository userRepository;
+    private IUserService userService;
 
     @Autowired
-    private UserInfoRepository userInfoRepository;
+    private IUserInfoService userInfoService;
 
     @RequestMapping(value = "/login")
     public String login()  {
@@ -44,7 +45,7 @@ public class LoginController {
             HttpServletRequest request,
             @RequestBody AuthenticationRequest authenticationRequest
             ) throws LogicException {
-        Optional<User> user = userRepository.findByUsername(authenticationRequest.getUserName());
+        Optional<User> user = userService.findByUsername(authenticationRequest.getUserName());
         if (user.isPresent()) {
             User user1 = user.get();
 
@@ -55,7 +56,7 @@ public class LoginController {
                 request.getSession().setAttribute("role", user1.getRole());
                 request.getSession().setAttribute("AuthToken", token);
                 request.getSession().setAttribute("Username", authenticationRequest.getUserName());
-                Optional<UserInfo> userInfo =userInfoRepository.findById(user1.getId());
+                Optional<UserInfo> userInfo =userInfoService.get(user1.getId());
                 userInfo.get().setToken(token);
 
                 return userInfo.get();

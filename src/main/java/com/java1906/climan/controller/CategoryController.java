@@ -1,26 +1,25 @@
 package com.java1906.climan.controller;
 
 import com.java1906.climan.data.model.Category;
-import com.java1906.climan.data.repo.CategoryRepository;
 import com.java1906.climan.interceptor.HasRole;
+import com.java1906.climan.services.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CategoryController {
     @Autowired
-    private CategoryRepository categoryRepository;
+    private ICategoryService categoryService;
 
     //Get all category
     @GetMapping("/category/list")
     @HasRole({"USER", "ADMIN"})
     public ResponseEntity<List<Category>> showCategoryList() {
-        List<Category> categoryList = (List<Category>) categoryRepository.findAll();
+        List<Category> categoryList = (List<Category>) categoryService.getAll();
         if (categoryList.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -32,7 +31,7 @@ public class CategoryController {
     @HasRole({"USER", "ADMIN"})
     public ResponseEntity<Object> getCategoryById(@PathVariable("id") Integer id) {
         System.out.println("Fetching category with id " + id);
-        Optional<Category> category = categoryRepository.findById(id);
+        Category category = categoryService.get(id);
         if (category == null){
             return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
         }
@@ -46,7 +45,7 @@ public class CategoryController {
         if(category == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        categoryRepository.save(category);
+        categoryService.post(category);
         return new ResponseEntity<>("created!", HttpStatus.CREATED);
     }
 
@@ -56,11 +55,11 @@ public class CategoryController {
     public ResponseEntity<String> updateCategory(@PathVariable("id") Integer id,
                                                    @RequestBody Category category){
         System.out.println("Updating Category " + id);
-        Optional<Category> currentCategory = categoryRepository.findById(id);
+        Category currentCategory = categoryService.get(id);
         if (currentCategory == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        categoryRepository.save(category);
+        categoryService.post(category);
         return new ResponseEntity<>("Updated!", HttpStatus.OK);
     }
 
@@ -68,11 +67,11 @@ public class CategoryController {
     @DeleteMapping("/category/delete/{id}")
     @HasRole({"USER", "ADMIN"})
     public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) {
-        Optional<Category> category = categoryRepository.findById(id);
+        Category category = categoryService.get(id);
         if(category == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        categoryRepository.deleteById(id);
+        categoryService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

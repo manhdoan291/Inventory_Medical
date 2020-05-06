@@ -9,6 +9,6 @@ public interface IProductService {
 	public Product get(long id);
 	public List<Product> getAll();
 	public void post(Product product);
-	public void put(Product product, long id);
+	public Product put(Product product, long id);
 	public void delete(long id);
 }
