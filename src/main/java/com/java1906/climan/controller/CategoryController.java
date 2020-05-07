@@ -45,7 +45,7 @@ public class CategoryController {
         if(category == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        categoryService.post(category);
+        categoryService.save(category);
         return new ResponseEntity<>("created!", HttpStatus.CREATED);
     }
 
@@ -59,7 +59,7 @@ public class CategoryController {
         if (currentCategory == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        categoryService.post(category);
+        categoryService.save(category);
         return new ResponseEntity<>("Updated!", HttpStatus.OK);
     }
 
