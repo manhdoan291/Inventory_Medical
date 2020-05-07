@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -32,8 +33,11 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public void put(Category category, Integer id) {
-        categoryRepository.findById(id);
+    public void put(Category category, Integer id) throws Exception {
+        Optional<Category> updatingCategory = categoryRepository.findById(id);
+        if(!updatingCategory.isPresent()){
+            throw new Exception();
+        }
         categoryRepository.save(category);
     }
 

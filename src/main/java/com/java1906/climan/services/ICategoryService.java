@@ -8,6 +8,6 @@ public interface ICategoryService {
     public Category get(Integer id);
     public List<Category> getAll();
     public void post(Category category);
-    public void put(Category category, Integer id);
+    public void put(Category category, Integer id) throws Exception;
     public void delete(Integer id);
 }
