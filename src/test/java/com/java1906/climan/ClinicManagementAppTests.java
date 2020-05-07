@@ -45,6 +45,7 @@ class ClinicManagementAppTests {
         category.setDescription("chua-benh");
 
         Product product = new Product();
+
         product.setId(category.getId());
         product.setName("thuoc dong y");
         product.setDescription("chua benh");

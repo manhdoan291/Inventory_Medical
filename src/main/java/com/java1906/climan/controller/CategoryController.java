@@ -16,7 +16,7 @@ public class CategoryController {
     private ICategoryService categoryService;
 
     //Get all category
-    @GetMapping("/category/list")
+    @GetMapping("/category")
     @HasRole({"USER", "ADMIN"})
     public ResponseEntity<List<Category>> showCategoryList() {
         List<Category> categoryList = (List<Category>) categoryService.getAll();
@@ -39,7 +39,7 @@ public class CategoryController {
     }
 
     // Create category
-    @PostMapping("/category/save")
+    @PostMapping("/category")
     @HasRole({"USER", "ADMIN"})
     public ResponseEntity<String> createCategory(@RequestBody Category category ) {
         if(category == null){
@@ -50,7 +50,7 @@ public class CategoryController {
     }
 
     // Update category
-    @PutMapping("/category/update/{id}")
+    @PutMapping("/category/{id}")
     @HasRole({"USER", "ADMIN"})
     public ResponseEntity<String> updateCategory(@PathVariable("id") Integer id,
                                                    @RequestBody Category category){
@@ -64,7 +64,7 @@ public class CategoryController {
     }
 
     // Delete category
-    @DeleteMapping("/category/delete/{id}")
+    @DeleteMapping("/category/{id}")
     @HasRole({"USER", "ADMIN"})
     public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) {
         Category category = categoryService.get(id);

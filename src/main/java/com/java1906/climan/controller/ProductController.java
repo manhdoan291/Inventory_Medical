@@ -17,7 +17,7 @@ public class ProductController {
 	private IProductService productService;
 
 	//Get all product
-	@GetMapping("/product/list")
+	@GetMapping("/product")
 	@HasRole({"USER", "ADMIN"})
 	public ResponseEntity<List<Product>> showProductList() {
 		List<Product> productList = (List<Product>) productService.getAll();
@@ -40,7 +40,7 @@ public class ProductController {
 	}
 
 	// Create product
-	@PostMapping("/product/save")
+	@PostMapping("/product")
 	@HasRole({"USER", "ADMIN"})
 	public ResponseEntity<String> createProduct(@RequestBody Product product ) {
 		if(product == null){
@@ -51,7 +51,7 @@ public class ProductController {
 	}
 
 	// Update product
-	@PutMapping("/product/update/{id}")
+	@PutMapping("/product/{id}")
 	@HasRole({"USER", "ADMIN"})
 	public ResponseEntity<String> updateProduct(@PathVariable("id") Long id,
 												 @RequestBody Product product){
@@ -65,7 +65,7 @@ public class ProductController {
 	}
 
 	// Delete product
-	@DeleteMapping("/product/delete/{id}")
+	@DeleteMapping("/product/{id}")
 	@HasRole({"USER", "ADMIN"})
 	public ResponseEntity<Product> deleteProduct(@PathVariable("id") Long id) {
 		Product product = productService.get(id);
