@@ -8,7 +8,6 @@ import com.java1906.demointerceptor.dto.AuthenticationRequest;
 import com.java1906.demointerceptor.exception.LogicException;
 import com.java1906.demointerceptor.utils.TokenManager;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.tomcat.util.security.MD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
