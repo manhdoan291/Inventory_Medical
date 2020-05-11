@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,6 +37,7 @@ public class LoginController {
     }
 
     @RequestMapping("/doLogin")
+    @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
     public Object doLogin (
             HttpServletRequest request,
@@ -58,6 +56,7 @@ public class LoginController {
                 request.getSession().setAttribute("Username", authenticationRequest.getUserName());
                 Optional<UserInfo> userInfo =userInfoService.get(user1.getId());
                 userInfo.get().setToken(token);
+                userInfo.get().setRole(user1.getRole().name());
                 return userInfo.get();
             }
             throw new LogicException("Invalid login", HttpStatus.NOT_FOUND);
