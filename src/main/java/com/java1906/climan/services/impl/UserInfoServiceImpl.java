@@ -2,8 +2,10 @@ package com.java1906.climan.services.impl;
 
 import com.java1906.climan.data.model.UserInfo;
 import com.java1906.climan.data.repo.UserInfoRepository;
+import com.java1906.climan.exception.LogicException;
 import com.java1906.climan.services.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,14 +29,25 @@ public class UserInfoServiceImpl implements IUserInfoService {
     }
 
     @Override
-    public void post(UserInfo userInfo) {
-        userInfoRepository.save(userInfo);
+    public UserInfo save(UserInfo userInfo) {
+        return userInfoRepository.save(userInfo);
     }
 
     @Override
-    public void put(UserInfo userInfo, Integer id) {
-        userInfoRepository.findById(id);
-        userInfoRepository.save(userInfo);
+    public UserInfo update(UserInfo userInfo, Integer id) throws Exception {
+        Optional<UserInfo> optionalUpdatingUserInfo = userInfoRepository.findById(id);
+        if (!optionalUpdatingUserInfo.isPresent()) {
+            throw new LogicException("UserInfo khong ton tai", HttpStatus.NOT_FOUND);
+        }
+        UserInfo updatingUserInfo = optionalUpdatingUserInfo.get();
+        if (null != userInfo.getName())
+            updatingUserInfo.setName(userInfo.getName());
+        if (null != userInfo.getPhone())
+            updatingUserInfo.setPhone(userInfo.getPhone());
+        if (null != userInfo.getEmail())
+            updatingUserInfo.setEmail(userInfo.getEmail());
+
+        return userInfoRepository.save(userInfo);
     }
 
     @Override

@@ -3,12 +3,15 @@ package com.java1906.climan.services.impl;
 
 import com.java1906.climan.data.model.Product;
 import com.java1906.climan.data.repo.ProductRepository;
+import com.java1906.climan.exception.LogicException;
 import com.java1906.climan.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -28,18 +31,27 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public void post(Product product) {
-		productRepository.save(product);
+	public Product save(Product product) {
+		return productRepository.save(product);
 
 	}
 
 	@Override
-	public Product put(Product product, long id) {
-		productRepository.findById(id).ifPresent((x)->{
-			product.setId(id);
-			productRepository.save(product);
-		});
-        return product;
+	public Product update(Product product, long id) throws Exception {
+		Optional<Product> optionalUpdatingProduct = productRepository.findById(id);
+		if (!optionalUpdatingProduct.isPresent()) {
+			throw new LogicException("Product khong ton tai", HttpStatus.NOT_FOUND);
+		}
+		Product updatingProduct = optionalUpdatingProduct.get();
+		if (null != product.getName())
+			updatingProduct.setName(product.getName());
+		if (null != product.getDescription())
+			updatingProduct.setDescription(product.getDescription());
+		if (null != product.getActive_flag())
+			updatingProduct.setActive_flag(product.getActive_flag());
+		if (null != product.getImg_url())
+			updatingProduct.setImg_url(product.getImg_url());
+		return productRepository.save(product);
     }
 
 	@Override

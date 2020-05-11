@@ -2,7 +2,6 @@ package com.java1906.climan.controller;
 
 import com.java1906.climan.data.model.UserInfo;
 import com.java1906.climan.data.model.User;
-import com.java1906.climan.data.repo.UserInfoRepository;
 import com.java1906.climan.dto.AuthenticationRequest;
 import com.java1906.climan.exception.LogicException;
 import com.java1906.climan.services.IUserInfoService;

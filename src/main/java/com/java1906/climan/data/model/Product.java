@@ -1,7 +1,6 @@
 package com.java1906.climan.data.model;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -15,7 +14,7 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	
-	@NotEmpty
+	@NotNull
 	private String name;
 	
 	@NotNull
@@ -88,7 +87,7 @@ public class Product implements Serializable {
 		this.update_date = update_date;
 	}
 
-	public Product(@NotEmpty String name, @NotNull String description, @NotNull String img_url, @NotNull Boolean active_flag,
+	public Product(@NotNull String name, @NotNull String description, @NotNull String img_url, @NotNull Boolean active_flag,
 				   @NotNull String create_date, @NotNull String update_date) {
 		super();
 		this.name = name;

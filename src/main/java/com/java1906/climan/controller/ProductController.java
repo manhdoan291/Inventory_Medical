@@ -46,7 +46,7 @@ public class ProductController {
 		if(product == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		productService.post(product);
+		productService.save(product);
 		return new ResponseEntity<>("created!", HttpStatus.CREATED);
 	}
 
@@ -56,11 +56,11 @@ public class ProductController {
 	public ResponseEntity<String> updateProduct(@PathVariable("id") Long id,
 												 @RequestBody Product product){
 		System.out.println("Updating product " + id);
-		Product currentProduct = productService.put(product, id);
+		Product currentProduct = productService.get(id);
 		if (currentProduct == null){
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		productService.post(product);
+		productService.save(product);
 		return new ResponseEntity<>("Updated!", HttpStatus.OK);
 	}
 
