@@ -17,6 +17,7 @@ public class CategoryController {
 
     //Get all category
     @GetMapping("/category")
+    @CrossOrigin(origins = "http://localhost:4200")
     @HasRole({"USER", "ADMIN"})
     public ResponseEntity<List<Category>> showCategoryList() {
         List<Category> categoryList = (List<Category>) categoryService.getAll();

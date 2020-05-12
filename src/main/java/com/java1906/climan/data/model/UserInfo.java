@@ -16,6 +16,16 @@ public class UserInfo implements Serializable {
 
     @Transient
     private String token;
+    @Transient
+    private String role;
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getRole() {
+        return role;
+    }
 
     public Integer getId() {
         return id;
