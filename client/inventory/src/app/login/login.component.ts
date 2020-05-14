@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
     error = '';
     classError = '';
+    storage: any;
 
     constructor(
         private formBuilder: FormBuilder,
@@ -57,6 +58,7 @@ export class LoginComponent implements OnInit {
             .subscribe(
                 data => {
                     debugger
+                    this.storage = sessionStorage;
                     this.submitted = true;
                     //if (data.role === 'admin') {
                     //    this.loading = false;
@@ -95,5 +97,8 @@ export class LoginComponent implements OnInit {
                     this.error = error;
                     this.loading = true;
                 });
+        console.log(this.storage);
+
     }
+    
 }

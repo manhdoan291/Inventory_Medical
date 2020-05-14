@@ -27,7 +27,7 @@ export class CategoryService {
         return this.http.get<Category[]>(`http://localhost:8080/category`, {
 
             headers: {
-                Authorization: `Bearer ${this.authenticationService.currentUserValue.token}`
+                AuthToken: `${this.authenticationService.currentUserValue.token}`
 
             }});
     }
