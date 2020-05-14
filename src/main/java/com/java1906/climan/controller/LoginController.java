@@ -49,7 +49,7 @@ public class LoginController {
             String md5Hex = DigestUtils
                     .md5Hex(authenticationRequest.getPassWord()).toUpperCase();
             if (user1.getPassword().toUpperCase().equals(md5Hex)) {
-                String token = tokenManager.createToken(request.getSession().getId());
+                String token = tokenManager.createToken(user1.getUsername(), user1.getRole());
                 request.getSession().setAttribute("role", user1.getRole());
                 request.getSession().setAttribute("AuthToken", token);
                 request.getSession().setAttribute("Username", authenticationRequest.getUserName());

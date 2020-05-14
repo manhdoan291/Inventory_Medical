@@ -55,7 +55,7 @@ public class AuthenticationAndLoggingInterceptor extends HandlerInterceptorAdapt
         Method method = hm.getMethod();
 
         if (method.isAnnotationPresent(HasRole.class)) {
-            if (TokenManager.getInstance().isAuthenticated(request.getSession().getId(), request))
+            if (TokenManager.getInstance().isAuthenticated(request))
                 if (TokenManager.getInstance().hasRole(request, method.getAnnotation(HasRole.class))) {
                     return true;
                 } else
