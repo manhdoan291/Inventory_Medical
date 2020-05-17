@@ -18,7 +18,7 @@ public class CategoryController {
     //Get all category
     @GetMapping("/category")
     @CrossOrigin(origins = "http://localhost:4200")
-    @HasRole({"USER", "ADMIN"})
+    @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<List<Category>> showCategoryList() {
         List<Category> categoryList = (List<Category>) categoryService.getAll();
         if (categoryList.isEmpty()){
@@ -29,7 +29,7 @@ public class CategoryController {
 
     //Get category by id
     @GetMapping("/category/{id}")
-    @HasRole({"USER", "ADMIN"})
+    @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<Object> getCategoryById(@PathVariable("id") Integer id) {
         System.out.println("Fetching category with id " + id);
         Category category = categoryService.get(id);
@@ -41,7 +41,7 @@ public class CategoryController {
 
     // Create category
     @PostMapping("/category")
-    @HasRole({"USER", "ADMIN"})
+    @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<String> createCategory(@RequestBody Category category ) {
         if(category == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -52,7 +52,7 @@ public class CategoryController {
 
     // Update category
     @PutMapping("/category/{id}")
-    @HasRole({"USER", "ADMIN"})
+    @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<String> updateCategory(@PathVariable("id") Integer id,
                                                    @RequestBody Category category){
         System.out.println("Updating Category " + id);
@@ -66,7 +66,7 @@ public class CategoryController {
 
     // Delete category
     @DeleteMapping("/category/{id}")
-    @HasRole({"USER", "ADMIN"})
+    @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) {
         Category category = categoryService.get(id);
         if(category == null){

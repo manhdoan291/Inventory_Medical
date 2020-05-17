@@ -5,9 +5,14 @@ import com.java1906.climan.interceptor.HasRole;
 import com.java1906.climan.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -18,7 +23,7 @@ public class ProductController {
 
 	//Get all product
 	@GetMapping("/product")
-	@HasRole({"USER", "ADMIN"})
+	@HasRole({"STAFF", "ADMIN","DOCTOR"})
 	public ResponseEntity<List<Product>> showProductList() {
 		List<Product> productList = (List<Product>) productService.getAll();
 		if (productList.isEmpty()){
@@ -29,7 +34,7 @@ public class ProductController {
 
 	//Get product by id
 	@GetMapping("/product/{id}")
-	@HasRole({"USER", "ADMIN"})
+	@HasRole({"STAFF", "ADMIN","DOCTOR"})
 	public ResponseEntity<Object> getProductById(@PathVariable("id") Long id) {
 		System.out.println("Fetching product with id " + id);
 		Product product = productService.get(id);
@@ -41,18 +46,20 @@ public class ProductController {
 
 	// Create product
 	@PostMapping("/product")
-	@HasRole({"USER", "ADMIN"})
+	@HasRole({"STAFF", "ADMIN","DOCTOR"})
 	public ResponseEntity<String> createProduct(@RequestBody Product product ) {
 		if(product == null){
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		productService.save(product);
 		return new ResponseEntity<>("created!", HttpStatus.CREATED);
+
+
 	}
 
 	// Update product
 	@PutMapping("/product/{id}")
-	@HasRole({"USER", "ADMIN"})
+	@HasRole({"STAFF", "ADMIN","DOCTOR"})
 	public ResponseEntity<String> updateProduct(@PathVariable("id") Long id,
 												 @RequestBody Product product){
 		System.out.println("Updating product " + id);
@@ -66,7 +73,7 @@ public class ProductController {
 
 	// Delete product
 	@DeleteMapping("/product/{id}")
-	@HasRole({"USER", "ADMIN"})
+	@HasRole({"STAFF", "ADMIN","DOCTOR"})
 	public ResponseEntity<Product> deleteProduct(@PathVariable("id") Long id) {
 		Product product = productService.get(id);
 		if(product == null){
@@ -74,5 +81,16 @@ public class ProductController {
 		}
 		productService.delete(id);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
+	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@HasRole({"STAFF", "ADMIN","DOCTOR"})
+	public  ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+		File convertFile = new File("./uploadfolder/image/" + file.getOriginalFilename());
+		convertFile.createNewFile();
+		FileOutputStream fout = new FileOutputStream(convertFile);
+		fout.write(file.getBytes());
+		fout.close();
+		return  new ResponseEntity<>("File is uploaded successfully",HttpStatus.OK);
 	}
 }
