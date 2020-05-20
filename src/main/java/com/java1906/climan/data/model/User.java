@@ -21,7 +21,7 @@ public class User implements Serializable {
     private UserInfo userInfo;
 
     @OneToOne(mappedBy = "user")
-    private UserInfo userInfo;
+    private UserInfo userInfor;
 
 
     public String getPassword() {
