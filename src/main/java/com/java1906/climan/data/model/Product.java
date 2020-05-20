@@ -3,6 +3,7 @@ package com.java1906.climan.data.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
 @Table(name = "product_info")
@@ -24,13 +25,13 @@ public class Product implements Serializable {
 	private String img_url;
 	
 	@NotNull
-	private Boolean active_flag;
+	private int activeFlag;
 	
 	@NotNull
-	private String create_date;
+	private Date createDate;
 	
 	@NotNull
-	private String update_date;
+	private Date updateDate;
 	public long getId() {
 		return id;
 	}
@@ -63,39 +64,39 @@ public class Product implements Serializable {
 		this.img_url = img_url;
 	}
 
-	public Boolean getActive_flag() {
-		return active_flag;
+	public int getActiveFlag() {
+		return activeFlag;
 	}
 
-	public void setActive_flag(Boolean active_flag) {
-		this.active_flag = active_flag;
+	public void setActiveFlag(int activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 
-	public String getCreate_date() {
-		return create_date;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreate_date(String create_date) {
-		this.create_date = create_date;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public String getUpdate_date() {
-		return update_date;
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setUpdate_date(String update_date) {
-		this.update_date = update_date;
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	public Product(@NotNull String name, @NotNull String description, @NotNull String img_url, @NotNull Boolean active_flag,
-				   @NotNull String create_date, @NotNull String update_date) {
+	public Product(@NotNull String name, @NotNull String description, @NotNull String img_url, @NotNull int activeFlag,
+				   @NotNull Date createDate, @NotNull Date updateDate) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.img_url = img_url;
-		this.active_flag = active_flag;
-		this.create_date = create_date;
-		this.update_date = update_date;
+		this.activeFlag = activeFlag;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
 	}
 
 	public Product() {
