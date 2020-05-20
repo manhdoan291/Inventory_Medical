@@ -17,6 +17,10 @@ public class User implements Serializable {
     private RoleType role;
     private Boolean activeFlag;
 
+    @OneToOne(mappedBy = "user")
+    private UserInfo userInfo;
+
+
     public String getPassword() {
         return password;
     }

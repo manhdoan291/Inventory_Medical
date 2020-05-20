@@ -19,6 +19,10 @@ public class UserInfo implements Serializable {
     @Transient
     private String role;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public void setRole(String role) {
         this.role = role;
     }

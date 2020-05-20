@@ -2,7 +2,9 @@ package com.java1906.climan.data.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -18,6 +20,9 @@ public class History {
     private Date exportDate;
     private Date importDate;
     private Double intoMoney;
+
+    @OneToMany(mappedBy = "history")
+    List<Invoice> invoices = new ArrayList<>();
 
     public Integer getId() {
         return id;

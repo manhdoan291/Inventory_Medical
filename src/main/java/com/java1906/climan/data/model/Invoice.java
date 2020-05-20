@@ -2,7 +2,9 @@ package com.java1906.climan.data.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -20,6 +22,13 @@ public class Invoice {
     private Double price;
     private Date createTime;
     private Date updateTime;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
+    List<Product> products = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "history_id")
+    private History history;
 
 
     public Integer getId() {

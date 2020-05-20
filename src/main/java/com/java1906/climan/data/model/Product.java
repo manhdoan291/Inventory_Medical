@@ -3,9 +3,10 @@ package com.java1906.climan.data.model;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Table(name = "product_info")
+@Table(name = "product")
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -27,10 +28,15 @@ public class Product implements Serializable {
 	private Boolean active_flag;
 	
 	@NotNull
-	private String create_date;
-	
+	private Date create_date;
+
 	@NotNull
-	private String update_date;
+	private Date update_date;
+
+	@ManyToOne
+	@JoinColumn(name = "invoice_id")
+	private Invoice invoice;
+
 	public long getId() {
 		return id;
 	}
@@ -71,24 +77,24 @@ public class Product implements Serializable {
 		this.active_flag = active_flag;
 	}
 
-	public String getCreate_date() {
+	public Date getCreate_date() {
 		return create_date;
 	}
 
-	public void setCreate_date(String create_date) {
+	public void setCreate_date(Date create_date) {
 		this.create_date = create_date;
 	}
 
-	public String getUpdate_date() {
+	public Date getUpdate_date() {
 		return update_date;
 	}
 
-	public void setUpdate_date(String update_date) {
+	public void setUpdate_date(Date update_date) {
 		this.update_date = update_date;
 	}
 
 	public Product(@NotNull String name, @NotNull String description, @NotNull String img_url, @NotNull Boolean active_flag,
-				   @NotNull String create_date, @NotNull String update_date) {
+				   @NotNull Date create_date, @NotNull Date update_date) {
 		super();
 		this.name = name;
 		this.description = description;
