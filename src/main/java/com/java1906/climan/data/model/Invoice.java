@@ -20,8 +20,8 @@ public class Invoice {
     private Integer quantity;
     private String unit;
     private Double price;
-    private Date createTime;
-    private Date updateTime;
+    private Date createDate;
+    private Date updateDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
     List<Product> products = new ArrayList<>();
@@ -95,19 +95,19 @@ public class Invoice {
         this.price = price;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createTime) {
+        this.createDate = createTime;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdateDate(Date updateTime) {
+        this.updateDate = updateTime;
     }
 }

@@ -15,7 +15,10 @@ public class User implements Serializable {
     private String username;
     private String password;
     private RoleType role;
-    private Boolean activeFlag;
+    private int activeFlag;
+
+    @Transient
+    private UserInfo userInfo;
 
     @OneToOne(mappedBy = "user")
     private UserInfo userInfo;
@@ -60,11 +63,19 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public Boolean getActiveFlag() {
+    public int getActiveFlag() {
         return activeFlag;
     }
 
-    public void setActiveFlag(Boolean activeFlag) {
+    public void setActiveFlag(int   activeFlag) {
         this.activeFlag = activeFlag;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 }

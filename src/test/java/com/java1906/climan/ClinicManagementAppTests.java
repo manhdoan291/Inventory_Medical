@@ -24,7 +24,7 @@ class ClinicManagementAppTests {
         User user = new User();
         user.setUsername("casper");
         user.setPassword("123456");
-        user.setActiveFlag(true);
+        user.setActiveFlag(1);
         user.setRole(RoleType.ADMIN);
 
         user = userRepository.save(user);
@@ -32,8 +32,8 @@ class ClinicManagementAppTests {
         UserInfo userInfo = new UserInfo();
         userInfo.setId(user.getId());
         userInfo.setEmail("casper@gmail.com");
-        userInfo.setName("Huy");
-        userInfo.setPhone("0398902420");
+        userInfo.setName("Hieu");
+        userInfo.setPhone("0385163198");
 
         userInfo = userInfoRepository.save(userInfo);
     }
@@ -50,7 +50,7 @@ class ClinicManagementAppTests {
         product.setName("thuoc dong y");
         product.setDescription("chua benh");
         product.setImg_url("huy.jpg");
-        product.setActive_flag(true);
+        product.setActiveFlag(true);
     }
 
 }
