@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "product_info")
+@Table(name = "product")
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -25,13 +25,18 @@ public class Product implements Serializable {
 	private String img_url;
 	
 	@NotNull
-	private int activeFlag;
+	private Boolean active_flag;
 	
 	@NotNull
-	private Date createDate;
-	
+	private Date create_date;
+
 	@NotNull
-	private Date updateDate;
+	private Date update_date;
+
+	@ManyToOne
+	@JoinColumn(name = "invoice_id")
+	private Invoice invoice;
+
 	public long getId() {
 		return id;
 	}
@@ -64,39 +69,39 @@ public class Product implements Serializable {
 		this.img_url = img_url;
 	}
 
-	public int getActiveFlag() {
-		return activeFlag;
+	public Boolean getActive_flag() {
+		return active_flag;
 	}
 
-	public void setActiveFlag(int activeFlag) {
-		this.activeFlag = activeFlag;
+	public void setActive_flag(Boolean active_flag) {
+		this.active_flag = active_flag;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public Date getCreate_date() {
+		return create_date;
 	}
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
+	public void setCreate_date(Date create_date) {
+		this.create_date = create_date;
 	}
 
-	public Date getUpdateDate() {
-		return updateDate;
+	public Date getUpdate_date() {
+		return update_date;
 	}
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
+	public void setUpdate_date(Date update_date) {
+		this.update_date = update_date;
 	}
 
-	public Product(@NotNull String name, @NotNull String description, @NotNull String img_url, @NotNull int activeFlag,
-				   @NotNull Date createDate, @NotNull Date updateDate) {
+	public Product(@NotNull String name, @NotNull String description, @NotNull String img_url, @NotNull Boolean active_flag,
+				   @NotNull Date create_date, @NotNull Date update_date) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.img_url = img_url;
-		this.activeFlag = activeFlag;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
+		this.active_flag = active_flag;
+		this.create_date = create_date;
+		this.update_date = update_date;
 	}
 
 	public Product() {

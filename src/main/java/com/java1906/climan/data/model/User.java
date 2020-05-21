@@ -20,6 +20,10 @@ public class User implements Serializable {
     @Transient
     private UserInfo userInfo;
 
+    @OneToOne(mappedBy = "user")
+    private UserInfo userInfor;
+
+
     public String getPassword() {
         return password;
     }
