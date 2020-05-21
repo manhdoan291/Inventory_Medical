@@ -1,22 +1,24 @@
 package com.java1906.climan.data.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-@Table
-public class Category {
+@Table(name = "category_detail")
+public class CategoryDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
     private String name;
     private String description;
+    private int activeFlag;
     private Date createDate;
     private Date updateDate;
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<CategoryDetail> categoryDetailList;
-
 
     public Integer getId() {
         return id;
@@ -24,6 +26,14 @@ public class Category {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public String getName() {
@@ -42,6 +52,14 @@ public class Category {
         this.description = description;
     }
 
+    public int getActiveFlag() {
+        return activeFlag;
+    }
+
+    public void setActiveFlag(int activeFlag) {
+        this.activeFlag = activeFlag;
+    }
+
     public Date getCreateDate() {
         return createDate;
     }
@@ -56,13 +74,5 @@ public class Category {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
-    }
-
-    public List<CategoryDetail> getCategoryDetailList() {
-        return categoryDetailList;
-    }
-
-    public void setCategoryDetailList(List<CategoryDetail> categoryDetailList) {
-        this.categoryDetailList = categoryDetailList;
     }
 }
