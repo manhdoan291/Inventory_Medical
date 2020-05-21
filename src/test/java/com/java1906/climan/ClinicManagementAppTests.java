@@ -50,7 +50,7 @@ class ClinicManagementAppTests {
         product.setName("thuoc dong y");
         product.setDescription("chua benh");
         product.setImg_url("huy.jpg");
-        product.setActiveFlag(true);
+        product.setActiveFlag(1);
     }
 
 }

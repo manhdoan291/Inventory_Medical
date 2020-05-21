@@ -1,6 +1,5 @@
 package com.java1906.climan.controller;
 
-import com.java1906.climan.data.model.Category;
 import com.java1906.climan.data.model.CategoryDetail;
 import com.java1906.climan.interceptor.HasRole;
 import com.java1906.climan.services.ICategoryDetailService;

@@ -1,7 +1,8 @@
 package com.java1906.climan.services;
 
-import com.java1906.climan.data.model.Category;
+
 import com.java1906.climan.data.model.CategoryDetail;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
