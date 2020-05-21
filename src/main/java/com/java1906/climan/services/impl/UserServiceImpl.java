@@ -54,7 +54,7 @@ public class UserServiceImpl implements IUserService {
         }if(null != updatingUser.getActiveFlag()){
             updatingUser.setActiveFlag(user.getActiveFlag());
         }
-        return userRepository.save(user);
+        return userRepository.save(updatingUser);
     }
 
     @Override

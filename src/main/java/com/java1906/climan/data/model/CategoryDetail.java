@@ -16,7 +16,7 @@ public class CategoryDetail implements Serializable {
     private Category category;
     private String name;
     private String description;
-    private int activeFlag;
+    private Integer activeFlag;
     private Date createDate;
     private Date updateDate;
 
@@ -52,11 +52,11 @@ public class CategoryDetail implements Serializable {
         this.description = description;
     }
 
-    public int getActiveFlag() {
+    public Integer getActiveFlag() {
         return activeFlag;
     }
 
-    public void setActiveFlag(int activeFlag) {
+    public void setActiveFlag(Integer activeFlag) {
         this.activeFlag = activeFlag;
     }
 

@@ -51,7 +51,7 @@ public class ProductServiceImpl implements IProductService {
 			updatingProduct.setActiveFlag(product.getActiveFlag());
 		if (null != product.getImg_url())
 			updatingProduct.setImg_url(product.getImg_url());
-		return productRepository.save(product);
+		return productRepository.save(updatingProduct);
     }
 
 	@Override

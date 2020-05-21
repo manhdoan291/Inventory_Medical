@@ -5,23 +5,21 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
+@Table(name = "user_info")
 public class UserInfo implements Serializable {
     @Id
     private Integer id;
     private String name;
     private String email;
     private String phone;
-    private Date createTime;
-    private Date updateTime;
+    private Date createDate;
+    private Date updateDate;
 
     @Transient
     private String token;
     @Transient
     private String role;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 
     public void setRole(String role) {
         this.role = role;
@@ -81,20 +79,20 @@ public class UserInfo implements Serializable {
         this.phone = phone;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
+    public Date getUpdateDate() {
+        return updateDate;
     }
 
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
     }
 
     public String getToken() {

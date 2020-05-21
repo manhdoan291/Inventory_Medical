@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements ICategoryService {
             updatingCategory.setName(category.getName());
         if (null != category.getDescription())
             updatingCategory.setDescription(category.getDescription());
-        return categoryRepository.save(category);
+        return categoryRepository.save(updatingCategory);
     }
 
     @Override

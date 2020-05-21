@@ -15,13 +15,10 @@ public class User implements Serializable {
     private String username;
     private String password;
     private RoleType role;
-    private int activeFlag;
+    private Integer activeFlag;
 
     @Transient
     private UserInfo userInfo;
-
-    @OneToOne(mappedBy = "user")
-    private UserInfo userInfor;
 
 
     public String getPassword() {
@@ -63,11 +60,11 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public int getActiveFlag() {
+    public Integer getActiveFlag() {
         return activeFlag;
     }
 
-    public void setActiveFlag(int   activeFlag) {
+    public void setActiveFlag(Integer   activeFlag) {
         this.activeFlag = activeFlag;
     }
 

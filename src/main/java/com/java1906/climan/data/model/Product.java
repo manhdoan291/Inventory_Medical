@@ -25,13 +25,13 @@ public class Product implements Serializable {
 	private String img_url;
 	
 	@NotNull
-	private Boolean active_flag;
+	private Integer activeFlag;
 	
 	@NotNull
-	private Date create_date;
+	private Date createDate;
 
 	@NotNull
-	private Date update_date;
+	private Date updateDate;
 
 	@ManyToOne
 	@JoinColumn(name = "invoice_id")
@@ -69,39 +69,39 @@ public class Product implements Serializable {
 		this.img_url = img_url;
 	}
 
-	public Boolean getActive_flag() {
-		return active_flag;
+	public Integer getActiveFlag() {
+		return activeFlag;
 	}
 
-	public void setActive_flag(Boolean active_flag) {
-		this.active_flag = active_flag;
+	public void setActiveFlag(Integer activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 
-	public Date getCreate_date() {
-		return create_date;
+	public Date getCreateDate() {
+		return createDate;
 	}
 
-	public void setCreate_date(Date create_date) {
-		this.create_date = create_date;
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 
-	public Date getUpdate_date() {
-		return update_date;
+	public Date getUpdateDate() {
+		return updateDate;
 	}
 
-	public void setUpdate_date(Date update_date) {
-		this.update_date = update_date;
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
 	}
 
-	public Product(@NotNull String name, @NotNull String description, @NotNull String img_url, @NotNull Boolean active_flag,
-				   @NotNull Date create_date, @NotNull Date update_date) {
+	public Product(@NotNull String name, @NotNull String description, @NotNull String img_url, @NotNull int activeFlag,
+				   @NotNull Date createDate, @NotNull Date updateDate) {
 		super();
 		this.name = name;
 		this.description = description;
 		this.img_url = img_url;
-		this.active_flag = active_flag;
-		this.create_date = create_date;
-		this.update_date = update_date;
+		this.activeFlag = activeFlag;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
 	}
 
 	public Product() {

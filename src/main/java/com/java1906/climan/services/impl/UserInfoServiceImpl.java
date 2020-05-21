@@ -47,7 +47,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
         if (null != userInfo.getEmail())
             updatingUserInfo.setEmail(userInfo.getEmail());
 
-        return userInfoRepository.save(userInfo);
+        return userInfoRepository.save(updatingUserInfo);
     }
 
     @Override
