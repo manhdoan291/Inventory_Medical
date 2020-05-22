@@ -14,9 +14,10 @@ public class User implements Serializable {
     @Column(name = "username")
     private String username;
     private String password;
-    private RoleType role;
     private Integer activeFlag;
 
+    @Transient
+    private RoleType role;
     @Transient
     private UserInfo userInfo;
 

@@ -50,10 +50,7 @@ public class CategoryDetailServiceImpl implements ICategoryDetailService {
         {
             updatingCategoryDetail.setDescription(categoryDetail.getDescription());
         }
-        if ( null!=categoryDetail.getCategory())
-        {
-            updatingCategoryDetail.setCategory(categoryDetail.getCategory());
-        }
+
         return categoryDetailRepository.save(updatingCategoryDetail);
         
     }

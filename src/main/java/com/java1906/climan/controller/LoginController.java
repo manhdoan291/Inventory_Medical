@@ -1,5 +1,6 @@
 package com.java1906.climan.controller;
 
+import com.java1906.climan.data.model.RoleType;
 import com.java1906.climan.data.model.UserInfo;
 import com.java1906.climan.data.model.User;
 import com.java1906.climan.dto.AuthenticationRequest;
@@ -45,7 +46,7 @@ public class LoginController {
         Optional<User> user = userService.findByUsername(authenticationRequest.getUserName());
         if (user.isPresent()) {
             User user1 = user.get();
-
+            user1.setRole(RoleType.ADMIN);
             String md5Hex = DigestUtils
                     .md5Hex(authenticationRequest.getPassWord()).toUpperCase();
             if (user1.getPassword().toUpperCase().equals(md5Hex)) {

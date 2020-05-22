@@ -5,20 +5,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "category_detail")
 public class CategoryDetail implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-
-    @ManyToOne
-    @JoinColumn(name="category_id")
-    private Category category;
     private String name;
     private String description;
     private Integer activeFlag;
     private Date createDate;
     private Date updateDate;
+
+    @Transient
+    private Integer categoryId;
 
     public Integer getId() {
         return id;
@@ -26,14 +24,6 @@ public class CategoryDetail implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public String getName() {
@@ -74,5 +64,13 @@ public class CategoryDetail implements Serializable {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Integer getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(Integer categoryId) {
+        this.categoryId = categoryId;
     }
 }
