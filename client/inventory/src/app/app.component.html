@@ -6,6 +6,7 @@
     <ul class="nav navbar-nav navbar-right">
       <li><a class="nav-item nav-link text-white" routerLink="/home" *ngIf="!isAdmin || !isUser"><i class="fas fa-home"></i>  Home</a></li>
       <li><a class="nav-item nav-link text-white" routerLink="/category" *ngIf="isAdmin"><i class="fas fa-home"></i>  Category</a></li>
+      <li><a class="nav-item nav-link text-white" routerLink="/product" *ngIf="isAdmin"><i class="fas fa-home"></i>  Product</a></li>
       <li>
         <a class="nav-item nav-link text-white" *ngIf="!isAdmin && !isUser" (click)="logout()">Login</a>
       </li>

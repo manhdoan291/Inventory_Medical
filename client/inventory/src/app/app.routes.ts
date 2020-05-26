@@ -4,6 +4,7 @@ import { HomeuserComponent } from './homeuser';
 import { HomeadminComponent } from './homeadmin';
 import { CategoryComponent } from './category';
 import { LoginComponent } from './login';
+import { ProductComponent } from './product';
 import { Role } from './_models';
 import { AuthGuard } from './_guards';
 const routes: Routes = [
@@ -27,6 +28,12 @@ const routes: Routes = [
     {
         path: 'category',
         component: CategoryComponent,
+        canActivate: [AuthGuard],
+        data: { roles: [Role.ADMIN] }
+    },
+    {
+        path: 'product',
+        component: ProductComponent,
         canActivate: [AuthGuard],
         data: { roles: [Role.ADMIN] }
     },

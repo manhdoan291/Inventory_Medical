@@ -15,7 +15,11 @@ public class Category {
     private Date createDate;
     private Date updateDate;
 
-    @OneToMany(mappedBy = "category")
+   // @OneToMany(mappedBy = "category")
+   @OneToMany(
+           cascade = CascadeType.ALL,
+           orphanRemoval = true
+   )
     private List<CategoryDetail> categoryDetailList;
 
 

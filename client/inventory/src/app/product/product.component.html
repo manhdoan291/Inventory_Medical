@@ -26,18 +26,24 @@
 
           <span *ngIf="sortType == 'name' && sortReverse" class="fa fa-caret-up"></span>
         </th>
-        <th (click)="sortType = 'description'; sortReverse = !sortReverse">
-          Decription
-          <span *ngIf="sortType == 'description' && !sortReverse" class="fa fa-caret-down"></span>
-          <span *ngIf="sortType == 'description' && sortReverse" class="fa fa-caret-up"></span>
+        <th (click)="sortType = 'create_date'; sortReverse = !sortReverse">
+          Date Create
+          <span *ngIf="sortType == 'create_date' && !sortReverse" class="fa fa-caret-down"></span>
+          <span *ngIf="sortType == 'create_date' && sortReverse" class="fa fa-caret-up"></span>
+        </th>
+        <th (click)="sortType = 'update_date'; sortReverse = !sortReverse">
+          Last Update
+          <span *ngIf="sortType == 'update_date' && !sortReverse" class="fa fa-caret-down"></span>
+          <span *ngIf="sortType == 'update_date' && sortReverse" class="fa fa-caret-up"></span>
         </th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let category of categorys | filter :type : searchText : 'includes' | orderBy: sortType : sortReverse : true | paginate: { itemsPerPage: 15, currentPage: p }" >
-        <td>{{category.id}}</td>
-        <td>{{category.name}}</td>
-        <td>{{category.description}}</td>
+      <tr *ngFor="let product of products | filter :type : searchText : 'includes' | orderBy: sortType : sortReverse : true | paginate: { itemsPerPage: 15, currentPage: p } " (click) ="openPopup1(product)">
+        <td>{{product.id}}</td>
+        <td>{{product.name}}</td>
+        <td>{{product.create_date}}</td>
+        <td>{{product.update_date}}</td>
       </tr>
     </tbody>
   </table>

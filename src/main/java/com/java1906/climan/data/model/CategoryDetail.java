@@ -4,8 +4,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-public class CategoryDetail implements Serializable {
+@Entity(name = "CategoryDetail")
+@Table(name = "category_detail")
+public class CategoryDetail{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;

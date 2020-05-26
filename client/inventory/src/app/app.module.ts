@@ -13,6 +13,10 @@ import { HomeadminComponent } from './homeadmin/homeadmin.component';
 import { HomeuserComponent } from './homeuser/homeuser.component';
 import { CategoryComponent } from './category/category.component';
 import { FilterPipe } from './filter/filter.pipe';
+import { ProductComponent } from './product/product.component';
+import { UpdateProductComponent } from './product/update-product/update-product.component';
+import { ViewProductComponent } from './product/view-product/view-product.component';
+import { CreateProductComponent } from './product/create-product/create-product.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +24,11 @@ import { FilterPipe } from './filter/filter.pipe';
     HomeadminComponent,
     HomeuserComponent,
         CategoryComponent,
-        FilterPipe
+        FilterPipe,
+        ProductComponent,
+        UpdateProductComponent,
+        ViewProductComponent,
+        CreateProductComponent
   ],
     imports: [
         NgbModule,
@@ -35,7 +43,14 @@ import { FilterPipe } from './filter/filter.pipe';
    
 
   ],
-  providers: [],
+    providers: [],
+    entryComponents: [
+      
+        UpdateProductComponent,
+        CreateProductComponent,
+        ViewProductComponent,
+      
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
