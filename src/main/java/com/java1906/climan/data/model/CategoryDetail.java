@@ -3,8 +3,9 @@ package com.java1906.climan.data.model;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
-@Entity(name = "CategoryDetail")
+@Entity
 @Table(name = "category_detail")
 public class CategoryDetail{
     @Id
@@ -15,6 +16,17 @@ public class CategoryDetail{
     private Integer activeFlag;
     private Date createDate;
     private Date updateDate;
+
+    @ManyToMany
+    private List<Product> products;
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     @Transient
     private Integer categoryId;

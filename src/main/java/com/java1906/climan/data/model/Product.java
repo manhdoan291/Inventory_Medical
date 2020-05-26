@@ -4,34 +4,41 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
-public class Product implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class Product {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@NotNull
 	private long id;
-	
-	@NotNull
 	private String name;
-	
-	@NotNull
 	private String description;
-	
-	@NotNull
 	private String img_url;
-	
-	@NotNull
 	private Integer activeFlag;
-	
-	@NotNull
 	private Date createDate;
-
-	@NotNull
 	private Date updateDate;
+
+	@ManyToMany
+	private List<CategoryDetail> categoryDetails;
+
+	public List<CategoryDetail> getCategoryDetails() {
+		return categoryDetails;
+	}
+
+	public void setCategoryDetails(List<CategoryDetail> categoryDetails) {
+		this.categoryDetails = categoryDetails;
+	}
+
+	public Invoice getInvoice() {
+		return invoice;
+	}
+
+	public void setInvoice(Invoice invoice) {
+		this.invoice = invoice;
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "invoice_id")
@@ -93,8 +100,8 @@ public class Product implements Serializable {
 		this.updateDate = updateDate;
 	}
 
-	public Product(@NotNull String name, @NotNull String description, @NotNull String img_url, @NotNull int activeFlag,
-				   @NotNull Date createDate, @NotNull Date updateDate) {
+	public Product(String name, String description,  String img_url, int activeFlag,
+				   Date createDate, Date updateDate) {
 		super();
 		this.name = name;
 		this.description = description;
