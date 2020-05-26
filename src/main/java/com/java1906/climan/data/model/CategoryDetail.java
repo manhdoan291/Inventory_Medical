@@ -19,6 +19,7 @@ public class CategoryDetail {
     private Date updateDate;
 
     @ManyToMany
+    @JsonIgnore
     private List<Product> products;
     @ManyToOne
     @JsonIgnore

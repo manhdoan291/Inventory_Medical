@@ -37,22 +37,20 @@ public class CategoryDetailServiceImpl implements ICategoryDetailService {
 
     @Override
     public CategoryDetail update(CategoryDetail categoryDetail, Integer id) throws Exception {
-        Optional<CategoryDetail> optionalUpdatingCategoryDetail= categoryDetailRepository.findById(id);
+        Optional<CategoryDetail> optionalUpdatingCategoryDetail = categoryDetailRepository.findById(id);
         if (!optionalUpdatingCategoryDetail.isPresent()) {
             throw new LogicException("Category Detail khong ton tai", HttpStatus.NOT_FOUND);
         }
         CategoryDetail updatingCategoryDetail = optionalUpdatingCategoryDetail.get();
-        if ( null!=categoryDetail.getName() )
-        {
+        if (null != categoryDetail.getName()) {
             updatingCategoryDetail.setName(categoryDetail.getName());
         }
-        if ( null!=categoryDetail.getDescription())
-        {
+        if (null != categoryDetail.getDescription()) {
             updatingCategoryDetail.setDescription(categoryDetail.getDescription());
         }
 
         return categoryDetailRepository.save(updatingCategoryDetail);
-        
+
     }
 
     @Override

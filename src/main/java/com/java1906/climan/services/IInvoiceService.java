@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface IInvoiceService {
     public Optional<Invoice> get(Integer id);
+
     public List<Invoice> getAll();
 }

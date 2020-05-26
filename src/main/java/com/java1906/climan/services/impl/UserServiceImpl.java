@@ -39,19 +39,22 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public User update(User user, Integer id) throws Exception{
+    public User update(User user, Integer id) throws Exception {
         Optional<User> optionalUpdatingUser = userRepository.findById(id);
-        if (!optionalUpdatingUser.isPresent()){
+        if (!optionalUpdatingUser.isPresent()) {
             throw new LogicException("User không tồn tại", HttpStatus.NOT_FOUND);
         }
         User updatingUser = optionalUpdatingUser.get();
-        if (null != updatingUser.getUsername()){
+        if (null != updatingUser.getUsername()) {
             updatingUser.setUsername(user.getUsername());
-        }if(null != updatingUser.getPassword()){
+        }
+        if (null != updatingUser.getPassword()) {
             updatingUser.setPassword(user.getPassword());
-        }if(null != updatingUser.getRole()){
+        }
+        if (null != updatingUser.getRole()) {
             updatingUser.setRole(user.getRole());
-        }if(null != updatingUser.getActiveFlag()){
+        }
+        if (null != updatingUser.getActiveFlag()) {
             updatingUser.setActiveFlag(user.getActiveFlag());
         }
         return userRepository.save(updatingUser);
