@@ -1,0 +1,80 @@
+package com.java1906.climan;
+
+import com.java1906.climan.data.model.*;
+import com.java1906.climan.data.repo.*;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.Arrays;
+
+@SpringBootTest
+class ClinicManagementApplicationTests {
+
+    @Test
+    void contextLoads() {
+    }
+
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private UserInfoRepository userInfoRepository;
+
+
+    @Test
+    void setupUsers() {
+        userRepository.deleteAll();
+        userInfoRepository.deleteAll();
+
+        User user01 = new User();
+        user01.setUsername("lent");
+        user01.setPassword("123456");
+        user01.setRole(RoleType.ADMIN);
+        user01 = userRepository.save(user01);
+
+        UserInfo userInfo = new UserInfo();
+        userInfo.setEmail("lent@email.com");
+        userInfo.setName("Casper Ngo");
+        userInfo.setPhone("123123123");
+        userInfo.setId(user01.getId());
+        userInfoRepository.save(userInfo);
+    }
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryDetailRepository categoryDetailRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
+
+    @Test
+    void createCategorysAndProducts() {
+        Category category = new Category();
+        category.setName("Category A");
+        category.setDescription("Category A Description");
+        category = categoryRepository.save(category);
+
+        CategoryDetail categoryDetail01 = new CategoryDetail();
+        categoryDetail01.setCategory(category);
+        categoryDetail01.setName("Category Value 01");
+        categoryDetailRepository.save(categoryDetail01);
+
+        CategoryDetail categoryDetail02 = new CategoryDetail();
+        categoryDetail02.setCategory(category);
+        categoryDetail02.setName("Category Value 02");
+        categoryDetailRepository.save(categoryDetail02);
+
+        Product product = new Product();
+
+        product.setId(category.getId());
+        product.setName("thuoc dong y");
+        product.setDescription("chua benh");
+        product.setImg_url("huy.jpg");
+        product.setActiveFlag(1);
+        product.setCategoryDetails(Arrays.asList(categoryDetail01, categoryDetail02));
+        productRepository.save(product);
+    }
+
+}

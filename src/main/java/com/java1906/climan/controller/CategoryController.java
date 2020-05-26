@@ -21,7 +21,7 @@ public class CategoryController {
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<List<Category>> showCategoryList() {
         List<Category> categoryList = (List<Category>) categoryService.getAll();
-        if (categoryList.isEmpty()){
+        if (categoryList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
@@ -33,17 +33,17 @@ public class CategoryController {
     public ResponseEntity<Object> getCategoryById(@PathVariable("id") Integer id) {
         System.out.println("Fetching category with id " + id);
         Category category = categoryService.get(id);
-        if (category == null){
+        if (category == null) {
             return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Object>(category,HttpStatus.OK);
+        return new ResponseEntity<Object>(category, HttpStatus.OK);
     }
 
     // Create category
     @PostMapping("/category")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> createCategory(@RequestBody Category category ) {
-        if(category == null){
+    public ResponseEntity<String> createCategory(@RequestBody Category category) {
+        if (category == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         categoryService.save(category);
@@ -54,10 +54,10 @@ public class CategoryController {
     @PutMapping("/category/{id}")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<String> updateCategory(@PathVariable("id") Integer id,
-                                                   @RequestBody Category category){
+                                                 @RequestBody Category category) {
         System.out.println("Updating Category " + id);
         Category currentCategory = categoryService.get(id);
-        if (currentCategory == null){
+        if (currentCategory == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         categoryService.save(category);
@@ -69,7 +69,7 @@ public class CategoryController {
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) {
         Category category = categoryService.get(id);
-        if(category == null){
+        if (category == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         categoryService.delete(id);

@@ -1,13 +1,14 @@
 package com.java1906.climan.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "category_detail")
-public class CategoryDetail{
+public class CategoryDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -19,6 +20,9 @@ public class CategoryDetail{
 
     @ManyToMany
     private List<Product> products;
+    @ManyToOne
+    @JsonIgnore
+    private Category category;
 
     public List<Product> getProducts() {
         return products;
@@ -28,8 +32,13 @@ public class CategoryDetail{
         this.products = products;
     }
 
-    @Transient
-    private Integer categoryId;
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     public Integer getId() {
         return id;
@@ -77,13 +86,5 @@ public class CategoryDetail{
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
     }
 }

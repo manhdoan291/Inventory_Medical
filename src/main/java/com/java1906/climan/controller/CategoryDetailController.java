@@ -21,7 +21,7 @@ public class CategoryDetailController {
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<List<CategoryDetail>> showCategoryList() {
         List<CategoryDetail> categoryDetailList = (List<CategoryDetail>) categoryDetailService.getAll();
-        if (categoryDetailList.isEmpty()){
+        if (categoryDetailList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(categoryDetailList, HttpStatus.OK);
@@ -33,17 +33,17 @@ public class CategoryDetailController {
     public ResponseEntity<Object> getCategoryDetailById(@PathVariable("id") Integer id) {
         System.out.println("Fetching category detail with id " + id);
         CategoryDetail categoryDetail = categoryDetailService.get(id);
-        if (categoryDetail == null){
+        if (categoryDetail == null) {
             return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Object>(categoryDetail,HttpStatus.OK);
+        return new ResponseEntity<Object>(categoryDetail, HttpStatus.OK);
     }
 
     // Create category
     @PostMapping("/categoryDetail")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> createCategoryDetail(@RequestBody CategoryDetail categoryDetail ) {
-        if(categoryDetail == null){
+    public ResponseEntity<String> createCategoryDetail(@RequestBody CategoryDetail categoryDetail) {
+        if (categoryDetail == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         categoryDetailService.save(categoryDetail);
@@ -54,10 +54,10 @@ public class CategoryDetailController {
     @PutMapping("/categoryDetail/{id}")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<String> updateCategoryDetail(@PathVariable("id") Integer id,
-                                                 @RequestBody CategoryDetail categoryDetail){
+                                                       @RequestBody CategoryDetail categoryDetail) {
         System.out.println("Updating Category Detail " + id);
         CategoryDetail currentCategoryDetail = categoryDetailService.get(id);
-        if (currentCategoryDetail == null){
+        if (currentCategoryDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         categoryDetailService.save(categoryDetail);
@@ -69,7 +69,7 @@ public class CategoryDetailController {
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<CategoryDetail> deleteCategoryDetail(@PathVariable("id") Integer id) {
         CategoryDetail categoryDetail = categoryDetailService.get(id);
-        if(categoryDetail == null){
+        if (categoryDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         categoryDetailService.delete(id);

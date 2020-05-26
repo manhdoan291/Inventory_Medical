@@ -1,6 +1,9 @@
 package com.java1906.climan.data.model;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,17 +20,6 @@ public class UserInfo implements Serializable {
 
     @Transient
     private String token;
-    @Transient
-    private String role;
-
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    public String getRole() {
-        return role;
-    }
 
     public Integer getId() {
         return id;
@@ -49,6 +41,10 @@ public class UserInfo implements Serializable {
         return email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (!(obj instanceof UserInfo)) {
@@ -61,14 +57,9 @@ public class UserInfo implements Serializable {
         return false;
     }
 
-
     @Override
     public int hashCode() {
         return getId().hashCode();
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPhone() {

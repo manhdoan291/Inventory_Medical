@@ -2,116 +2,114 @@ package com.java1906.climan.data.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "product")
 public class Product {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@NotNull
-	private long id;
-	private String name;
-	private String description;
-	private String img_url;
-	private Integer activeFlag;
-	private Date createDate;
-	private Date updateDate;
 
-	@ManyToMany
-	private List<CategoryDetail> categoryDetails;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
+    private long id;
+    private String name;
+    private String description;
+    private String img_url;
+    private Integer activeFlag;
+    private Date createDate;
+    private Date updateDate;
 
-	public List<CategoryDetail> getCategoryDetails() {
-		return categoryDetails;
-	}
+    @ManyToMany
+    private List<CategoryDetail> categoryDetails;
+    @ManyToOne
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 
-	public void setCategoryDetails(List<CategoryDetail> categoryDetails) {
-		this.categoryDetails = categoryDetails;
-	}
+    public Product(String name, String description, String img_url, int activeFlag,
+                   Date createDate, Date updateDate) {
+        super();
+        this.name = name;
+        this.description = description;
+        this.img_url = img_url;
+        this.activeFlag = activeFlag;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+    }
 
-	public Invoice getInvoice() {
-		return invoice;
-	}
+    public Product() {
+    }
 
-	public void setInvoice(Invoice invoice) {
-		this.invoice = invoice;
-	}
+    public List<CategoryDetail> getCategoryDetails() {
+        return categoryDetails;
+    }
 
-	@ManyToOne
-	@JoinColumn(name = "invoice_id")
-	private Invoice invoice;
+    public void setCategoryDetails(List<CategoryDetail> categoryDetails) {
+        this.categoryDetails = categoryDetails;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public Invoice getInvoice() {
+        return invoice;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getImg_url() {
-		return img_url;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public void setImg_url(String img_url) {
-		this.img_url = img_url;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public Integer getActiveFlag() {
-		return activeFlag;
-	}
+    public String getImg_url() {
+        return img_url;
+    }
 
-	public void setActiveFlag(Integer activeFlag) {
-		this.activeFlag = activeFlag;
-	}
+    public void setImg_url(String img_url) {
+        this.img_url = img_url;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public Integer getActiveFlag() {
+        return activeFlag;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public void setActiveFlag(Integer activeFlag) {
+        this.activeFlag = activeFlag;
+    }
 
-	public Date getUpdateDate() {
-		return updateDate;
-	}
+    public Date getCreateDate() {
+        return createDate;
+    }
 
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
 
-	public Product(String name, String description,  String img_url, int activeFlag,
-				   Date createDate, Date updateDate) {
-		super();
-		this.name = name;
-		this.description = description;
-		this.img_url = img_url;
-		this.activeFlag = activeFlag;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
+    public Date getUpdateDate() {
+        return updateDate;
+    }
 
-	public Product() {
-	}
+    public void setUpdateDate(Date updateDate) {
+        this.updateDate = updateDate;
+    }
 
 }

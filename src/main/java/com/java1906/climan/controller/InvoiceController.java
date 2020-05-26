@@ -19,10 +19,10 @@ public class InvoiceController {
     private IInvoiceService invoiceService;
 
     @GetMapping("/invoice")
-    @HasRole({"STAFF","ADMIN","DOCTOR"})
+    @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<List<Invoice>> showInvoiceList() {
         List<Invoice> invoiceList = (List<Invoice>) invoiceService.getAll();
-        if (invoiceList.isEmpty()){
+        if (invoiceList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(invoiceList, HttpStatus.OK);
@@ -30,13 +30,13 @@ public class InvoiceController {
 
     //Get Invoice by id
     @GetMapping("/invoice/{id}")
-    @HasRole({"STAFF","ADMIN","DOCTOR"})
+    @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<Object> getInvoiceById(@PathVariable("id") Integer id) {
         System.out.println("Fetching Invoice with id " + id);
         Optional<Invoice> invoice = invoiceService.get(id);
-        if (invoice  == null){
+        if (invoice == null) {
             return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Object>(invoice ,HttpStatus.OK);
+        return new ResponseEntity<Object>(invoice, HttpStatus.OK);
     }
 }

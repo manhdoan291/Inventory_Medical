@@ -9,6 +9,8 @@ import java.util.List;
 @Entity
 @Table
 public class History {
+    @OneToMany(mappedBy = "history")
+    List<Invoice> invoices = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
@@ -20,9 +22,6 @@ public class History {
     private Date exportDate;
     private Date importDate;
     private Double intoMoney;
-
-    @OneToMany(mappedBy = "history")
-    List<Invoice> invoices = new ArrayList<>();
 
     public Integer getId() {
         return id;

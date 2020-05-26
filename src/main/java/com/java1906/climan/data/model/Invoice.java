@@ -9,6 +9,8 @@ import java.util.List;
 @Entity
 @Table
 public class Invoice {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
+    List<Product> products = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
@@ -22,10 +24,6 @@ public class Invoice {
     private Double price;
     private Date createDate;
     private Date updateDate;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
-    List<Product> products = new ArrayList<>();
-
     @ManyToOne
     @JoinColumn(name = "history_id")
     private History history;

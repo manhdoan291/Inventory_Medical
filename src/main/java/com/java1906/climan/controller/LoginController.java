@@ -1,8 +1,7 @@
 package com.java1906.climan.controller;
 
-import com.java1906.climan.data.model.RoleType;
-import com.java1906.climan.data.model.UserInfo;
 import com.java1906.climan.data.model.User;
+import com.java1906.climan.data.model.UserInfo;
 import com.java1906.climan.dto.AuthenticationRequest;
 import com.java1906.climan.exception.LogicException;
 import com.java1906.climan.services.IUserInfoService;
@@ -32,31 +31,31 @@ public class LoginController {
     private IUserInfoService userInfoService;
 
     @RequestMapping(value = "/login")
-    public String login()  {
+    public String login() {
         return "login";
     }
 
     @RequestMapping("/doLogin")
     @CrossOrigin(origins = "http://localhost:4200")
     @ResponseBody
-    public Object doLogin (
+    public Object doLogin(
             HttpServletRequest request,
             @RequestBody AuthenticationRequest authenticationRequest
-            ) throws LogicException {
-        Optional<User> user = userService.findByUsername(authenticationRequest.getUserName());
-        if (user.isPresent()) {
-            User user1 = user.get();
-            user1.setRole(RoleType.ADMIN);
+    ) throws LogicException {
+        Optional<User> optionalUser = userService.findByUsername(authenticationRequest.getUserName());
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
             String md5Hex = DigestUtils
                     .md5Hex(authenticationRequest.getPassWord()).toUpperCase();
-            if (user1.getPassword().toUpperCase().equals(md5Hex)) {
-                String token = tokenManager.createToken(user1.getUsername(), user1.getRole());
-                request.getSession().setAttribute("role", user1.getRole());
+            if (user.getPassword().toUpperCase().equals(md5Hex)) {
+                String token = tokenManager.createToken(user.getUsername(), user.getRole());
+                request.getSession().setAttribute("role", user.getRole());
                 request.getSession().setAttribute("AuthToken", token);
                 request.getSession().setAttribute("Username", authenticationRequest.getUserName());
-                Optional<UserInfo> userInfo =userInfoService.get(user1.getId());
-                userInfo.get().setToken(token);
-                userInfo.get().setRole(user1.getRole().name());
+                Optional<UserInfo> userInfo = userInfoService.get(user.getId());
+                if (userInfo.get() != null) {
+                    userInfo.get().setToken(token);
+                }
                 return userInfo.get();
             }
             throw new LogicException("Invalid login", HttpStatus.NOT_FOUND);
@@ -70,7 +69,7 @@ public class LoginController {
         session.removeAttribute("role");
         session.removeAttribute("AuthToken");
         session.removeAttribute("Username");
-        return ResponseEntity.ok(" ") ;
+        return ResponseEntity.ok(" ");
     }
 }
 // set session co 3 thu: role la gi, auth cho user da dang nhap hay chua,

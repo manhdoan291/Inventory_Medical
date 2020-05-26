@@ -15,9 +15,8 @@ public class User implements Serializable {
     private String username;
     private String password;
     private Integer activeFlag;
-
-    @Transient
     private RoleType role;
+
     @Transient
     private UserInfo userInfo;
 
@@ -41,7 +40,7 @@ public class User implements Serializable {
     @PrePersist
     @PreUpdate
     public void preSave() {
-        password =  DigestUtils
+        password = DigestUtils
                 .md5Hex(password).toUpperCase();
     }
 
@@ -65,7 +64,7 @@ public class User implements Serializable {
         return activeFlag;
     }
 
-    public void setActiveFlag(Integer   activeFlag) {
+    public void setActiveFlag(Integer activeFlag) {
         this.activeFlag = activeFlag;
     }
 

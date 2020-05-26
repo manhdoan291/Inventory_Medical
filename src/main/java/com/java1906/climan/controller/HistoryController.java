@@ -22,7 +22,7 @@ public class HistoryController {
     @HasRole({"ADMIN"})
     public ResponseEntity<List<History>> showHistoryList() {
         List<History> historyList = (List<History>) historyService.getAll();
-        if (historyList.isEmpty()){
+        if (historyList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(historyList, HttpStatus.OK);
@@ -34,9 +34,9 @@ public class HistoryController {
     public ResponseEntity<Object> getHistoryById(@PathVariable("id") Integer id) {
         System.out.println("Fetching History with id " + id);
         Optional<History> history = historyService.get(id);
-        if (history  == null){
+        if (history == null) {
             return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Object>(history ,HttpStatus.OK);
+        return new ResponseEntity<Object>(history, HttpStatus.OK);
     }
 }
