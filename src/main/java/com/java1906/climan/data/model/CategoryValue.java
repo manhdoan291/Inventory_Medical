@@ -8,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "category_detail")
-public class CategoryDetail {
+public class CategoryValue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
@@ -20,16 +20,16 @@ public class CategoryDetail {
 
     @ManyToMany
     @JsonIgnore
-    private List<Product> products;
+    private List<ProductInfo> products;
     @ManyToOne
-    @JsonIgnore
+//    @JsonIgnore
     private Category category;
 
-    public List<Product> getProducts() {
+    public List<ProductInfo> getProducts() {
         return products;
     }
 
-    public void setProducts(List<Product> products) {
+    public void setProducts(List<ProductInfo> products) {
         this.products = products;
     }
 

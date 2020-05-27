@@ -1,9 +1,9 @@
 package com.java1906.climan.services.impl;
 
-import com.java1906.climan.data.model.CategoryDetail;
-import com.java1906.climan.data.repo.CategoryDetailRepository;
+import com.java1906.climan.data.model.CategoryValue;
+import com.java1906.climan.data.repo.CategoryValueRepository;
 import com.java1906.climan.exception.LogicException;
-import com.java1906.climan.services.ICategoryDetailService;
+import com.java1906.climan.services.ICategoryValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -14,34 +14,34 @@ import java.util.Optional;
 
 @Service
 @Transactional
-public class CategoryDetailServiceImpl implements ICategoryDetailService {
+public class CategoryValueServiceImpl implements ICategoryValueService {
     @Autowired
-    private CategoryDetailRepository categoryDetailRepository;
+    private CategoryValueRepository categoryDetailRepository;
 
     @Override
-    public CategoryDetail get(Integer id) {
+    public CategoryValue get(Integer id) {
         return categoryDetailRepository.findById(id).get();
     }
 
     @Override
-    public List<CategoryDetail> getAll() {
-        return (List<CategoryDetail>) categoryDetailRepository.findAll();
+    public List<CategoryValue> getAll() {
+        return (List<CategoryValue>) categoryDetailRepository.findAll();
     }
 
     @Override
-    public CategoryDetail save(CategoryDetail categoryDetail) {
+    public CategoryValue save(CategoryValue categoryDetail) {
 
 
         return categoryDetailRepository.save(categoryDetail);
     }
 
     @Override
-    public CategoryDetail update(CategoryDetail categoryDetail, Integer id) throws Exception {
-        Optional<CategoryDetail> optionalUpdatingCategoryDetail = categoryDetailRepository.findById(id);
+    public CategoryValue update(CategoryValue categoryDetail, Integer id) throws Exception {
+        Optional<CategoryValue> optionalUpdatingCategoryDetail = categoryDetailRepository.findById(id);
         if (!optionalUpdatingCategoryDetail.isPresent()) {
             throw new LogicException("Category Detail khong ton tai", HttpStatus.NOT_FOUND);
         }
-        CategoryDetail updatingCategoryDetail = optionalUpdatingCategoryDetail.get();
+        CategoryValue updatingCategoryDetail = optionalUpdatingCategoryDetail.get();
         if (null != categoryDetail.getName()) {
             updatingCategoryDetail.setName(categoryDetail.getName());
         }

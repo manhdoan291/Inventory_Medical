@@ -44,7 +44,7 @@ class ClinicManagementApplicationTests {
     private CategoryRepository categoryRepository;
 
     @Autowired
-    private CategoryDetailRepository categoryDetailRepository;
+    private CategoryValueRepository categoryDetailRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -56,17 +56,17 @@ class ClinicManagementApplicationTests {
         category.setDescription("Category A Description");
         category = categoryRepository.save(category);
 
-        CategoryDetail categoryDetail01 = new CategoryDetail();
+        CategoryValue categoryDetail01 = new CategoryValue();
         categoryDetail01.setCategory(category);
         categoryDetail01.setName("Category Value 01");
         categoryDetailRepository.save(categoryDetail01);
 
-        CategoryDetail categoryDetail02 = new CategoryDetail();
+        CategoryValue categoryDetail02 = new CategoryValue();
         categoryDetail02.setCategory(category);
         categoryDetail02.setName("Category Value 02");
         categoryDetailRepository.save(categoryDetail02);
 
-        Product product = new Product();
+        ProductInfo product = new ProductInfo();
 
         product.setId(category.getId());
         product.setName("thuoc dong y");

@@ -10,7 +10,7 @@ import java.util.List;
 @Table
 public class Invoice {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
-    List<Product> products = new ArrayList<>();
+    List<ProductInfo> products = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull

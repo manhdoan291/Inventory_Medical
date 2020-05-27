@@ -1,8 +1,10 @@
 package com.java1906.climan.controller;
 
-import com.java1906.climan.data.model.CategoryDetail;
+import com.java1906.climan.data.model.Category;
+import com.java1906.climan.data.model.CategoryValue;
 import com.java1906.climan.interceptor.HasRole;
-import com.java1906.climan.services.ICategoryDetailService;
+import com.java1906.climan.services.ICategoryService;
+import com.java1906.climan.services.ICategoryValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +13,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class CategoryDetailController {
+public class CategoryValueController {
     @Autowired
-    private ICategoryDetailService categoryDetailService;
+    private ICategoryValueService categoryDetailService;
+
+    @Autowired
+    private ICategoryService   categoryService;
 
     //Get all category
     @GetMapping("/categoryDetail")
     @CrossOrigin(origins = "http://localhost:4200")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<List<CategoryDetail>> showCategoryList() {
-        List<CategoryDetail> categoryDetailList = (List<CategoryDetail>) categoryDetailService.getAll();
+    public ResponseEntity<List<CategoryValue>> showCategoryList() {
+        List<CategoryValue> categoryDetailList = (List<CategoryValue>) categoryDetailService.getAll();
         if (categoryDetailList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -32,7 +37,7 @@ public class CategoryDetailController {
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<Object> getCategoryDetailById(@PathVariable("id") Integer id) {
         System.out.println("Fetching category detail with id " + id);
-        CategoryDetail categoryDetail = categoryDetailService.get(id);
+        CategoryValue categoryDetail = categoryDetailService.get(id);
         if (categoryDetail == null) {
             return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
         }
@@ -42,10 +47,14 @@ public class CategoryDetailController {
     // Create category
     @PostMapping("/categoryDetail")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> createCategoryDetail(@RequestBody CategoryDetail categoryDetail) {
+    public ResponseEntity<String> createCategoryDetail(@RequestBody CategoryValue categoryDetail) {
         if (categoryDetail == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+
+        // lấy đc id của thg cha: category
+        // set id vừa lấy, vào category_id của categoryDetail.
+
         categoryDetailService.save(categoryDetail);
         return new ResponseEntity<>("created!", HttpStatus.CREATED);
     }
@@ -54,9 +63,9 @@ public class CategoryDetailController {
     @PutMapping("/categoryDetail/{id}")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<String> updateCategoryDetail(@PathVariable("id") Integer id,
-                                                       @RequestBody CategoryDetail categoryDetail) {
+                                                       @RequestBody CategoryValue categoryDetail) {
         System.out.println("Updating Category Detail " + id);
-        CategoryDetail currentCategoryDetail = categoryDetailService.get(id);
+        CategoryValue currentCategoryDetail = categoryDetailService.get(id);
         if (currentCategoryDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -67,8 +76,8 @@ public class CategoryDetailController {
     // Delete category detail
     @DeleteMapping("/categoryDetail/{id}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<CategoryDetail> deleteCategoryDetail(@PathVariable("id") Integer id) {
-        CategoryDetail categoryDetail = categoryDetailService.get(id);
+    public ResponseEntity<CategoryValue> deleteCategoryDetail(@PathVariable("id") Integer id) {
+        CategoryValue categoryDetail = categoryDetailService.get(id);
         if (categoryDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

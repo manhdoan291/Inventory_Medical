@@ -1,18 +1,18 @@
 package com.java1906.climan.services;
 
 
-import com.java1906.climan.data.model.Product;
+import com.java1906.climan.data.model.ProductInfo;
 
 import java.util.List;
 
 public interface IProductService {
-    public Product get(long id);
+    public ProductInfo get(long id);
 
-    public List<Product> getAll();
+    public List<ProductInfo> getAll();
 
-    public Product save(Product product);
+    public ProductInfo save(ProductInfo product);
 
-    public Product update(Product product, long id) throws Exception;
+    public ProductInfo update(ProductInfo product, long id) throws Exception;
 
     public void delete(long id);
 }

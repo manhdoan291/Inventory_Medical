@@ -20,7 +20,7 @@ public class Category {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<CategoryDetail> categoryDetailList;
+    private List<CategoryValue> categoryValueList;
 
 
     public Integer getId() {
@@ -63,11 +63,11 @@ public class Category {
         this.updateDate = updateDate;
     }
 
-    public List<CategoryDetail> getCategoryDetailList() {
-        return categoryDetailList;
+    public List<CategoryValue> getCategoryValueList() {
+        return categoryValueList;
     }
 
-    public void setCategoryDetailList(List<CategoryDetail> categoryDetailList) {
-        this.categoryDetailList = categoryDetailList;
+    public void setCategoryValueList(List<CategoryValue> categoryValueList) {
+        this.categoryValueList = categoryValueList;
     }
 }

@@ -1,5 +1,7 @@
 package com.java1906.climan.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -7,27 +9,32 @@ import java.util.List;
 
 @Entity
 @Table(name = "product")
-public class Product {
+public class ProductInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
-    private long id;
+    private Integer id;
     private String name;
     private String description;
     private String img_url;
     private Integer activeFlag;
     private Date createDate;
     private Date updateDate;
+    private long weight;
+
+    @ManyToOne
+    @JsonIgnore
+    private Unit unit;
 
     @ManyToMany
-    private List<CategoryDetail> categoryDetails;
+    private List<CategoryValue> categoryDetails;
     @ManyToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
-    public Product(String name, String description, String img_url, int activeFlag,
-                   Date createDate, Date updateDate) {
+    public ProductInfo(String name, String description, String img_url, int activeFlag,
+                       Date createDate, Date updateDate) {
         super();
         this.name = name;
         this.description = description;
@@ -37,14 +44,14 @@ public class Product {
         this.updateDate = updateDate;
     }
 
-    public Product() {
+    public ProductInfo() {
     }
 
-    public List<CategoryDetail> getCategoryDetails() {
+    public List<CategoryValue> getCategoryDetails() {
         return categoryDetails;
     }
 
-    public void setCategoryDetails(List<CategoryDetail> categoryDetails) {
+    public void setCategoryDetails(List<CategoryValue> categoryDetails) {
         this.categoryDetails = categoryDetails;
     }
 
@@ -56,11 +63,11 @@ public class Product {
         this.invoice = invoice;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -112,4 +119,19 @@ public class Product {
         this.updateDate = updateDate;
     }
 
+    public long getWeight() {
+        return weight;
+    }
+
+    public void setWeight(long weight) {
+        this.weight = weight;
+    }
+
+    public Unit getUnit() {
+        return unit;
+    }
+
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
 }

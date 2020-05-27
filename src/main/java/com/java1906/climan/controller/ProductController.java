@@ -1,7 +1,7 @@
 package com.java1906.climan.controller;
 
-import com.java1906.climan.data.model.Product;
-import com.java1906.climan.data.repo.CategoryDetailRepository;
+import com.java1906.climan.data.model.ProductInfo;
+import com.java1906.climan.data.repo.CategoryValueRepository;
 import com.java1906.climan.interceptor.HasRole;
 import com.java1906.climan.services.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +23,13 @@ public class ProductController {
     private IProductService productService;
 
     @Autowired
-    private CategoryDetailRepository categoryDetailRepository;
+    private CategoryValueRepository categoryDetailRepository;
 
     //Get all product
     @GetMapping("/product")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<List<Product>> showProductList() {
-        List<Product> productList = productService.getAll();
+    public ResponseEntity<List<ProductInfo>> showProductList() {
+        List<ProductInfo> productList = productService.getAll();
         if (productList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
@@ -41,7 +41,7 @@ public class ProductController {
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<Object> getProductById(@PathVariable("id") Long id) {
         System.out.println("Fetching product with id " + id);
-        Product product = productService.get(id);
+        ProductInfo product = productService.get(id);
         if (product == null) {
             return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
         }
@@ -51,7 +51,7 @@ public class ProductController {
     // Create product
     @PostMapping("/product")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<String> createProduct(@RequestBody Product product) {
+    public ResponseEntity<String> createProduct(@RequestBody ProductInfo product) {
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -65,9 +65,9 @@ public class ProductController {
     @PutMapping("/product/{id}")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<String> updateProduct(@PathVariable("id") Long id,
-                                                @RequestBody Product product) {
+                                                @RequestBody ProductInfo product) {
         System.out.println("Updating product " + id);
-        Product currentProduct = productService.get(id);
+        ProductInfo currentProduct = productService.get(id);
         if (currentProduct == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -78,8 +78,8 @@ public class ProductController {
     // Delete product
     @DeleteMapping("/product/{id}")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<Product> deleteProduct(@PathVariable("id") Long id) {
-        Product product = productService.get(id);
+    public ResponseEntity<ProductInfo> deleteProduct(@PathVariable("id") Long id) {
+        ProductInfo product = productService.get(id);
         if (product == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
