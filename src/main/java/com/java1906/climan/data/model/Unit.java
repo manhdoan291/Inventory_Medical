@@ -10,11 +10,7 @@ public class Unit {
     private Integer id;
     private String name;
 
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<ProductInfo> productInfoList;
+
 
     public Integer getId() {
         return id;
@@ -32,11 +28,4 @@ public class Unit {
         this.name = name;
     }
 
-    public List<ProductInfo> getProductInfoList() {
-        return productInfoList;
-    }
-
-    public void setProductInfoList(List<ProductInfo> productInfoList) {
-        this.productInfoList = productInfoList;
-    }
 }

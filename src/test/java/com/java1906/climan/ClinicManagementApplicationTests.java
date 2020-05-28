@@ -73,7 +73,7 @@ class ClinicManagementApplicationTests {
         product.setDescription("chua benh");
         product.setImg_url("huy.jpg");
         product.setActiveFlag(1);
-        product.setCategoryDetails(Arrays.asList(categoryDetail01, categoryDetail02));
+        product.setCategoryValue(Arrays.asList(categoryDetail01, categoryDetail02));
         productRepository.save(product);
     }
 

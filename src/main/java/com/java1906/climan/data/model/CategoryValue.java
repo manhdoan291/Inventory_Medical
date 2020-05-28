@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "category_detail")
+@Table(name = "category_value")
 public class CategoryValue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,8 +21,9 @@ public class CategoryValue {
     @ManyToMany
     @JsonIgnore
     private List<ProductInfo> products;
+
     @ManyToOne
-//    @JsonIgnore
+    @JsonIgnore
     private Category category;
 
     public List<ProductInfo> getProducts() {
