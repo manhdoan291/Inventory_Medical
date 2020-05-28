@@ -1,14 +1,12 @@
 package com.java1906.climan.data.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "product")
+@Table(name = "product_info")
 public class ProductInfo {
 
     @Id
@@ -21,14 +19,9 @@ public class ProductInfo {
     private Integer activeFlag;
     private Date createDate;
     private Date updateDate;
-    private long weight;
-
-    @ManyToOne
-    @JsonIgnore
-    private Unit unit;
 
     @ManyToMany
-    private List<CategoryValue> categoryDetails;
+    private List<CategoryValue> categoryValue;
     @ManyToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
@@ -47,12 +40,12 @@ public class ProductInfo {
     public ProductInfo() {
     }
 
-    public List<CategoryValue> getCategoryDetails() {
-        return categoryDetails;
+    public List<CategoryValue> getCategoryValue() {
+        return categoryValue;
     }
 
-    public void setCategoryDetails(List<CategoryValue> categoryDetails) {
-        this.categoryDetails = categoryDetails;
+    public void setCategoryValue(List<CategoryValue> categoryValue) {
+        this.categoryValue = categoryValue;
     }
 
     public Invoice getInvoice() {
@@ -119,19 +112,5 @@ public class ProductInfo {
         this.updateDate = updateDate;
     }
 
-    public long getWeight() {
-        return weight;
-    }
 
-    public void setWeight(long weight) {
-        this.weight = weight;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
 }
