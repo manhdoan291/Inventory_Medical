@@ -9,8 +9,6 @@ import java.util.List;
 @Entity
 @Table
 public class Invoice {
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
-    List<ProductInfo> products = new ArrayList<>();
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
@@ -28,6 +26,27 @@ public class Invoice {
     @JoinColumn(name = "history_id")
     private History history;
 
+    @ManyToMany
+    @JoinTable(name = "productInfo_Invoice",
+            joinColumns = @JoinColumn(name = "Invoice_id"),
+            inverseJoinColumns = @JoinColumn(name = "productInfo_id"))
+    private List<ProductInfo> productInfos;
+
+    public List<ProductInfo> getProductInfos() {
+        return productInfos;
+    }
+
+    public void setProductInfos(List<ProductInfo> productInfos) {
+        this.productInfos = productInfos;
+    }
+
+    public History getHistory() {
+        return history;
+    }
+
+    public void setHistory(History history) {
+        this.history = history;
+    }
 
     public Integer getId() {
         return id;

@@ -14,14 +14,16 @@ public class Category {
     private String description;
     private Date createDate;
     private Date updateDate;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    private  List<CategoryValue> categoryValue ;
 
-    // @OneToMany(mappedBy = "category")
-    @OneToMany(
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<CategoryValue> categoryValueList;
+    public List<CategoryValue> getCategoryValue() {
+        return categoryValue;
+    }
 
+    public void setCategoryValue(List<CategoryValue> categoryValue) {
+        this.categoryValue = categoryValue;
+    }
 
     public Integer getId() {
         return id;
@@ -63,11 +65,4 @@ public class Category {
         this.updateDate = updateDate;
     }
 
-    public List<CategoryValue> getCategoryValueList() {
-        return categoryValueList;
-    }
-
-    public void setCategoryValueList(List<CategoryValue> categoryValueList) {
-        this.categoryValueList = categoryValueList;
-    }
 }

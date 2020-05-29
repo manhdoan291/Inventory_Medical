@@ -14,4 +14,5 @@ public interface ICategoryService {
     public Category update(Category category, Integer id) throws Exception;
 
     public void delete(Integer id);
+
 }

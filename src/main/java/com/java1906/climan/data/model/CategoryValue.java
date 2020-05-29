@@ -18,20 +18,17 @@ public class CategoryValue {
     private Date createDate;
     private Date updateDate;
 
-    @ManyToMany
-    @JsonIgnore
-    private List<ProductInfo> products;
-
     @ManyToOne
-    @JsonIgnore
+    @JoinColumn(name ="category_id")
     private Category category;
 
-    public List<ProductInfo> getProducts() {
-        return products;
-    }
+    @ManyToMany
+    @JoinTable(name = "productInfo_categoryValue",
+            joinColumns = @JoinColumn(name = "categoryValue_id"),
+            inverseJoinColumns = @JoinColumn(name = "productInfo_id"))
+    private List<ProductInfo> productInfos;
 
-    public void setProducts(List<ProductInfo> products) {
-        this.products = products;
+    public CategoryValue() {
     }
 
     public Category getCategory() {
@@ -89,4 +86,12 @@ public class CategoryValue {
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
     }
+    public List<ProductInfo> getProductInfos() {
+        return productInfos;
+    }
+
+    public void setProductInfos(List<ProductInfo> productInfos) {
+        this.productInfos = productInfos;
+    }
+
 }
