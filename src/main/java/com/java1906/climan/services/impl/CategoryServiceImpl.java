@@ -19,10 +19,7 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Override
-    public Category get(Integer id) {
-        return categoryRepository.findById(id).get();
-    }
+
 
     @Override
     public List<Category> getAll() {
@@ -30,23 +27,28 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
+    public Optional<Category> findById(Integer id) {
+        return categoryRepository.findById(id);
+    }
+
+    @Override
     public Category save(Category category) {
         return categoryRepository.save(category);
     }
 
-    @Override
-    public Category update(Category category, Integer id) throws Exception {
-        Optional<Category> optionalUpdatingCategory = categoryRepository.findById(id);
-        if (!optionalUpdatingCategory.isPresent()) {
-            throw new LogicException("Category khong ton tai", HttpStatus.NOT_FOUND);
-        }
-        Category updatingCategory = optionalUpdatingCategory.get();
-        if (null != category.getName())
-            updatingCategory.setName(category.getName());
-        if (null != category.getDescription())
-            updatingCategory.setDescription(category.getDescription());
-        return categoryRepository.save(updatingCategory);
-    }
+//    @Override
+//    public Category update(Category category, Integer id) throws Exception {
+//        Optional<Category> optionalUpdatingCategory = categoryRepository.findById(id);
+//        if (!optionalUpdatingCategory.isPresent()) {
+//            throw new LogicException("Category khong ton tai", HttpStatus.NOT_FOUND);
+//        }
+//        Category updatingCategory = optionalUpdatingCategory.get();
+//        if (null != category.getName())
+//            updatingCategory.setName(category.getName());
+//        if (null != category.getDescription())
+//            updatingCategory.setDescription(category.getDescription());
+//        return categoryRepository.save(updatingCategory);
+//    }
 
     @Override
     public void delete(Integer id) {

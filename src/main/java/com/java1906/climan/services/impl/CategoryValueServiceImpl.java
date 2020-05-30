@@ -16,45 +16,57 @@ import java.util.Optional;
 @Transactional
 public class CategoryValueServiceImpl implements ICategoryValueService {
     @Autowired
-    private CategoryValueRepository categoryDetailRepository;
+    private CategoryValueRepository categoryValueRepository;
+
 
     @Override
-    public CategoryValue get(Integer id) {
-        return categoryDetailRepository.findById(id).get();
+    public List<CategoryValue> findAll() {
+        return categoryValueRepository.findAll();
     }
 
     @Override
-    public List<CategoryValue> getAll() {
-        return (List<CategoryValue>) categoryDetailRepository.findAll();
+    public Optional<CategoryValue> findById(Integer id) {
+        return categoryValueRepository.findById(id);
     }
+
+
 
     @Override
-    public CategoryValue save(CategoryValue categoryDetail) {
-
-
-        return categoryDetailRepository.save(categoryDetail);
+    public void save(CategoryValue categoryValue) {
+         categoryValueRepository.save(categoryValue);
     }
+//
+//    @Override
+//    public CategoryValue update(CategoryValue categoryValue, Integer id) throws Exception {
+//        Optional<CategoryValue> updatingCategoryValue = categoryValueRepository.findById(id);
+//        if (!updatingCategoryValue.isPresent()) {
+//            throw new LogicException("Category Value khong ton tai", HttpStatus.NOT_FOUND);
+//        }
+//        CategoryValue updatingCategoryDetail = updatingCategoryValue.get();
+//        if (null != categoryValue.getName()) {
+//            updatingCategoryDetail.setName(categoryValue.getName());
+//        }
+//        if (null != categoryValue.getDescription()) {
+//            updatingCategoryDetail.setDescription(categoryValue.getDescription());
+//        }
+//
+//        return categoryValueRepository.save(updatingCategoryDetail);
+//
+//    }
 
-    @Override
-    public CategoryValue update(CategoryValue categoryDetail, Integer id) throws Exception {
-        Optional<CategoryValue> optionalUpdatingCategoryDetail = categoryDetailRepository.findById(id);
-        if (!optionalUpdatingCategoryDetail.isPresent()) {
-            throw new LogicException("Category Detail khong ton tai", HttpStatus.NOT_FOUND);
-        }
-        CategoryValue updatingCategoryDetail = optionalUpdatingCategoryDetail.get();
-        if (null != categoryDetail.getName()) {
-            updatingCategoryDetail.setName(categoryDetail.getName());
-        }
-        if (null != categoryDetail.getDescription()) {
-            updatingCategoryDetail.setDescription(categoryDetail.getDescription());
-        }
-
-        return categoryDetailRepository.save(updatingCategoryDetail);
-
-    }
 
     @Override
     public void delete(Integer id) {
-        categoryDetailRepository.deleteById(id);
+        categoryValueRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CategoryValue> findAllByCategory(Integer id) {
+        return categoryValueRepository.findAllByCategory_id(id);
+    }
+
+    @Override
+    public List<CategoryValue> findAllByNameContatining(String name) {
+        return null;
     }
 }

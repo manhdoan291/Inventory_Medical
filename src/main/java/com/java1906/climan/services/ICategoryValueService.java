@@ -4,16 +4,15 @@ package com.java1906.climan.services;
 import com.java1906.climan.data.model.CategoryValue;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICategoryValueService {
 
-    public CategoryValue get(Integer id);
+    Iterable<CategoryValue> findAll();
+    Optional<CategoryValue> findById(Integer id);
+    void save(CategoryValue categoryValue);
+    void delete(Integer id);
+    List<CategoryValue> findAllByCategory(Integer id);
+    List<CategoryValue> findAllByNameContatining(String name); // phần này tìm kiếm
 
-    public List<CategoryValue> getAll();
-
-    public CategoryValue save(CategoryValue categoryDetail);
-
-    public CategoryValue update(CategoryValue categoryDetail, Integer id) throws Exception;
-
-    public void delete(Integer id);
 }

@@ -31,6 +31,16 @@ public class CategoryValue {
     public CategoryValue() {
     }
 
+    public CategoryValue(String name, String description, Integer activeFlag, Date createDate, Date updateDate, Category category, List<ProductInfo> productInfos) {
+        this.name = name;
+        this.description = description;
+        this.activeFlag = activeFlag;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+        this.category = category;
+        this.productInfos = productInfos;
+    }
+
     public Category getCategory() {
         return category;
     }

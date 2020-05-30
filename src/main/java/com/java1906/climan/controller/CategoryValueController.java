@@ -10,52 +10,63 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/categoryValue")
 public class CategoryValueController {
     @Autowired
-    private ICategoryValueService categoryDetailService;
+    private ICategoryValueService categoryValueService;
 
     @Autowired
     private ICategoryService   categoryService;
 
     //Get all category
-    @GetMapping("/categoryDetail")
+    @GetMapping("")
     @CrossOrigin(origins = "http://localhost:4200")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<List<CategoryValue>> showCategoryList() {
-        List<CategoryValue> categoryDetailList = (List<CategoryValue>) categoryDetailService.getAll();
-        if (categoryDetailList.isEmpty()) {
+        List<CategoryValue> categoryValueList = (List<CategoryValue>) categoryValueService.findAll();
+        if (categoryValueList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(categoryDetailList, HttpStatus.OK);
+        return new ResponseEntity<>(categoryValueList, HttpStatus.OK);
+    }
+
+    //trả cho  sever list của  category
+    @GetMapping("/category/{id}")
+    public ResponseEntity<List<CategoryValue>> listCategoryValueByCategory(@PathVariable Integer id){
+        List<CategoryValue> categoryValueList = categoryValueService.findAllByCategory(id);
+        return new ResponseEntity<List<CategoryValue>>(categoryValueList,HttpStatus.OK);
     }
 
     //Get category by id
-    @GetMapping("/categoryDetail/{id}")
+    @GetMapping("/{id}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<Object> getCategoryDetailById(@PathVariable("id") Integer id) {
-        System.out.println("Fetching category detail with id " + id);
-        CategoryValue categoryDetail = categoryDetailService.get(id);
-        if (categoryDetail == null) {
+    public ResponseEntity<Object> getCategoryValueById(@PathVariable("id") Integer id) {
+        System.out.println("Fetching category value with id " + id);
+        Optional<CategoryValue> categoryValue = categoryValueService.findById(id);
+        if (categoryValue == null) {
             return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Object>(categoryDetail, HttpStatus.OK);
+        return new ResponseEntity<Object>(categoryValue, HttpStatus.OK);
     }
 
     // Create category
-    @PostMapping("/categoryDetail")
+    @PostMapping("/")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> createCategoryDetail(@RequestBody CategoryValue categoryDetail) {
-        if (categoryDetail == null) {
+    public ResponseEntity<String> createCategoryValue(@RequestBody CategoryValue categoryValue) {
+        List<Category> categories =new ArrayList<>();
+        if (categoryValue == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
         // lấy đc id của thg cha: category
         // set id vừa lấy, vào category_id của categoryDetail.
 
-        categoryDetailService.save(categoryDetail);
+        categoryValueService.save(categoryValue);
         return new ResponseEntity<>("created!", HttpStatus.CREATED);
     }
 
@@ -65,11 +76,11 @@ public class CategoryValueController {
     public ResponseEntity<String> updateCategoryDetail(@PathVariable("id") Integer id,
                                                        @RequestBody CategoryValue categoryDetail) {
         System.out.println("Updating Category Detail " + id);
-        CategoryValue currentCategoryDetail = categoryDetailService.get(id);
+        Optional<CategoryValue> currentCategoryDetail = categoryValueService.findById(id);
         if (currentCategoryDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        categoryDetailService.save(categoryDetail);
+        categoryValueService.save(categoryDetail);
         return new ResponseEntity<>("Updated!", HttpStatus.OK);
     }
 
@@ -77,11 +88,11 @@ public class CategoryValueController {
     @DeleteMapping("/categoryDetail/{id}")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<CategoryValue> deleteCategoryDetail(@PathVariable("id") Integer id) {
-        CategoryValue categoryDetail = categoryDetailService.get(id);
+        Optional<CategoryValue> categoryDetail = categoryValueService.findById(id);
         if (categoryDetail == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        categoryDetailService.delete(id);
+        categoryValueService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
