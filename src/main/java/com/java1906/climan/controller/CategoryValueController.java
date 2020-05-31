@@ -27,7 +27,7 @@ public class CategoryValueController {
     @GetMapping("")
     @CrossOrigin(origins = "http://localhost:4200")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<List<CategoryValue>> showCategoryList() {
+    public ResponseEntity<List<CategoryValue>> showCategoryValueList() {
         List<CategoryValue> categoryValueList = (List<CategoryValue>) categoryValueService.findAll();
         if (categoryValueList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -39,60 +39,48 @@ public class CategoryValueController {
     @GetMapping("/category/{id}")
     public ResponseEntity<List<CategoryValue>> listCategoryValueByCategory(@PathVariable Integer id){
         List<CategoryValue> categoryValueList = categoryValueService.findAllByCategory(id);
+        if(categoryValueList.isEmpty()){
+            return new ResponseEntity<List<CategoryValue>>(categoryValueList,HttpStatus.NO_CONTENT);
+        }
         return new ResponseEntity<List<CategoryValue>>(categoryValueList,HttpStatus.OK);
     }
 
-    //Get category by id
-    @GetMapping("/{id}")
+
+    // Create categoryvalue
+    @PostMapping("/{id}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<Object> getCategoryValueById(@PathVariable("id") Integer id) {
-        System.out.println("Fetching category value with id " + id);
-        Optional<CategoryValue> categoryValue = categoryValueService.findById(id);
-        if (categoryValue == null) {
-            return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> createCategoryValue(@PathVariable("id") Integer id ,@RequestBody CategoryValue categoryValue) {
+        Optional<CategoryValue> categoryValue1 = categoryValueService.findById(id);
+        if (!categoryValue1.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<Object>(categoryValue, HttpStatus.OK);
-    }
-
-    // Create category
-    @PostMapping("/")
-    @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> createCategoryValue(@RequestBody CategoryValue categoryValue) {
-        List<Category> categories =new ArrayList<>();
-        if (categoryValue == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        // lấy đc id của thg cha: category
-        // set id vừa lấy, vào category_id của categoryDetail.
-
         categoryValueService.save(categoryValue);
         return new ResponseEntity<>("created!", HttpStatus.CREATED);
     }
 
     // Update category detail
-    @PutMapping("/categoryDetail/{id}")
+    @PutMapping("/{id}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> updateCategoryDetail(@PathVariable("id") Integer id,
-                                                       @RequestBody CategoryValue categoryDetail) {
-        System.out.println("Updating Category Detail " + id);
-        Optional<CategoryValue> currentCategoryDetail = categoryValueService.findById(id);
-        if (currentCategoryDetail == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<CategoryValue> updateCategoryDetail(@PathVariable("id") Integer id,
+                                                       @RequestBody CategoryValue categoryValue) {
+        System.out.println("Updating Category Value " + id);
+        Optional<CategoryValue> categoryValue1 = categoryValueService.findById(id);
+        if (!categoryValue1.isPresent()) {
+            return new ResponseEntity<CategoryValue>(HttpStatus.NOT_FOUND);
         }
-        categoryValueService.save(categoryDetail);
-        return new ResponseEntity<>("Updated!", HttpStatus.OK);
+        categoryValueService.save(categoryValue);
+        return new ResponseEntity<CategoryValue>(categoryValue, HttpStatus.OK);
     }
 
-    // Delete category detail
+    // Delete category value
     @DeleteMapping("/categoryDetail/{id}")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<CategoryValue> deleteCategoryDetail(@PathVariable("id") Integer id) {
-        Optional<CategoryValue> categoryDetail = categoryValueService.findById(id);
-        if (categoryDetail == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        Optional<CategoryValue> categoryValue = categoryValueService.findById(id);
+        if (!categoryValue.isPresent()) {
+            return new ResponseEntity<CategoryValue>(HttpStatus.NOT_FOUND);
         }
         categoryValueService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<CategoryValue>(HttpStatus.NO_CONTENT);
     }
 }

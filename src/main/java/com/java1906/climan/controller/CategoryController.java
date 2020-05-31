@@ -56,15 +56,19 @@ public class CategoryController {
     // Update category
     @PutMapping("/category/{id}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> updateCategory(@PathVariable("id") Integer id,
+    public ResponseEntity<Category> updateCategory(@PathVariable("id") Integer id,
                                                  @RequestBody Category category) {
         System.out.println("Updating Category " + id);
         Optional<Category> categorys = categoryService.findById(id);
-        if (categorys == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (!categorys.isPresent()) {
+            return new ResponseEntity<Category>(HttpStatus.NOT_FOUND);
         }
+        categorys.get().setName(category.getName());
+        categorys.get().setDescription(category.getDescription());
+        categorys.get().setCreateDate(category.getCreateDate());
+        categorys.get().setUpdateDate(category.getUpdateDate());
         categoryService.save(category);
-        return new ResponseEntity<>("Updated!", HttpStatus.OK);
+        return new ResponseEntity<Category>(category, HttpStatus.OK);
     }
 
     // Delete category
@@ -72,7 +76,7 @@ public class CategoryController {
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) {
         Optional<Category> category = categoryService.findById(id);
-        if (category == null) {
+        if (!category.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         categoryService.delete(id);

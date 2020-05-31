@@ -35,25 +35,6 @@ public class CategoryValueServiceImpl implements ICategoryValueService {
     public void save(CategoryValue categoryValue) {
          categoryValueRepository.save(categoryValue);
     }
-//
-//    @Override
-//    public CategoryValue update(CategoryValue categoryValue, Integer id) throws Exception {
-//        Optional<CategoryValue> updatingCategoryValue = categoryValueRepository.findById(id);
-//        if (!updatingCategoryValue.isPresent()) {
-//            throw new LogicException("Category Value khong ton tai", HttpStatus.NOT_FOUND);
-//        }
-//        CategoryValue updatingCategoryDetail = updatingCategoryValue.get();
-//        if (null != categoryValue.getName()) {
-//            updatingCategoryDetail.setName(categoryValue.getName());
-//        }
-//        if (null != categoryValue.getDescription()) {
-//            updatingCategoryDetail.setDescription(categoryValue.getDescription());
-//        }
-//
-//        return categoryValueRepository.save(updatingCategoryDetail);
-//
-//    }
-
 
     @Override
     public void delete(Integer id) {

@@ -36,20 +36,10 @@ public class CategoryServiceImpl implements ICategoryService {
         return categoryRepository.save(category);
     }
 
-//    @Override
-//    public Category update(Category category, Integer id) throws Exception {
-//        Optional<Category> optionalUpdatingCategory = categoryRepository.findById(id);
-//        if (!optionalUpdatingCategory.isPresent()) {
-//            throw new LogicException("Category khong ton tai", HttpStatus.NOT_FOUND);
-//        }
-//        Category updatingCategory = optionalUpdatingCategory.get();
-//        if (null != category.getName())
-//            updatingCategory.setName(category.getName());
-//        if (null != category.getDescription())
-//            updatingCategory.setDescription(category.getDescription());
-//        return categoryRepository.save(updatingCategory);
-//    }
-
+    @Override
+    public void update(Category category) throws Exception {
+categoryRepository.save(category);
+    }
     @Override
     public void delete(Integer id) {
         categoryRepository.deleteById(id);

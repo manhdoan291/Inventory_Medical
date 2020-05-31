@@ -17,6 +17,9 @@ public class Category {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private  List<CategoryValue> categoryValue ;
 
+    public Category() {
+    }
+
     public List<CategoryValue> getCategoryValue() {
         return categoryValue;
     }
