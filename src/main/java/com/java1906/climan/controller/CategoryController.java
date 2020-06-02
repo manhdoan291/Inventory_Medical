@@ -26,7 +26,7 @@ public class CategoryController {
     public ResponseEntity<List<Category>> showCategoryList() {
         List<Category> categoryList = (List<Category>) categoryService.getAll();
         if (categoryList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(categoryList,HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(categoryList, HttpStatus.OK);
     }
@@ -50,7 +50,7 @@ public class CategoryController {
         categoryService.save(category);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponentsBuilder.path("/categories/{id}").buildAndExpand(category.getId()).toUri());
-        return new ResponseEntity<String>(headers,HttpStatus.CREATED);
+        return new ResponseEntity<String>("ok",HttpStatus.CREATED);
     }
 
     // Update category
@@ -67,19 +67,18 @@ public class CategoryController {
         categorys.get().setDescription(category.getDescription());
         categorys.get().setCreateDate(category.getCreateDate());
         categorys.get().setUpdateDate(category.getUpdateDate());
-        categoryService.save(category);
         return new ResponseEntity<Category>(category, HttpStatus.OK);
     }
 
     // Delete category
     @DeleteMapping("/category/{id}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) {
+    public ResponseEntity<String> deleteCategory(@PathVariable("id") Integer id) {
         Optional<Category> category = categoryService.findById(id);
         if (!category.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         categoryService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<String>("delete_ok",HttpStatus.OK);
     }
 }

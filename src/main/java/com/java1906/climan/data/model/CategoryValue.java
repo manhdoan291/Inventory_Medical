@@ -20,6 +20,7 @@ public class CategoryValue {
 
     @ManyToOne
     @JoinColumn(name ="category_id")
+    @JsonIgnore
     private Category category;
 
     @ManyToMany

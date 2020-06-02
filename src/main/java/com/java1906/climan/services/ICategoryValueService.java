@@ -12,7 +12,7 @@ public interface ICategoryValueService {
     Optional<CategoryValue> findById(Integer id);
     void save(CategoryValue categoryValue);
     void delete(Integer id);
-    List<CategoryValue> findAllByCategory(Integer id);
+    Optional<CategoryValue> findByCategory(Integer categoryId);
     List<CategoryValue> findAllByNameContatining(String name); // phần này tìm kiếm
 
 }
