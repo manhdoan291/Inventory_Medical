@@ -6,9 +6,7 @@ import com.java1906.climan.services.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,22 +19,32 @@ public class InvoiceController {
     @GetMapping("/invoice")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<List<Invoice>> showInvoiceList() {
-        List<Invoice> invoiceList = (List<Invoice>) invoiceService.getAll();
+        List<Invoice> invoiceList = (List<Invoice>) invoiceService.finAllInvoice();
         if (invoiceList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(invoiceList, HttpStatus.OK);
     }
 
-    //Get Invoice by id
-    @GetMapping("/invoice/{id}")
+  // create invoice
+    @PostMapping("/invoice")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<Object> getInvoiceById(@PathVariable("id") Integer id) {
-        System.out.println("Fetching Invoice with id " + id);
-        Optional<Invoice> invoice = invoiceService.get(id);
-        if (invoice == null) {
-            return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Object>(invoice, HttpStatus.OK);
+    public ResponseEntity<Invoice> createInvoce(@RequestBody Invoice invoice){
+        Invoice inv = invoiceService.saveInvoice(invoice);
+        return new ResponseEntity<>(inv,HttpStatus.CREATED);
     }
+    //update invoice
+    @PutMapping("/invoice")
+    @HasRole({"STAFF", "ADMIN", "DOCTOR"})
+    public ResponseEntity<Invoice> updateInvoide(@RequestBody Invoice invoice){
+        Invoice inv = invoiceService.updateInvoice(invoice);
+        return new ResponseEntity<>(inv,HttpStatus.CREATED);
+    }
+    //
+    @DeleteMapping("/student")
+    public ResponseEntity<String> deleteInvoice(@RequestParam Integer invoiceId){
+        String message = invoiceService.deleteInvoice(invoiceId);
+        return new ResponseEntity<>(message,HttpStatus.OK);
+    }
+
 }

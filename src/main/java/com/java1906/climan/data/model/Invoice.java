@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table
@@ -30,13 +31,14 @@ public class Invoice {
     @JoinTable(name = "productInfo_Invoice",
             joinColumns = @JoinColumn(name = "Invoice_id"),
             inverseJoinColumns = @JoinColumn(name = "productInfo_id"))
-    private List<ProductInfo> productInfos;
+    private Set<ProductInfo> productInfos;
 
-    public List<ProductInfo> getProductInfos() {
+
+    public Set<ProductInfo> getProductInfos() {
         return productInfos;
     }
 
-    public void setProductInfos(List<ProductInfo> productInfos) {
+    public void setProductInfos(Set<ProductInfo> productInfos) {
         this.productInfos = productInfos;
     }
 

@@ -24,61 +24,36 @@ public class CategoryController {
     @CrossOrigin(origins = "http://localhost:4200")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<List<Category>> showCategoryList() {
-        List<Category> categoryList = (List<Category>) categoryService.getAll();
-        if (categoryList.isEmpty()) {
-            return new ResponseEntity<>(categoryList,HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(categoryList, HttpStatus.OK);
+         return new ResponseEntity<>(categoryService.getAll(),HttpStatus.OK);
+
     }
 
     //Get category by id
-    @GetMapping("/category/{id}")
+    @GetMapping("/category/{categoryId}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<Object> getCategoryById(@PathVariable("id") int id) {
-        System.out.println("Fetching category with id " + id);
-        Optional<Category> category = categoryService.findById(id);
-        if (category == null) {
-            return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Object>(category, HttpStatus.OK);
+    public ResponseEntity<Object> getCategoryById(@PathVariable("categoryId") int categoryId) {
+    return new ResponseEntity<>(categoryService.findById(categoryId),HttpStatus.OK);
     }
 
     // Create category
     @PostMapping("/category")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> createCategory(@RequestBody Category category , UriComponentsBuilder uriComponentsBuilder) {
-        categoryService.save(category);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(uriComponentsBuilder.path("/categories/{id}").buildAndExpand(category.getId()).toUri());
-        return new ResponseEntity<String>("ok",HttpStatus.CREATED);
-    }
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
 
+        return new ResponseEntity<Category>(categoryService.save(category),HttpStatus.CREATED);
+    }
     // Update category
-    @PutMapping("/category/{id}")
+    @PutMapping("/category/{categoryId}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<Category> updateCategory(@PathVariable("id") Integer id,
-                                                 @RequestBody Category category) {
-        System.out.println("Updating Category " + id);
-        Optional<Category> categorys = categoryService.findById(id);
-        if (!categorys.isPresent()) {
-            return new ResponseEntity<Category>(HttpStatus.NOT_FOUND);
-        }
-        categorys.get().setName(category.getName());
-        categorys.get().setDescription(category.getDescription());
-        categorys.get().setCreateDate(category.getCreateDate());
-        categorys.get().setUpdateDate(category.getUpdateDate());
-        return new ResponseEntity<Category>(category, HttpStatus.OK);
+    public ResponseEntity<Category> updateCategory(@PathVariable("categoryId") Integer categoryId,
+                                                 @RequestBody Category category) throws Exception {
+            return new ResponseEntity<Category>(categoryService.update(categoryId,category),HttpStatus.NOT_FOUND);
     }
-
     // Delete category
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping("/category/{categoryId}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> deleteCategory(@PathVariable("id") Integer id) {
-        Optional<Category> category = categoryService.findById(id);
-        if (!category.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        categoryService.delete(id);
+    public ResponseEntity<String> deleteCategory(@PathVariable("categoryId") Integer categoryId) {
+        categoryService.delete(categoryId);
         return new ResponseEntity<String>("delete_ok",HttpStatus.OK);
     }
 }

@@ -12,9 +12,9 @@ public interface ICategoryService {
 
     Category save(Category category);
 
-    void update(Category category) throws Exception;
+    Category update(int categoryId , Category category) throws Exception;
 
-    void delete(Integer id);
+    void delete(Integer categoryId);
 
 
 }

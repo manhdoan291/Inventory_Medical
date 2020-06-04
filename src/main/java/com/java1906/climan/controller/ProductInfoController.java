@@ -1,6 +1,6 @@
 package com.java1906.climan.controller;
 
-import com.java1906.climan.data.model.Category;
+import com.java1906.climan.data.model.CategoryValue;
 import com.java1906.climan.data.model.ProductInfo;
 import com.java1906.climan.data.repo.CategoryValueRepository;
 import com.java1906.climan.interceptor.HasRole;
@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,39 +35,33 @@ class ProductInfoController {
         Iterable<ProductInfo> productList = productInfoService.finAllProduct();
         return new ResponseEntity<>(productList, HttpStatus.OK);
     }
+
     // Create product
     @PostMapping("/product")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<String> createProduct(@RequestBody ProductInfo productInfo) {
-        productInfoService.save(productInfo);
-        return new ResponseEntity<>("created!", HttpStatus.CREATED);
+    public ResponseEntity<ProductInfo> createProduct(@RequestBody ProductInfo productInfo) {
+
+        ProductInfo prductInfo = productInfoService.save(productInfo);
+        return new ResponseEntity<ProductInfo>(prductInfo, HttpStatus.CREATED);
     }
+
     // Update product
-    @PutMapping("/product/{id}")
+    @PutMapping("/product")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<ProductInfo> updateProduct(@PathVariable("id") Integer id,
-                                                     @RequestBody ProductInfo product) {
-        Optional<ProductInfo> productInfo1 = productInfoService.findById(id);
-        if (!productInfo1.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-//        productInfo1.get().setId(id);
-//        productInfo1.get().setId(id);
-//        return new ResponseEntity<>("Updated!", HttpStatus.OK);
-        return null;
+    public ResponseEntity<ProductInfo> updateProduct(
+            @RequestBody ProductInfo product) {
+        ProductInfo productInfo1 = productInfoService.update(product);
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
     // Delete product
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/product")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<String> deleteProduct(@PathVariable("id") Integer id) {
-        Optional<ProductInfo> productInfo = productInfoService.findById(id);
-        if (!productInfo.isPresent()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        productInfoService.delete(id);
-        return new ResponseEntity<String>("delete_ok",HttpStatus.OK);
+    public ResponseEntity<String> deleteProduct(@RequestParam Integer id) {
+        String message = productInfoService.delete(id);
+        return new ResponseEntity<String>(message, HttpStatus.OK);
     }
+
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<Object> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
@@ -77,4 +72,5 @@ class ProductInfoController {
         fout.close();
         return new ResponseEntity<>("File is uploaded successfully", HttpStatus.OK);
     }
+
 }

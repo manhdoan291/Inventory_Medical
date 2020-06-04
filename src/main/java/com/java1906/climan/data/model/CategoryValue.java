@@ -3,15 +3,17 @@ package com.java1906.climan.data.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "category_value")
 public class CategoryValue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    private Integer idCategory;
     private String name;
     private String description;
     private Integer activeFlag;
@@ -23,22 +25,20 @@ public class CategoryValue {
     @JsonIgnore
     private Category category;
 
-    @ManyToMany
-    @JoinTable(name = "productInfo_categoryValue",
-            joinColumns = @JoinColumn(name = "categoryValue_id"),
-            inverseJoinColumns = @JoinColumn(name = "productInfo_id"))
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(name = "productInfo_categoryValue", joinColumns = { @JoinColumn(name = "ProductInfo_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "categoryValue_id") })
     private List<ProductInfo> productInfos;
 
     public CategoryValue() {
     }
 
-    public CategoryValue(String name, String description, Integer activeFlag, Date createDate, Date updateDate, Category category, List<ProductInfo> productInfos) {
-        this.name = name;
-        this.description = description;
-        this.activeFlag = activeFlag;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.category = category;
+    public List<ProductInfo> getProductInfos() {
+        return productInfos;
+    }
+
+    public void setProductInfos(List<ProductInfo> productInfos) {
         this.productInfos = productInfos;
     }
 
@@ -50,12 +50,12 @@ public class CategoryValue {
         this.category = category;
     }
 
-    public Integer getId() {
-        return id;
+    public Integer getIdCategory() {
+        return idCategory;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdCategory(Integer idCategory) {
+        this.idCategory = idCategory;
     }
 
     public String getName() {
@@ -96,13 +96,6 @@ public class CategoryValue {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
-    }
-    public List<ProductInfo> getProductInfos() {
-        return productInfos;
-    }
-
-    public void setProductInfos(List<ProductInfo> productInfos) {
-        this.productInfos = productInfos;
     }
 
 }

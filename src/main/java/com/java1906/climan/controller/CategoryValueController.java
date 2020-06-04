@@ -29,62 +29,37 @@ public class CategoryValueController {
     @CrossOrigin(origins = "http://localhost:4200")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity <List<CategoryValue>> showCategoryValueList() {
-        List<CategoryValue> categoryValueList = (List<CategoryValue>) categoryValueService.findAll();
-        if (categoryValueList.isEmpty()) {
-            return new ResponseEntity <List<CategoryValue>>(categoryValueList,HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<List<CategoryValue>>(categoryValueList,HttpStatus.OK);
-    }
+            return new ResponseEntity <List<CategoryValue>>(categoryValueService.findAll(),HttpStatus.OK);
 
-    @GetMapping("/category/{id}")
-    public ResponseEntity<List<CategoryValue>> listAllCategoryValueByCategory(@PathVariable Integer categoryid) {
-        Optional<CategoryValue> categoryValues = categoryValueService.findByCategory(categoryid);
-        if (categoryValues.isPresent()) {
-            return new ResponseEntity<List<CategoryValue>>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<List<CategoryValue>>(HttpStatus.OK);
+    }
+//GET ById
+    @GetMapping("/{id}")
+    @HasRole({"STAFF", "ADMIN"})
+    public ResponseEntity<Object> getCategoryValueById(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(categoryValueService.findById(id),HttpStatus.OK);
     }
 
 
 //    // Create categoryvalue
     @PostMapping("category/{categoryId}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<Optional<CategoryValue>> createCategoryValue(@PathVariable(value = "categoryId") Integer categoryId, @RequestBody CategoryValue categoryValue)   {
-        Optional<Category> category = categoryService.findById(categoryId);
-//        Category category = categoryValue.getCategory();
-        categoryValue.setCategory(category.get());
-            categoryValueService.save(categoryValue);
-    return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<CategoryValue> createCategoryValue(@PathVariable(value = "categoryId") Integer categoryId, @RequestBody CategoryValue categoryValue)   {
+        return new ResponseEntity<>(categoryValueService.save(categoryId,categoryValue),HttpStatus.OK);
     }
 
-    // Update category detail
-    @PutMapping("/{id}/{category_id}")
+    // Update category value
+    @PutMapping("/{categoryValueId}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<CategoryValue> updateCategoryDetail(@PathVariable("id") Integer id, @PathVariable("category_id") Integer category_id,
+    public ResponseEntity<CategoryValue> updateCategoryDetail(@PathVariable("categoryValueId") Integer categoryValueId,
                                                               @RequestBody CategoryValue categoryValue) {
-        Optional<Category> category = categoryService.findById(category_id);
-        Optional<CategoryValue> categoryValue1 = categoryValueService.findById(id);
-        if (!categoryValue1.isPresent()) {
-            return new ResponseEntity<CategoryValue>(HttpStatus.NOT_FOUND);
-        }
-        categoryValue1.get().setName(categoryValue.getName());
-        categoryValue1.get().setActiveFlag(categoryValue.getActiveFlag());
-        categoryValue1.get().setDescription(categoryValue.getDescription());
-        categoryValue1.get().setCategory(category.get());
-        categoryValue1.get().setUpdateDate(categoryValue.getUpdateDate());
-        categoryValueService.save(categoryValue1.get());
-        return new ResponseEntity<CategoryValue>(categoryValue, HttpStatus.OK);
+        return new ResponseEntity<CategoryValue>(categoryValueService.update(categoryValueId,categoryValue), HttpStatus.OK);
     }
 
     // Delete category value
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{categoryValueId}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> deleteCategoryDetail(@PathVariable("id") Integer id) {
-        Optional<CategoryValue> categoryValue = categoryValueService.findById(id);
-        if (!categoryValue.isPresent()) {
-            return new ResponseEntity<String>("Lỗi",HttpStatus.NOT_FOUND);
-        }
-        categoryValueService.delete(id);
+    public ResponseEntity<String> deleteCategoryDetail(@PathVariable("categoryValueId") Integer categoryValueId) {
+        categoryValueService.delete(categoryValueId);
         return new ResponseEntity<String>("Delete Ok",HttpStatus.OK);
     }
 }

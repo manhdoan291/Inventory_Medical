@@ -8,10 +8,11 @@ import java.util.Optional;
 
 public interface ICategoryValueService {
 
-    Iterable<CategoryValue> findAll();
-    Optional<CategoryValue> findById(Integer id);
-    void save(CategoryValue categoryValue);
-    void delete(Integer id);
+    List<CategoryValue> findAll();
+    Optional<CategoryValue> findById(Integer categoryValueId);
+    CategoryValue save( int categoryId,CategoryValue categoryValue);
+    CategoryValue update(int categoryValueId, CategoryValue categoryValue);
+    void delete(Integer categoryValueId);
     Optional<CategoryValue> findByCategory(Integer categoryId);
     List<CategoryValue> findAllByNameContatining(String name); // phần này tìm kiếm
 

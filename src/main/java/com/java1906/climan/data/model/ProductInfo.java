@@ -2,9 +2,7 @@ package com.java1906.climan.data.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "product_info")
@@ -21,9 +19,30 @@ public class ProductInfo {
     private Date createDate;
     private Date updateDate;
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "productInfo_categoryValue",
+            joinColumns = {@JoinColumn(name = "ProductInfo_id")},
+            inverseJoinColumns = {@JoinColumn(name = "categoryValue_id")})
+    private Set<CategoryValue> categoryValues;
+
+    @ManyToMany
+    @JoinTable(name = "productInfo_Invoice",
+            joinColumns = @JoinColumn(name = "Invoice_id"),
+            inverseJoinColumns = @JoinColumn(name = "productInfo_id"))
+    private Set<Invoice> invoices;
+
     public ProductInfo() {
     }
+public ProductInfo(String name,String description,String img_url,int activeFlag, Date createDate,Date updateDate,Set<CategoryValue> categoryValues){
+            this.name =name;
+            this.description =description;
+            this.img_url =img_url;
+            this.activeFlag =activeFlag;
+            this.createDate =createDate;
+            this.updateDate =updateDate;
+            this.categoryValues =categoryValues;
 
+}
     public Integer getId() {
         return id;
     }
@@ -80,5 +99,19 @@ public class ProductInfo {
         this.updateDate = updateDate;
     }
 
+    public Set<CategoryValue> getCategoryValues() {
+        return categoryValues;
+    }
 
+    public void setCategoryValues(Set<CategoryValue> categoryValues) {
+        this.categoryValues = categoryValues;
+    }
+
+    public Set<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(Set<Invoice> invoices) {
+        this.invoices = invoices;
+    }
 }

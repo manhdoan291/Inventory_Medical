@@ -1,16 +1,15 @@
 package com.java1906.climan.services.impl;
 
 
+import com.java1906.climan.data.model.CategoryValue;
 import com.java1906.climan.data.model.ProductInfo;
+import com.java1906.climan.data.repo.CategoryValueRepository;
 import com.java1906.climan.data.repo.ProductInfoRepository;
-import com.java1906.climan.exception.LogicException;
 import com.java1906.climan.services.IProducInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Transactional
@@ -19,6 +18,9 @@ public class ProductServiceImpl implements IProducInfoService {
 
     @Autowired
     private ProductInfoRepository productInfoRepository;
+    @Autowired
+    private CategoryValueRepository categoryValueRepository;
+
     @Override
     public Iterable<ProductInfo> finAllProduct() {
         return productInfoRepository.findAll();
@@ -30,17 +32,26 @@ public class ProductServiceImpl implements IProducInfoService {
     }
 
     @Override
-    public void save(ProductInfo productInfo) {
-        productInfoRepository.save(productInfo);
+    public ProductInfo save(ProductInfo productInfo) {
+      return  productInfoRepository.save(productInfo);
     }
 
     @Override
-    public void update(ProductInfo product) {
+    public ProductInfo update(ProductInfo productInfo) {
+        ProductInfo pInfo = productInfoRepository.getOne(productInfo.getId());
+        if(null !=pInfo){
+            pInfo =productInfo;
+            return  productInfoRepository.save(pInfo);
+        }else{
+            return null;
+        }
     }
 
     @Override
-    public void delete(int id) {
+    public String delete(int id) {
         productInfoRepository.deleteById(id);
+        return "ProductInfo" +id +"deleted successfully!";
     }
+
 
 }

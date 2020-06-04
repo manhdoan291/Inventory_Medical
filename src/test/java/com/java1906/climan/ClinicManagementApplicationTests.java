@@ -27,14 +27,14 @@ class ClinicManagementApplicationTests {
         userInfoRepository.deleteAll();
 
         User user01 = new User();
-        user01.setUsername("lent");
+        user01.setUsername("hieudv");
         user01.setPassword("123456");
         user01.setRole(RoleType.ADMIN);
         user01 = userRepository.save(user01);
 
         UserInfo userInfo = new UserInfo();
-        userInfo.setEmail("lent@email.com");
-        userInfo.setName("Casper Ngo");
+        userInfo.setEmail("hieudv@email.com");
+        userInfo.setName("dev DoanHieu");
         userInfo.setPhone("123123123");
         userInfo.setId(user01.getId());
         userInfoRepository.save(userInfo);
@@ -47,7 +47,7 @@ class ClinicManagementApplicationTests {
     private CategoryValueRepository categoryDetailRepository;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductInfoRepository productRepository;
 
     @Test
     void createCategorysAndProducts() {

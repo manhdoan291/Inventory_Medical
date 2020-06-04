@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IInvoiceService {
-    public Optional<Invoice> get(Integer id);
-
-    public List<Invoice> getAll();
+        public Invoice saveInvoice(Invoice invoice);
+        public List<Invoice> finAllInvoice();
+        public Invoice updateInvoice(Invoice invoice);
+        public String deleteInvoice(int invoiceId);
 }
