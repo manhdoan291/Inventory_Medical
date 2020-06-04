@@ -23,17 +23,14 @@ public class ProductInfo {
     @JoinTable(name = "productInfo_categoryValue",
             joinColumns = {@JoinColumn(name = "ProductInfo_id")},
             inverseJoinColumns = {@JoinColumn(name = "categoryValue_id")})
-    private Set<CategoryValue> categoryValues;
+    private List<CategoryValue> categoryValues;
 
-    @ManyToMany
-    @JoinTable(name = "productInfo_Invoice",
-            joinColumns = @JoinColumn(name = "Invoice_id"),
-            inverseJoinColumns = @JoinColumn(name = "productInfo_id"))
-    private Set<Invoice> invoices;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productInfo")
+    private  List<Invoice> invoices ;
 
     public ProductInfo() {
     }
-public ProductInfo(String name,String description,String img_url,int activeFlag, Date createDate,Date updateDate,Set<CategoryValue> categoryValues){
+public ProductInfo(String name,String description,String img_url,int activeFlag, Date createDate,Date updateDate,List<CategoryValue> categoryValues){
             this.name =name;
             this.description =description;
             this.img_url =img_url;
@@ -99,19 +96,19 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
         this.updateDate = updateDate;
     }
 
-    public Set<CategoryValue> getCategoryValues() {
+    public List<CategoryValue> getCategoryValues() {
         return categoryValues;
     }
 
-    public void setCategoryValues(Set<CategoryValue> categoryValues) {
+    public void setCategoryValues(List<CategoryValue> categoryValues) {
         this.categoryValues = categoryValues;
     }
 
-    public Set<Invoice> getInvoices() {
+    public List<Invoice> getInvoices() {
         return invoices;
     }
 
-    public void setInvoices(Set<Invoice> invoices) {
+    public void setInvoices(List<Invoice> invoices) {
         this.invoices = invoices;
     }
 }

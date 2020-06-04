@@ -1,5 +1,7 @@
 package com.java1906.climan.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -27,19 +29,17 @@ public class Invoice {
     @JoinColumn(name = "history_id")
     private History history;
 
-    @ManyToMany
-    @JoinTable(name = "productInfo_Invoice",
-            joinColumns = @JoinColumn(name = "Invoice_id"),
-            inverseJoinColumns = @JoinColumn(name = "productInfo_id"))
-    private Set<ProductInfo> productInfos;
+    @ManyToOne
+    @JoinColumn(name ="productInfo_id")
+    @JsonIgnore
+    private ProductInfo productInfo;
 
-
-    public Set<ProductInfo> getProductInfos() {
-        return productInfos;
+    public ProductInfo getProductInfo() {
+        return productInfo;
     }
 
-    public void setProductInfos(Set<ProductInfo> productInfos) {
-        this.productInfos = productInfos;
+    public void setProductInfo(ProductInfo productInfo) {
+        this.productInfo = productInfo;
     }
 
     public History getHistory() {

@@ -19,32 +19,32 @@ public class InvoiceController {
     @GetMapping("/invoice")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<List<Invoice>> showInvoiceList() {
-        List<Invoice> invoiceList = (List<Invoice>) invoiceService.finAllInvoice();
-        if (invoiceList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(invoiceList, HttpStatus.OK);
+        return new ResponseEntity<>(invoiceService.finAllInvoice(), HttpStatus.OK);
     }
 
+    //get  byid
+    @GetMapping("/{id}")
+    @HasRole({"STAFF", "ADMIN"})
+    public ResponseEntity<Object> getInvoiceById(@PathVariable("id") Integer id) {
+        return new ResponseEntity<>(invoiceService.findById(id),HttpStatus.OK);
+    }
   // create invoice
-    @PostMapping("/invoice")
+    @PostMapping("/invoice/{productInfoId}")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<Invoice> createInvoce(@RequestBody Invoice invoice){
-        Invoice inv = invoiceService.saveInvoice(invoice);
-        return new ResponseEntity<>(inv,HttpStatus.CREATED);
+    public ResponseEntity<Invoice> createInvoce(@PathVariable(value = "productInfoId") int productInfoId, @RequestBody Invoice invoice){
+        return new ResponseEntity<>(invoiceService.save(productInfoId,invoice),HttpStatus.CREATED);
     }
     //update invoice
-    @PutMapping("/invoice")
+    @PutMapping("/invoice/{invoiceId}")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<Invoice> updateInvoide(@RequestBody Invoice invoice){
-        Invoice inv = invoiceService.updateInvoice(invoice);
-        return new ResponseEntity<>(inv,HttpStatus.CREATED);
+    public ResponseEntity<Invoice> updateInvoice(@PathVariable("invoiceId") int invoiceId, @RequestBody Invoice invoice){
+        return new ResponseEntity<>(invoiceService.update(invoiceId,invoice),HttpStatus.CREATED);
     }
     //
-    @DeleteMapping("/student")
-    public ResponseEntity<String> deleteInvoice(@RequestParam Integer invoiceId){
-        String message = invoiceService.deleteInvoice(invoiceId);
-        return new ResponseEntity<>(message,HttpStatus.OK);
+    @DeleteMapping("/{invoiceId}")
+    public ResponseEntity<String> deleteInvoice( @PathVariable("invoiceId") int invoiceId){
+      invoiceService.delete(invoiceId);
+        return new ResponseEntity<>("Delete Ok",HttpStatus.OK);
     }
 
 }

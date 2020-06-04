@@ -18,9 +18,6 @@ public class ProductServiceImpl implements IProducInfoService {
 
     @Autowired
     private ProductInfoRepository productInfoRepository;
-    @Autowired
-    private CategoryValueRepository categoryValueRepository;
-
     @Override
     public Iterable<ProductInfo> finAllProduct() {
         return productInfoRepository.findAll();
@@ -33,24 +30,18 @@ public class ProductServiceImpl implements IProducInfoService {
 
     @Override
     public ProductInfo save(ProductInfo productInfo) {
-      return  productInfoRepository.save(productInfo);
+
+       return productInfoRepository.save(productInfo);
     }
 
     @Override
     public ProductInfo update(ProductInfo productInfo) {
-        ProductInfo pInfo = productInfoRepository.getOne(productInfo.getId());
-        if(null !=pInfo){
-            pInfo =productInfo;
-            return  productInfoRepository.save(pInfo);
-        }else{
-            return null;
-        }
+        return productInfoRepository.save(productInfo);
     }
 
     @Override
-    public String delete(int id) {
+    public void  delete(int id) {
         productInfoRepository.deleteById(id);
-        return "ProductInfo" +id +"deleted successfully!";
     }
 
 

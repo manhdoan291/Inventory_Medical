@@ -111,4 +111,9 @@ public class CategoryValueServiceImpl implements ICategoryValueService {
     public List<CategoryValue> findAllByNameContatining(String name) {
         return null;
     }
+
+    @Override
+    public void save(CategoryValue categoryValue) {
+        categoryValueRepository.save(categoryValue);
+    }
 }

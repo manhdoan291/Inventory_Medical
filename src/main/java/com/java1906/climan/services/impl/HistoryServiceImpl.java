@@ -13,16 +13,31 @@ import java.util.Optional;
 @Transactional
 @Service
 public class HistoryServiceImpl implements IHistoryService {
+
     @Autowired
     private HistoryRepository historyRepository;
-
     @Override
-    public Optional<History> get(Integer id) {
-        return historyRepository.findById(id);
+    public Iterable<History> finAllHistory() {
+        return historyRepository.findAll();
     }
 
     @Override
-    public List<History> getAll() {
-        return (List<History>) historyRepository.findAll();
+    public Optional<History> findById(int historyId) {
+        return historyRepository.findById(historyId);
+    }
+
+    @Override
+    public History save(History history) {
+        return historyRepository.save(history);
+    }
+
+    @Override
+    public History update(History history) {
+        return historyRepository.save(history);
+    }
+
+    @Override
+    public void delete(int id) {
+
     }
 }

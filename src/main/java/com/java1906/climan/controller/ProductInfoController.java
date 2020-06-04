@@ -4,6 +4,7 @@ import com.java1906.climan.data.model.CategoryValue;
 import com.java1906.climan.data.model.ProductInfo;
 import com.java1906.climan.data.repo.CategoryValueRepository;
 import com.java1906.climan.interceptor.HasRole;
+import com.java1906.climan.services.ICategoryValueService;
 import com.java1906.climan.services.IProducInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,12 +25,11 @@ class ProductInfoController {
 
     @Autowired
     private IProducInfoService productInfoService;
-
     @Autowired
-    private CategoryValueRepository categoryDetailRepository;
+    private ICategoryValueService categoryValueService;
 
     //Get all product
-    @GetMapping("/product")
+    @GetMapping("/productInfo")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<Iterable<ProductInfo>> showProductList() {
         Iterable<ProductInfo> productList = productInfoService.finAllProduct();
@@ -37,29 +37,58 @@ class ProductInfoController {
     }
 
     // Create product
-    @PostMapping("/product")
+    @PostMapping("/productInfo")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<ProductInfo> createProduct(@RequestBody ProductInfo productInfo) {
+        // Sửa lý liên kêt n-n
+        List<CategoryValue> newCategoryValue = new ArrayList<>();
+        if(productInfo.getCategoryValues() !=null){
+            for(CategoryValue categoryValue : productInfo.getCategoryValues()){
+                categoryValueService.save(categoryValue);
+                newCategoryValue.add(categoryValue);
+            }
+        }
+        productInfo.setCategoryValues(newCategoryValue);
+        ProductInfo productInfo1 = new ProductInfo(productInfo.getName(),productInfo.getDescription(),
+                productInfo.getImg_url(),productInfo.getActiveFlag(),productInfo.getCreateDate(),
+                productInfo.getUpdateDate(),productInfo.getCategoryValues());
 
-        ProductInfo prductInfo = productInfoService.save(productInfo);
-        return new ResponseEntity<ProductInfo>(prductInfo, HttpStatus.CREATED);
+        return new ResponseEntity<ProductInfo>(productInfoService.save(productInfo1),HttpStatus.CREATED);
     }
 
     // Update product
-    @PutMapping("/product")
+    @PutMapping("/productInfo/{productInfoId}")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<ProductInfo> updateProduct(
-            @RequestBody ProductInfo product) {
-        ProductInfo productInfo1 = productInfoService.update(product);
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+    public ResponseEntity<ProductInfo> updateProduct(@PathVariable("productInfoId") int productInfoId,
+            @RequestBody ProductInfo productInfo) {
+        List<CategoryValue> newCategoryValue = new ArrayList<>();
+        if(productInfo.getCategoryValues() != null){
+            for(CategoryValue categoryValue : productInfo.getCategoryValues()){
+                categoryValueService.save(categoryValue);
+                newCategoryValue.add(categoryValue);
+            }
+        }
+        productInfo.setCategoryValues(newCategoryValue);
+        Optional<ProductInfo> productInfoMaster =productInfoService.findById(productInfoId);
+        if(!productInfoMaster.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        productInfoMaster.get().setName(productInfo.getName());
+        productInfoMaster.get().setDescription(productInfo.getDescription());
+        productInfoMaster.get().setActiveFlag(productInfo.getActiveFlag());
+        productInfoMaster.get().setImg_url(productInfo.getImg_url());
+        productInfoMaster.get().setCategoryValues(productInfo.getCategoryValues());
+        productInfoMaster.get().setUpdateDate(productInfo.getUpdateDate());
+
+        return new ResponseEntity<>(productInfoService.save(productInfoMaster.get()), HttpStatus.CREATED);
     }
 
     // Delete product
-    @DeleteMapping("/product")
+    @DeleteMapping("/productInfo/{productInfoId}")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<String> deleteProduct(@RequestParam Integer id) {
-        String message = productInfoService.delete(id);
-        return new ResponseEntity<String>(message, HttpStatus.OK);
+    public ResponseEntity<String> deleteProduct(@PathVariable("productInfoId") Integer productInfoId) {
+        productInfoService.delete(productInfoId);
+        return new ResponseEntity<String>("delete OK",HttpStatus.OK);
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

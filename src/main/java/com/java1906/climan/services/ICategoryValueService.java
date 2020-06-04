@@ -16,4 +16,5 @@ public interface ICategoryValueService {
     Optional<CategoryValue> findByCategory(Integer categoryId);
     List<CategoryValue> findAllByNameContatining(String name); // phần này tìm kiếm
 
+    void save(CategoryValue categoryValue);
 }

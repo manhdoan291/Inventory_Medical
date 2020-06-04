@@ -1,6 +1,7 @@
 package com.java1906.climan.services;
 
 
+import com.java1906.climan.data.model.CategoryValue;
 import com.java1906.climan.data.model.ProductInfo;
 
 import java.util.Optional;
@@ -10,11 +11,11 @@ public interface IProducInfoService {
 
     Optional<ProductInfo> findById(int id);
 
-    public ProductInfo save(ProductInfo product);
+     ProductInfo save(ProductInfo productInfo);
 
     public ProductInfo update(ProductInfo product);
 
-    String delete(int id);
-
+    void delete(int id);
+//    void save(ProductInfo productInfo);
 
 }
