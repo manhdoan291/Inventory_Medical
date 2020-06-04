@@ -16,6 +16,6 @@ public interface IInvoiceService {
 
          Invoice update(int invoiceId, Invoice invoice);
 
-        void delete(int id);
+        void delete(int invoiceId);
 //    void save(ProductInfo productInfo);
 }

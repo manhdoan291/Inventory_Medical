@@ -87,4 +87,13 @@ public class History {
     public void setIntoMoney(Double intoMoney) {
         this.intoMoney = intoMoney;
     }
+
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+
 }

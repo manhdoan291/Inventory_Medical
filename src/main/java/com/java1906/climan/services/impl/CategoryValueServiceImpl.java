@@ -64,7 +64,7 @@ public class CategoryValueServiceImpl implements ICategoryValueService {
 
     @Override
     public CategoryValue update(int categoryValueId, CategoryValue categoryValueRequest) {
-        if(!categoryRepository.existsById(categoryValueId)){
+        if(!categoryValueRepository.existsById(categoryValueId)){
             try {
                 throw new ResourceNotFoundException("CategoryValue with id "+categoryValueId + "not found");
             } catch (ResourceNotFoundException e) {
@@ -83,6 +83,7 @@ public class CategoryValueServiceImpl implements ICategoryValueService {
         categoryValue1.setName(categoryValueRequest.getName());
         categoryValue1.setDescription(categoryValueRequest.getDescription());
         categoryValue1.setActiveFlag(categoryValueRequest.getActiveFlag());
+        categoryValue1.setCategory(categoryValueRequest.getCategory());
         categoryValue1.setUpdateDate(categoryValueRequest.getUpdateDate());
         categoryValue1.setCreateDate(categoryValue1.getCreateDate());
 
@@ -93,7 +94,7 @@ public class CategoryValueServiceImpl implements ICategoryValueService {
     public void delete(Integer categoryValueId) {
         if (!categoryValueRepository.existsById(categoryValueId)) {
             try {
-                throw new ResourceNotFoundException("Author with id " + categoryValueId + " not found");
+                throw new ResourceNotFoundException("CategoryValue with id " + categoryValueId + " not found");
             } catch (ResourceNotFoundException e) {
                 e.printStackTrace();
             }

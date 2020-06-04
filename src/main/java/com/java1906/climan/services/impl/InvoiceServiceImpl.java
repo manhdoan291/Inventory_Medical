@@ -48,7 +48,7 @@ private ProductInfoRepository productInfoRepository;
         Optional<ProductInfo> productInfoById = productInfoRepository.findById(productInfoId);
         if(!productInfoById.isPresent()){
             try {
-                throw new ResourceNotFoundException("Invoice with id "+productInfoId+ "does not exist");
+                throw new ResourceNotFoundException("ProductInfo with id "+productInfoId+ "does not exist");
             } catch (ResourceNotFoundException e) {
                 e.printStackTrace();
             }
@@ -64,11 +64,45 @@ private ProductInfoRepository productInfoRepository;
 
     @Override
     public Invoice update(int invoiceId, Invoice invoice) {
-        return null;
+        if(!invoiceRepository.existsById(invoiceId)){
+            try {
+                throw new ResourceNotFoundException("Invoice with id "+invoiceId + "not found");
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        Optional<Invoice> invoiceById =invoiceRepository.findById(invoiceId);
+        if(!invoiceById.isPresent()){
+            try {
+                throw new ResourceNotFoundException("Invoice with"+invoiceId + " not fount");
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        Invoice invoice1 =invoiceById.get();
+        invoice1.setName(invoice.getName());
+        invoice1.setLotNumber(invoice.getLotNumber());
+        invoice1.setDateOfManufacture(invoice.getDateOfManufacture());
+        invoice1.setExpiryDate(invoice.getExpiryDate());
+        invoice1.setQuantity(invoice.getQuantity());
+        invoice1.setUnit(invoice.getUnit());
+        invoice1.setPrice(invoice.getPrice());
+        invoice1.setCreateDate(invoice.getCreateDate());
+        invoice1.setUpdateDate(invoice.getUpdateDate());
+
+
+        return invoiceRepository.save(invoice1);
     }
 
     @Override
-    public void delete(int id) {
-
+    public void delete(int invoiceId) {
+        if (!invoiceRepository.existsById(invoiceId)) {
+            try {
+                throw new ResourceNotFoundException("Invoice with id " + invoiceId + " not found");
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        invoiceRepository.deleteById(invoiceId);
     }
 }

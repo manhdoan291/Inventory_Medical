@@ -11,10 +11,10 @@ public interface IHistoryService {
 
     Optional<History> findById(int historyId);
 
-    History save(History history);
+    History save(int invoiceId , History history);
 
-    public History update(History history);
+     History update(int historyId , History history);
 
-    void delete(int id);
+    void delete(int historyId);
 
 }

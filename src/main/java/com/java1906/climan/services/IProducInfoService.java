@@ -15,7 +15,7 @@ public interface IProducInfoService {
 
     public ProductInfo update(ProductInfo product);
 
-    void delete(int id);
+    void delete(int productId);
 //    void save(ProductInfo productInfo);
 
 }
