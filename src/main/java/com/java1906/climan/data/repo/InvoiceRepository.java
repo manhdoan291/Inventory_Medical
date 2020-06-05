@@ -1,8 +1,7 @@
 package com.java1906.climan.data.repo;
 
-import com.java1906.climan.data.model.Invoice;
+import com.java1906.climan.data.model.Invoice_Enter;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 
-public interface InvoiceRepository extends JpaRepository<Invoice, Integer> {
+public interface InvoiceRepository extends JpaRepository<Invoice_Enter, Integer> {
 }

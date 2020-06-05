@@ -26,7 +26,7 @@ public class ProductInfo {
     private List<CategoryValue> categoryValues;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "productInfo")
-    private  List<Invoice> invoices ;
+    private  List<InvoiceEnter_Detail> invoiceEnters ;
 
     public ProductInfo() {
     }
@@ -40,6 +40,7 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
             this.categoryValues =categoryValues;
 
 }
+
     public Integer getId() {
         return id;
     }
@@ -104,11 +105,11 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
         this.categoryValues = categoryValues;
     }
 
-    public List<Invoice> getInvoices() {
-        return invoices;
+    public List<InvoiceEnter_Detail> getInvoiceEnters() {
+        return invoiceEnters;
     }
 
-    public void setInvoices(List<Invoice> invoices) {
-        this.invoices = invoices;
+    public void setInvoiceEnters(List<InvoiceEnter_Detail> invoiceEnters) {
+        this.invoiceEnters = invoiceEnters;
     }
 }

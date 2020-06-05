@@ -1,53 +1,58 @@
 package com.java1906.climan.data.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table
-public class Invoice {
+public class Invoice_Enter {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     private Integer id;
     private String name;
+    private int type;
     private String lotNumber;
     private Date dateOfManufacture;
     private Date expiryDate;
-    private Integer quantity;
-    private String unit;
-    private Double price;
     private Date createDate;
     private Date updateDate;
     @ManyToOne
-    @JoinColumn(name = "history_id")
-    private History history;
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 
-    @ManyToOne
-    @JoinColumn(name ="productInfo_id")
-    @JsonIgnore
-    private ProductInfo productInfo;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoiceEnters")
+    private  List<InvoiceEnter_Detail> invoiceEnterDetails ;
 
-    public ProductInfo getProductInfo() {
-        return productInfo;
+
+    public List<InvoiceEnter_Detail> getInvoiceEnterDetails() {
+        return invoiceEnterDetails;
     }
 
-    public void setProductInfo(ProductInfo productInfo) {
-        this.productInfo = productInfo;
+    public void setInvoiceEnterDetails(List<InvoiceEnter_Detail> invoiceEnterDetails) {
+        this.invoiceEnterDetails = invoiceEnterDetails;
     }
 
-    public History getHistory() {
-        return history;
+    public Invoice_Enter() {
     }
 
-    public void setHistory(History history) {
-        this.history = history;
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 
     public Integer getId() {
@@ -88,30 +93,6 @@ public class Invoice {
 
     public void setExpiryDate(Date expiryDate) {
         this.expiryDate = expiryDate;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public Date getCreateDate() {
