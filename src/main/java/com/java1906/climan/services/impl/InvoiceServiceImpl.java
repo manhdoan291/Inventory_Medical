@@ -1,7 +1,6 @@
 package com.java1906.climan.services.impl;
 
 import com.java1906.climan.controller.ResourceNotFoundException;
-import com.java1906.climan.data.model.Invoice;
 import com.java1906.climan.data.model.ProductInfo;
 import com.java1906.climan.data.repo.InvoiceRepository;
 import com.java1906.climan.data.repo.ProductInfoRepository;

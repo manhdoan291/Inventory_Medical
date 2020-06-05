@@ -1,53 +1,25 @@
 package com.java1906.climan.data.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table
 public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
     private Integer id;
-    private String name;
-    private String lotNumber;
-    private Date dateOfManufacture;
-    private Date expiryDate;
-    private Integer quantity;
-    private String unit;
-    private Double price;
-    private Date createDate;
-    private Date updateDate;
-    @ManyToOne
-    @JoinColumn(name = "history_id")
-    private History history;
+    private int type; // kieu hoa don
+    private double inTotal;       // tong gia nhap
+    private double outTotal;    // tong gia xuat
+    private int activeFlag;
+    private Date createdDate;
+    private Date updatedDate;
 
-    @ManyToOne
-    @JoinColumn(name ="productInfo_id")
-    @JsonIgnore
-    private ProductInfo productInfo;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
+    private List<InvoiceValue> invoiceValue ;
 
-    public ProductInfo getProductInfo() {
-        return productInfo;
-    }
-
-    public void setProductInfo(ProductInfo productInfo) {
-        this.productInfo = productInfo;
-    }
-
-    public History getHistory() {
-        return history;
-    }
-
-    public void setHistory(History history) {
-        this.history = history;
+    public Invoice() {
     }
 
     public Integer getId() {
@@ -58,75 +30,51 @@ public class Invoice {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getType() {
+        return type;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setType(int type) {
+        this.type = type;
     }
 
-    public String getLotNumber() {
-        return lotNumber;
+    public double getInTotal() {
+        return inTotal;
     }
 
-    public void setLotNumber(String lotNumber) {
-        this.lotNumber = lotNumber;
+    public void setInTotal(double inTotal) {
+        this.inTotal = inTotal;
     }
 
-    public Date getDateOfManufacture() {
-        return dateOfManufacture;
+    public double getOutTotal() {
+        return outTotal;
     }
 
-    public void setDateOfManufacture(Date dateOfManufacture) {
-        this.dateOfManufacture = dateOfManufacture;
+    public void setOutTotal(double outTotal) {
+        this.outTotal = outTotal;
     }
 
-    public Date getExpiryDate() {
-        return expiryDate;
+    public int getActiveFlag() {
+        return activeFlag;
     }
 
-    public void setExpiryDate(Date expiryDate) {
-        this.expiryDate = expiryDate;
+    public void setActiveFlag(int activeFlag) {
+        this.activeFlag = activeFlag;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Date getCreatedDate() {
+        return createdDate;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
     }
 
-    public String getUnit() {
-        return unit;
+    public Date getUpdatedDate() {
+        return updatedDate;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Date getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Date createTime) {
-        this.createDate = createTime;
-    }
-
-    public Date getUpdateDate() {
-        return updateDate;
-    }
-
-    public void setUpdateDate(Date updateTime) {
-        this.updateDate = updateTime;
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
 }

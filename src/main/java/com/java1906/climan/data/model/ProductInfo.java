@@ -1,13 +1,15 @@
 package com.java1906.climan.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "product_info")
-public class ProductInfo {
-
+public class ProductInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
@@ -25,8 +27,10 @@ public class ProductInfo {
             inverseJoinColumns = {@JoinColumn(name = "categoryValue_id")})
     private List<CategoryValue> categoryValues;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productInfo")
-    private  List<Invoice> invoices ;
+    @ManyToOne
+    @JoinColumn(name ="invoice_id")
+    @JsonIgnore
+    private Invoice invoice;
 
     public ProductInfo() {
     }
@@ -104,11 +108,11 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
         this.categoryValues = categoryValues;
     }
 
-    public List<Invoice> getInvoices() {
-        return invoices;
+    public Invoice getInvoice() {
+        return invoice;
     }
 
-    public void setInvoices(List<Invoice> invoices) {
-        this.invoices = invoices;
+    public void setInvoice(Invoice invoice) {
+        this.invoice = invoice;
     }
 }

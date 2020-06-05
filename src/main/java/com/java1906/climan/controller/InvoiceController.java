@@ -1,6 +1,5 @@
 package com.java1906.climan.controller;
 
-import com.java1906.climan.data.model.Invoice;
 import com.java1906.climan.interceptor.HasRole;
 import com.java1906.climan.services.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class InvoiceController {
