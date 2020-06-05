@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 
 public class InvoiceReceipt implements Serializable {
-    @@OneToOne
+    @OneToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
