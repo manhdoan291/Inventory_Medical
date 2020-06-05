@@ -1,15 +1,13 @@
 package com.java1906.climan.data.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "product_info")
-public class ProductInfo implements Serializable {
+public class ProductInfo {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
@@ -27,10 +25,8 @@ public class ProductInfo implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "categoryValue_id")})
     private List<CategoryValue> categoryValues;
 
-    @ManyToOne
-    @JoinColumn(name ="invoice_id")
-    @JsonIgnore
-    private Invoice invoice;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productInfo")
+    private  List<InvoiceEnter_Detail> invoiceEnters ;
 
     public ProductInfo() {
     }
@@ -44,6 +40,7 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
             this.categoryValues =categoryValues;
 
 }
+
     public Integer getId() {
         return id;
     }
@@ -108,11 +105,11 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
         this.categoryValues = categoryValues;
     }
 
-    public Invoice getInvoice() {
-        return invoice;
+    public List<InvoiceEnter_Detail> getInvoiceEnters() {
+        return invoiceEnters;
     }
 
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
+    public void setInvoiceEnters(List<InvoiceEnter_Detail> invoiceEnters) {
+        this.invoiceEnters = invoiceEnters;
     }
 }

@@ -1,5 +1,6 @@
 package com.java1906.climan.controller;
 
+import com.java1906.climan.data.model.Invoice_Enter;
 import com.java1906.climan.interceptor.HasRole;
 import com.java1906.climan.services.IInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class InvoiceController {
 
     @GetMapping("/invoice")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<List<Invoice>> showInvoiceList() {
+    public ResponseEntity<List<Invoice_Enter>> showInvoiceList() {
         return new ResponseEntity<>(invoiceService.finAllInvoice(), HttpStatus.OK);
     }
 
@@ -29,13 +30,13 @@ public class InvoiceController {
   // create invoice
     @PostMapping("/invoice/{productInfoId}")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<Invoice> createInvoce(@PathVariable(value = "productInfoId") int productInfoId, @RequestBody Invoice invoice){
+    public ResponseEntity<Invoice_Enter> createInvoce(@PathVariable(value = "productInfoId") int productInfoId, @RequestBody Invoice_Enter invoice){
         return new ResponseEntity<>(invoiceService.save(productInfoId,invoice),HttpStatus.CREATED);
     }
     //update invoice
     @PutMapping("/invoice/{invoiceId}")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<Invoice> updateInvoice(@PathVariable("invoiceId") int invoiceId, @RequestBody Invoice invoice){
+    public ResponseEntity<Invoice_Enter> updateInvoice(@PathVariable("invoiceId") int invoiceId, @RequestBody Invoice_Enter invoice){
         return new ResponseEntity<>(invoiceService.update(invoiceId,invoice),HttpStatus.CREATED);
     }
     //

@@ -2,7 +2,6 @@ package com.java1906.climan.data.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,7 +21,7 @@ public class History {
     private Double intoMoney;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "history")
-    private  List<Invoice> invoices ;
+    private  List<Invoice_Enter> invoices ;
 
     public Integer getId() {
         return id;
@@ -88,11 +87,11 @@ public class History {
         this.intoMoney = intoMoney;
     }
 
-    public List<Invoice> getInvoices() {
+    public List<Invoice_Enter> getInvoices() {
         return invoices;
     }
 
-    public void setInvoices(List<Invoice> invoices) {
+    public void setInvoices(List<Invoice_Enter> invoices) {
         this.invoices = invoices;
     }
 

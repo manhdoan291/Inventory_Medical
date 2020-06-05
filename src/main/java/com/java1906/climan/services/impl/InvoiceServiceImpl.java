@@ -1,6 +1,7 @@
 package com.java1906.climan.services.impl;
 
 import com.java1906.climan.controller.ResourceNotFoundException;
+import com.java1906.climan.data.model.Invoice_Enter;
 import com.java1906.climan.data.model.ProductInfo;
 import com.java1906.climan.data.repo.InvoiceRepository;
 import com.java1906.climan.data.repo.ProductInfoRepository;
@@ -23,12 +24,12 @@ private ProductInfoRepository productInfoRepository;
 
 
     @Override
-    public List<Invoice> finAllInvoice() {
+    public List<Invoice_Enter> finAllInvoice() {
         return invoiceRepository.findAll();
     }
 
     @Override
-    public Optional<Invoice> findById(int invoiceId) {
+    public Optional<Invoice_Enter> findById(int invoiceId) {
         if(!invoiceRepository.existsById(invoiceId)){
             try{
                 throw new ResourceNotFoundException("Invoice with"+invoiceId+"not found");
@@ -41,8 +42,8 @@ private ProductInfoRepository productInfoRepository;
     }
 
     @Override
-    public Invoice save(int productInfoId, Invoice invoice) {
-        List<Invoice> invoicesList = new ArrayList<>();
+    public Invoice_Enter save(int productInfoId, Invoice_Enter invoice) {
+        List<Invoice_Enter> invoicesList = new ArrayList<>();
         ProductInfo productInfo1 = new ProductInfo();
         Optional<ProductInfo> productInfoById = productInfoRepository.findById(productInfoId);
         if(!productInfoById.isPresent()){
@@ -53,16 +54,17 @@ private ProductInfoRepository productInfoRepository;
             }
         }
 
-        ProductInfo productInfo = productInfoById.get();
-        invoice.setProductInfo(productInfo);
-        Invoice invoice1 =invoiceRepository.save(invoice);
-        invoicesList.add(invoice1);
-        productInfo1.setInvoices(invoicesList);
-        return invoice1;
+//        ProductInfo productInfo = productInfoById.get();
+//        invoice.setProductInfo(productInfo);
+//        Invoice invoice1 =invoiceRepository.save(invoice);
+//        invoicesList.add(invoice1);
+//        productInfo1.setInvoices(invoicesList);
+//        return invoice1;
+            return null;
     }
 
     @Override
-    public Invoice update(int invoiceId, Invoice invoice) {
+    public Invoice_Enter update(int invoiceId, Invoice_Enter invoice) {
         if(!invoiceRepository.existsById(invoiceId)){
             try {
                 throw new ResourceNotFoundException("Invoice with id "+invoiceId + "not found");
@@ -70,7 +72,7 @@ private ProductInfoRepository productInfoRepository;
                 e.printStackTrace();
             }
         }
-        Optional<Invoice> invoiceById =invoiceRepository.findById(invoiceId);
+        Optional<Invoice_Enter> invoiceById =invoiceRepository.findById(invoiceId);
         if(!invoiceById.isPresent()){
             try {
                 throw new ResourceNotFoundException("Invoice with"+invoiceId + " not fount");
@@ -78,19 +80,20 @@ private ProductInfoRepository productInfoRepository;
                 e.printStackTrace();
             }
         }
-        Invoice invoice1 =invoiceById.get();
-        invoice1.setName(invoice.getName());
-        invoice1.setLotNumber(invoice.getLotNumber());
-        invoice1.setDateOfManufacture(invoice.getDateOfManufacture());
-        invoice1.setExpiryDate(invoice.getExpiryDate());
-        invoice1.setQuantity(invoice.getQuantity());
-        invoice1.setUnit(invoice.getUnit());
-        invoice1.setPrice(invoice.getPrice());
-        invoice1.setCreateDate(invoice.getCreateDate());
-        invoice1.setUpdateDate(invoice.getUpdateDate());
+//        Invoice invoice1 =invoiceById.get();
+//        invoice1.setName(invoice.getName());
+//        invoice1.setLotNumber(invoice.getLotNumber());
+//        invoice1.setDateOfManufacture(invoice.getDateOfManufacture());
+//        invoice1.setExpiryDate(invoice.getExpiryDate());
+//        invoice1.setQuantity(invoice.getQuantity());
+//        invoice1.setUnit(invoice.getUnit());
+//        invoice1.setPrice(invoice.getPrice());
+//        invoice1.setCreateDate(invoice.getCreateDate());
+//        invoice1.setUpdateDate(invoice.getUpdateDate());
 
 
-        return invoiceRepository.save(invoice1);
+//        return invoiceRepository.save(invoice1);
+        return null;
     }
 
     @Override

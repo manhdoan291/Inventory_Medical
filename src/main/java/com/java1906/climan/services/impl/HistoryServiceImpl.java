@@ -2,6 +2,7 @@ package com.java1906.climan.services.impl;
 
 import com.java1906.climan.controller.ResourceNotFoundException;
 import com.java1906.climan.data.model.History;
+import com.java1906.climan.data.model.Invoice_Enter;
 import com.java1906.climan.data.repo.HistoryRepository;
 import com.java1906.climan.data.repo.InvoiceRepository;
 import com.java1906.climan.services.IHistoryService;
@@ -41,8 +42,8 @@ public class HistoryServiceImpl implements IHistoryService {
     @Override
     public History save(int invoiceId,History history) {
         List<History> historyList =new ArrayList<>();
-        Invoice invoice1 =new Invoice();
-        Optional<Invoice> invoiceById = invoiceRepository.findById(invoiceId);
+        Invoice_Enter invoice1 =new Invoice_Enter();
+        Optional<Invoice_Enter> invoiceById = invoiceRepository.findById(invoiceId);
         if(!invoiceById.isPresent()){
             try {
                 throw new ResourceNotFoundException("Invoice with id "+invoiceId+ "does not exist");
@@ -50,8 +51,8 @@ public class HistoryServiceImpl implements IHistoryService {
                 e.printStackTrace();
             }
         }
-        Invoice invoice = invoiceById.get();
-        history.setInvoices((List<Invoice>) invoice);
+        Invoice_Enter invoice = invoiceById.get();
+        history.setInvoices((List<Invoice_Enter>) invoice);
         History history1 =historyRepository.save(history);
         historyList.add(history1);
         return history1;
