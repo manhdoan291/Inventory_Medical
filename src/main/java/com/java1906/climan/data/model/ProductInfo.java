@@ -1,5 +1,7 @@
 package com.java1906.climan.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
@@ -25,11 +27,21 @@ public class ProductInfo {
             inverseJoinColumns = {@JoinColumn(name = "categoryValue_id")})
     private List<CategoryValue> categoryValues;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "productInfo")
-    private  List<InvoiceEnter_Detail> invoiceEnters ;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(name = "productInfo_invoiceEnter", joinColumns = { @JoinColumn(name = "ProductInfo_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "invoiceEnter_id") })
+    private List<Invoice_Enter> invoiceEnters;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(name = "productInfo_invoiceExport", joinColumns = { @JoinColumn(name = "ProductInfo_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "invoiceExport_id") })
+    private List<Invoice_Export> invoiceExports;
 
     public ProductInfo() {
     }
+
 public ProductInfo(String name,String description,String img_url,int activeFlag, Date createDate,Date updateDate,List<CategoryValue> categoryValues){
             this.name =name;
             this.description =description;
@@ -40,6 +52,14 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
             this.categoryValues =categoryValues;
 
 }
+
+    public List<Invoice_Enter> getInvoiceEnters() {
+        return invoiceEnters;
+    }
+
+    public void setInvoiceEnters(List<Invoice_Enter> invoiceEnters) {
+        this.invoiceEnters = invoiceEnters;
+    }
 
     public Integer getId() {
         return id;
@@ -105,11 +125,4 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
         this.categoryValues = categoryValues;
     }
 
-    public List<InvoiceEnter_Detail> getInvoiceEnters() {
-        return invoiceEnters;
-    }
-
-    public void setInvoiceEnters(List<InvoiceEnter_Detail> invoiceEnters) {
-        this.invoiceEnters = invoiceEnters;
-    }
 }

@@ -15,18 +15,19 @@ public class Supplier {
     private String supplierAddress;
     private String numberPhone;
     private String email;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "supplier")
-    private List<Invoice_Enter> invoice_enters ;
+        private List<Invoice_Enter> invoiceEnters;
 
     public Supplier() {
     }
 
-    public List<Invoice_Enter> getInvoice_enters() {
-        return invoice_enters;
+    public List<Invoice_Enter> getInvoiceEnters() {
+        return invoiceEnters;
     }
 
-    public void setInvoice_enters(List<Invoice_Enter> invoice_enters) {
-        this.invoice_enters = invoice_enters;
+    public void setInvoiceEnters(List<Invoice_Enter> invoiceEnters) {
+        this.invoiceEnters = invoiceEnters;
     }
 
     public int getSupplierId() {

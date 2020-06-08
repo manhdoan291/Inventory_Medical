@@ -16,8 +16,22 @@ public class Customer {
     private String numberPhone;
     private String email;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
+    private  List<Invoice_Export> invoiceExports ;
+
+    public Customer() {
+    }
+
     public int getCustomerId() {
         return customerId;
+    }
+
+    public List<Invoice_Export> getInvoiceExports() {
+        return invoiceExports;
+    }
+
+    public void setInvoiceExports(List<Invoice_Export> invoiceExports) {
+        this.invoiceExports = invoiceExports;
     }
 
     public void setCustomerId(int customerId) {
