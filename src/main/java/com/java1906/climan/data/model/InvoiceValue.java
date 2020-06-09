@@ -11,7 +11,7 @@ public class InvoiceValue {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice_value")
+    @OneToMany(fetch = FetchType.LAZY)
     private List<ProductInfo> productInfo ;
 
     @ManyToOne

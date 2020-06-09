@@ -1,19 +1,21 @@
 package com.java1906.climan.data.model;
 
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class InvoiceIssue implements Serializable {
+public class InvoiceIssue  {
 
-    @OneToOne
+    @Id
+    @GeneratedValue
+    private Integer id;
+
+    @ManyToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
@@ -34,5 +36,13 @@ public class InvoiceIssue implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

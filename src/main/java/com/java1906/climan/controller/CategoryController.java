@@ -49,6 +49,7 @@ public class CategoryController {
                                                  @RequestBody Category category) throws Exception {
             return new ResponseEntity<Category>(categoryService.update(categoryId,category),HttpStatus.NOT_FOUND);
     }
+
     // Delete category
     @DeleteMapping("/category/{categoryId}")
     @HasRole({"STAFF", "ADMIN"})

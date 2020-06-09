@@ -16,8 +16,14 @@ public class Invoice {
     private Date createdDate;
     private Date updatedDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "invoice")
+    @OneToMany(fetch = FetchType.LAZY)
     private List<InvoiceValue> invoiceValue ;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private  List<InvoiceIssue> invoiceIssues ;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    private  List<InvoiceReceipt> invoiceReceipts ;
 
     public Invoice() {
     }

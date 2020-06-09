@@ -2,6 +2,8 @@ package com.java1906.climan.services;
 
 
 
+import com.java1906.climan.data.model.Invoice;
+
 import java.util.List;
 import java.util.Optional;
 
