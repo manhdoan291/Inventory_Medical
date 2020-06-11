@@ -6,13 +6,13 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class InvoiceValue {
+public class InvoiceItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<ProductInfo> productInfo ;
+    private ProductInfo productInfo ;
 
     @ManyToOne
     @JoinColumn(name = "invoice_id")
@@ -31,7 +31,7 @@ public class InvoiceValue {
     private double priceInTotal;    // tong gia nhap = priceIn * qty
     private double priceOutTotal;   // tong gia xuat
 
-    public InvoiceValue() {
+    public InvoiceItem() {
     }
 
     public Integer getId() {
@@ -104,5 +104,9 @@ public class InvoiceValue {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
+    }
+
+    public void setProductInfo(ProductInfo productInfo) {
+        this.productInfo = productInfo;
     }
 }

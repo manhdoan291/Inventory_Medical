@@ -17,7 +17,7 @@ public class Invoice {
     private Date updatedDate;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<InvoiceValue> invoiceValue ;
+    private List<InvoiceItem> invoiceItem;
 
     @OneToMany(fetch = FetchType.LAZY)
     private  List<InvoiceIssue> invoiceIssues ;
@@ -82,5 +82,29 @@ public class Invoice {
 
     public void setUpdatedDate(Date updatedDate) {
         this.updatedDate = updatedDate;
+    }
+
+    public List<InvoiceItem> getInvoiceItem() {
+        return invoiceItem;
+    }
+
+    public void setInvoiceItem(List<InvoiceItem> invoiceItem) {
+        this.invoiceItem = invoiceItem;
+    }
+
+    public List<InvoiceIssue> getInvoiceIssues() {
+        return invoiceIssues;
+    }
+
+    public void setInvoiceIssues(List<InvoiceIssue> invoiceIssues) {
+        this.invoiceIssues = invoiceIssues;
+    }
+
+    public List<InvoiceReceipt> getInvoiceReceipts() {
+        return invoiceReceipts;
+    }
+
+    public void setInvoiceReceipts(List<InvoiceReceipt> invoiceReceipts) {
+        this.invoiceReceipts = invoiceReceipts;
     }
 }

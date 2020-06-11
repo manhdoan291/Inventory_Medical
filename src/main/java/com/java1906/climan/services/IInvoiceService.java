@@ -10,9 +10,9 @@ import java.util.Optional;
 public interface IInvoiceService {
         List<Invoice> finAllInvoice();
 
-        Optional<Invoice> findById(int invoiceId);
+        Optional<Invoice> findById(Integer invoiceId);
 
-        Invoice save(int productInfoId,Invoice invoice);
+        Invoice save(Invoice invoice);
 
          Invoice update(int invoiceId, Invoice invoice);
 

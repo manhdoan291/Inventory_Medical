@@ -11,7 +11,7 @@ public class Unit {
     private String name;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "unit")
-    private List<InvoiceValue> invoiceValue;
+    private List<InvoiceItem> invoiceItem;
 
     public Unit() {
     }
@@ -32,11 +32,11 @@ public class Unit {
         this.name = name;
     }
 
-    public List<InvoiceValue> getInvoiceValue() {
-        return invoiceValue;
+    public List<InvoiceItem> getInvoiceItem() {
+        return invoiceItem;
     }
 
-    public void setInvoiceValue(List<InvoiceValue> invoiceValue) {
-        this.invoiceValue = invoiceValue;
+    public void setInvoiceItem(List<InvoiceItem> invoiceItem) {
+        this.invoiceItem = invoiceItem;
     }
 }

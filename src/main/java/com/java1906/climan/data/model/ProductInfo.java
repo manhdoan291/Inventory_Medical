@@ -28,9 +28,9 @@ public class ProductInfo implements Serializable {
     private List<CategoryValue> categoryValues;
 
     @ManyToOne
-    @JoinColumn(name ="invoice_value")
+    @JoinColumn(name ="invoice_item")
     @JsonIgnore
-    private InvoiceValue invoiceValue;
+    private InvoiceItem invoiceItem;
 
     public ProductInfo() {
     }
@@ -108,11 +108,11 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
         this.categoryValues = categoryValues;
     }
 
-    public InvoiceValue getInvoiceValue() {
-        return invoiceValue;
+    public InvoiceItem getInvoiceItem() {
+        return invoiceItem;
     }
 
-    public void setInvoiceValue(InvoiceValue invoice) {
-        this.invoiceValue = invoice;
+    public void setInvoiceItem(InvoiceItem invoice) {
+        this.invoiceItem = invoice;
     }
 }
