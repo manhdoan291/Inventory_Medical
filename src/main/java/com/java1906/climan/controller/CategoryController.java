@@ -4,11 +4,15 @@ import com.java1906.climan.data.model.Category;
 import com.java1906.climan.interceptor.HasRole;
 import com.java1906.climan.services.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.nio.file.OpenOption;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class CategoryController {
@@ -20,59 +24,36 @@ public class CategoryController {
     @CrossOrigin(origins = "http://localhost:4200")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<List<Category>> showCategoryList() {
-        List<Category> categoryList = (List<Category>) categoryService.getAll();
-        if (categoryList.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(categoryList, HttpStatus.OK);
+         return new ResponseEntity<>(categoryService.getAll(),HttpStatus.OK);
+
     }
 
     //Get category by id
-    @GetMapping("/category/{id}")
+    @GetMapping("/category/{categoryId}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<Object> getCategoryById(@PathVariable("id") Integer id) {
-        System.out.println("Fetching category with id " + id);
-        Category category = categoryService.get(id);
-        if (category == null) {
-            return new ResponseEntity<Object>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<Object>(category, HttpStatus.OK);
+    public ResponseEntity<Object> getCategoryById(@PathVariable("categoryId") int categoryId) {
+    return new ResponseEntity<>(categoryService.findById(categoryId),HttpStatus.OK);
     }
 
     // Create category
     @PostMapping("/category")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> createCategory(@RequestBody Category category) {
-        if (category == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        categoryService.save(category);
-        return new ResponseEntity<>("created!", HttpStatus.CREATED);
-    }
+    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
 
+        return new ResponseEntity<Category>(categoryService.save(category),HttpStatus.CREATED);
+    }
     // Update category
-    @PutMapping("/category/{id}")
+    @PutMapping("/category/{categoryId}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<String> updateCategory(@PathVariable("id") Integer id,
-                                                 @RequestBody Category category) {
-        System.out.println("Updating Category " + id);
-        Category currentCategory = categoryService.get(id);
-        if (currentCategory == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        categoryService.save(category);
-        return new ResponseEntity<>("Updated!", HttpStatus.OK);
+    public ResponseEntity<Category> updateCategory(@PathVariable("categoryId") Integer categoryId,
+                                                 @RequestBody Category category) throws Exception {
+            return new ResponseEntity<Category>(categoryService.update(categoryId,category),HttpStatus.NOT_FOUND);
     }
-
     // Delete category
-    @DeleteMapping("/category/{id}")
+    @DeleteMapping("/category/{categoryId}")
     @HasRole({"STAFF", "ADMIN"})
-    public ResponseEntity<Category> deleteCategory(@PathVariable("id") Integer id) {
-        Category category = categoryService.get(id);
-        if (category == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        categoryService.delete(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<String> deleteCategory(@PathVariable("categoryId") Integer categoryId) {
+        categoryService.delete(categoryId);
+        return new ResponseEntity<String>("delete_ok",HttpStatus.OK);
     }
 }

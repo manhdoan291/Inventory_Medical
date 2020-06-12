@@ -1,14 +1,16 @@
 package com.java1906.climan.services.impl;
 
+import com.java1906.climan.controller.ResourceNotFoundException;
+import com.java1906.climan.data.model.Category;
 import com.java1906.climan.data.model.CategoryValue;
+import com.java1906.climan.data.repo.CategoryRepository;
 import com.java1906.climan.data.repo.CategoryValueRepository;
-import com.java1906.climan.exception.LogicException;
 import com.java1906.climan.services.ICategoryValueService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,45 +18,103 @@ import java.util.Optional;
 @Transactional
 public class CategoryValueServiceImpl implements ICategoryValueService {
     @Autowired
-    private CategoryValueRepository categoryDetailRepository;
-
+    private CategoryValueRepository categoryValueRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
     @Override
-    public CategoryValue get(Integer id) {
-        return categoryDetailRepository.findById(id).get();
+    public List<CategoryValue> findAll() {
+        return categoryValueRepository.findAll();
     }
 
     @Override
-    public List<CategoryValue> getAll() {
-        return (List<CategoryValue>) categoryDetailRepository.findAll();
-    }
-
-    @Override
-    public CategoryValue save(CategoryValue categoryDetail) {
-
-
-        return categoryDetailRepository.save(categoryDetail);
-    }
-
-    @Override
-    public CategoryValue update(CategoryValue categoryDetail, Integer id) throws Exception {
-        Optional<CategoryValue> optionalUpdatingCategoryDetail = categoryDetailRepository.findById(id);
-        if (!optionalUpdatingCategoryDetail.isPresent()) {
-            throw new LogicException("Category Detail khong ton tai", HttpStatus.NOT_FOUND);
+    public Optional<CategoryValue> findById(Integer categoryValueId) {
+        if(!categoryValueRepository.existsById(categoryValueId)){
+            try{
+                throw new ResourceNotFoundException("CategoryValue with"+categoryValueId+"not found");
+            }catch (ResourceNotFoundException e){
+                e.printStackTrace();
+            }
         }
-        CategoryValue updatingCategoryDetail = optionalUpdatingCategoryDetail.get();
-        if (null != categoryDetail.getName()) {
-            updatingCategoryDetail.setName(categoryDetail.getName());
-        }
-        if (null != categoryDetail.getDescription()) {
-            updatingCategoryDetail.setDescription(categoryDetail.getDescription());
-        }
-
-        return categoryDetailRepository.save(updatingCategoryDetail);
-
+        return categoryValueRepository.findById(categoryValueId);
     }
 
     @Override
-    public void delete(Integer id) {
-        categoryDetailRepository.deleteById(id);
+    public CategoryValue save(int categoryId,CategoryValue categoryValue) {
+        List<CategoryValue> categoryValues = new ArrayList<>();
+        Category category1 = new Category();
+        Optional<Category> categoryById = categoryRepository.findById(categoryId);
+        if(!categoryById.isPresent()){
+            try {
+                throw new ResourceNotFoundException("CategoryValue with id "+categoryId+ "does not exist");
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        //goi thang id category ra
+        Category category = categoryById.get();
+        //set vao category
+        categoryValue.setCategory(category);
+        //save lai
+        CategoryValue categoryValue1 =categoryValueRepository.save(categoryValue);
+        //categoryValue chua category
+        categoryValues.add(categoryValue1);
+        category1.setCategoryValue(categoryValues);
+        return categoryValue1;
+    }
+
+    @Override
+    public CategoryValue update(int categoryValueId, CategoryValue categoryValueRequest) {
+        if(!categoryValueRepository.existsById(categoryValueId)){
+            try {
+                throw new ResourceNotFoundException("CategoryValue with id "+categoryValueId + "not found");
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        Optional<CategoryValue> categoryValue =categoryValueRepository.findById(categoryValueId);
+        if(!categoryValue.isPresent()){
+            try {
+                throw new ResourceNotFoundException("CategoryValue with"+categoryValueId + " not fount");
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        CategoryValue categoryValue1 =categoryValue.get();
+        categoryValue1.setName(categoryValueRequest.getName());
+        categoryValue1.setDescription(categoryValueRequest.getDescription());
+        categoryValue1.setActiveFlag(categoryValueRequest.getActiveFlag());
+        categoryValue1.setCategory(categoryValueRequest.getCategory());
+        categoryValue1.setUpdateDate(categoryValueRequest.getUpdateDate());
+        categoryValue1.setCreateDate(categoryValue1.getCreateDate());
+
+        return categoryValueRepository.save(categoryValue1);
+    }
+
+    @Override
+    public void delete(Integer categoryValueId) {
+        if (!categoryValueRepository.existsById(categoryValueId)) {
+            try {
+                throw new ResourceNotFoundException("CategoryValue with id " + categoryValueId + " not found");
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        categoryValueRepository.deleteById(categoryValueId);
+    }
+
+
+    @Override
+    public Optional<CategoryValue> findByCategory(Integer categoryId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public List<CategoryValue> findAllByNameContatining(String name) {
+        return null;
+    }
+
+    @Override
+    public void save(CategoryValue categoryValue) {
+        categoryValueRepository.save(categoryValue);
     }
 }

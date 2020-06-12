@@ -3,15 +3,18 @@ package com.java1906.climan.services;
 import com.java1906.climan.data.model.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ICategoryService {
-    public Category get(Integer id);
+    List<Category> getAll();
 
-    public List<Category> getAll();
+    Optional<Category> findById(Integer id);
 
-    public Category save(Category category);
+    Category save(Category category);
 
-    public Category update(Category category, Integer id) throws Exception;
+    Category update(int categoryId , Category category) throws Exception;
 
-    public void delete(Integer id);
+    void delete(Integer categoryId);
+
+
 }

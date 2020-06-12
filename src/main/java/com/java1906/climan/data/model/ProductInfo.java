@@ -1,9 +1,10 @@
 package com.java1906.climan.data.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Table(name = "product_info")
@@ -20,40 +21,44 @@ public class ProductInfo {
     private Date createDate;
     private Date updateDate;
 
-    @ManyToMany
-    private List<CategoryValue> categoryValue;
-    @ManyToOne
-    @JoinColumn(name = "invoice_id")
-    private Invoice invoice;
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "productInfo_categoryValue",
+            joinColumns = {@JoinColumn(name = "ProductInfo_id")},
+            inverseJoinColumns = {@JoinColumn(name = "categoryValue_id")})
+    private List<CategoryValue> categoryValues;
 
-    public ProductInfo(String name, String description, String img_url, int activeFlag,
-                       Date createDate, Date updateDate) {
-        super();
-        this.name = name;
-        this.description = description;
-        this.img_url = img_url;
-        this.activeFlag = activeFlag;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(name = "productInfo_invoiceEnter", joinColumns = { @JoinColumn(name = "ProductInfo_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "invoiceEnter_id") })
+    private List<Invoice_Enter> invoiceEnters;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
+    @JoinTable(name = "productInfo_invoiceExport", joinColumns = { @JoinColumn(name = "ProductInfo_id") }, inverseJoinColumns = {
+            @JoinColumn(name = "invoiceExport_id") })
+    private List<Invoice_Export> invoiceExports;
 
     public ProductInfo() {
     }
 
-    public List<CategoryValue> getCategoryValue() {
-        return categoryValue;
+public ProductInfo(String name,String description,String img_url,int activeFlag, Date createDate,Date updateDate,List<CategoryValue> categoryValues){
+            this.name =name;
+            this.description =description;
+            this.img_url =img_url;
+            this.activeFlag =activeFlag;
+            this.createDate =createDate;
+            this.updateDate =updateDate;
+            this.categoryValues =categoryValues;
+
+}
+
+    public List<Invoice_Enter> getInvoiceEnters() {
+        return invoiceEnters;
     }
 
-    public void setCategoryValue(List<CategoryValue> categoryValue) {
-        this.categoryValue = categoryValue;
-    }
-
-    public Invoice getInvoice() {
-        return invoice;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
+    public void setInvoiceEnters(List<Invoice_Enter> invoiceEnters) {
+        this.invoiceEnters = invoiceEnters;
     }
 
     public Integer getId() {
@@ -112,5 +117,12 @@ public class ProductInfo {
         this.updateDate = updateDate;
     }
 
+    public List<CategoryValue> getCategoryValues() {
+        return categoryValues;
+    }
+
+    public void setCategoryValues(List<CategoryValue> categoryValues) {
+        this.categoryValues = categoryValues;
+    }
 
 }
