@@ -4,8 +4,10 @@ import com.java1906.climan.controller.ResourceNotFoundException;
 import com.java1906.climan.data.model.CategoryValue;
 import com.java1906.climan.data.model.Invoice;
 import com.java1906.climan.data.model.InvoiceItem;
+import com.java1906.climan.data.model.ProductInfo;
 import com.java1906.climan.data.repo.InvoiceItemRepository;
 import com.java1906.climan.data.repo.InvoiceRepository;
+import com.java1906.climan.data.repo.ProductInfoRepository;
 import com.java1906.climan.services.IInvoiceItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class InvoiceItemServiceImpl implements IInvoiceItemService {
 
     @Autowired
     private InvoiceRepository invoiceRepository;
+
+    @Autowired
+    private ProductInfoRepository productInfoRepository;
 
 
     @Override
@@ -43,10 +48,12 @@ public class InvoiceItemServiceImpl implements IInvoiceItemService {
     }
 
     @Override
-    public InvoiceItem save(Integer invoiceId, InvoiceItem invoiceItem) {
+    public InvoiceItem save(Integer invoiceId, InvoiceItem invoiceItem, Integer productInfoId) {
         List<InvoiceItem> invoiceItems = new ArrayList<>();
         Invoice invoice = new Invoice();
+
         Optional<Invoice> invoiceOptional = invoiceRepository.findById(invoiceId);
+        Optional<ProductInfo> productInfoOptional = productInfoRepository.findById(productInfoId);
         if(!invoiceOptional.isPresent()){
             try {
                 throw new ResourceNotFoundException("Invoice with id "+invoiceId+ "does not exist");
@@ -56,11 +63,14 @@ public class InvoiceItemServiceImpl implements IInvoiceItemService {
         }
         Invoice invoice1 = invoiceOptional.get();
         invoiceItem.setInvoice(invoice1);
+        ProductInfo productInfo1 = productInfoOptional.get();
+        invoiceItem.setProductInfo(productInfo1);
+        invoiceItem.setPriceInTotal(invoiceItem.getQty()*invoiceItem.getPriceIn());
+        invoiceItem.setPriceOutTotal(invoiceItem.getQty()*invoiceItem.getPriceOut());
         InvoiceItem invoiceItem1 = invoiceItemRepository.save(invoiceItem);
         invoiceItems.add(invoiceItem1);
         invoice.setInvoiceItem(invoiceItems);
         return invoiceItem1;
-
     }
 
     @Override

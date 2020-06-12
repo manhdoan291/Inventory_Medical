@@ -27,10 +27,8 @@ public class ProductInfo implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "categoryValue_id")})
     private List<CategoryValue> categoryValues;
 
-    @ManyToOne
-    @JoinColumn(name ="invoice_item")
-    @JsonIgnore
-    private InvoiceItem invoiceItem;
+    @OneToMany(fetch = FetchType.LAZY)
+    private  List<InvoiceItem> invoiceItem ;
 
     public ProductInfo() {
     }
@@ -108,11 +106,11 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
         this.categoryValues = categoryValues;
     }
 
-    public InvoiceItem getInvoiceItem() {
+    public List<InvoiceItem> getInvoiceItem() {
         return invoiceItem;
     }
 
-    public void setInvoiceItem(InvoiceItem invoice) {
-        this.invoiceItem = invoice;
+    public void setInvoiceItem(List<InvoiceItem> invoiceItem) {
+        this.invoiceItem = invoiceItem;
     }
 }

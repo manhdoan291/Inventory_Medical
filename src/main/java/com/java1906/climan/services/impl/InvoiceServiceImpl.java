@@ -29,8 +29,9 @@ private ProductInfoRepository productInfoRepository;
         return invoiceRepository.findAll();
     }
 
+
     @Override
-    public Optional<Invoice> findById(int invoiceId) {
+    public Optional<Invoice> findById(Integer invoiceId) {
         if(!invoiceRepository.existsById(invoiceId)){
             try{
                 throw new ResourceNotFoundException("Invoice with"+invoiceId+"not found");

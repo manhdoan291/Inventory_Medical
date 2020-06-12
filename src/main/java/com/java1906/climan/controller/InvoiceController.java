@@ -31,7 +31,7 @@ public class InvoiceController {
     @PostMapping("/invoice/{productInfoId}")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
     public ResponseEntity<Invoice> createInvoce(@PathVariable(value = "productInfoId") int productInfoId, @RequestBody Invoice invoice){
-        return new ResponseEntity<>(invoiceService.save(productInfoId,invoice),HttpStatus.CREATED);
+        return new ResponseEntity<>(invoiceService.save(invoice),HttpStatus.CREATED);
     }
     //update invoice
     @PutMapping("/invoice/{invoiceId}")

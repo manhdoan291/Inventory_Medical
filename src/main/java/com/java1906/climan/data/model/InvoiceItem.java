@@ -3,15 +3,18 @@ package com.java1906.climan.data.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
-public class InvoiceItem {
+public class InvoiceItem implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JoinColumn(name ="product_info_id")
+    @JsonIgnore
     private ProductInfo productInfo ;
 
     @ManyToOne
@@ -42,13 +45,6 @@ public class InvoiceItem {
         this.id = id;
     }
 
-    public List<ProductInfo> getProductInfo() {
-        return productInfo;
-    }
-
-    public void setProductInfo(List<ProductInfo> productInfo) {
-        this.productInfo = productInfo;
-    }
 
     public Invoice getInvoice() {
         return invoice;

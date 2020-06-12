@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface IInvoiceItemService {
     List<InvoiceItem> findAll();
     Optional<InvoiceItem> findById(Integer invoiceItemId);
-    InvoiceItem save( Integer invoiceId,InvoiceItem invoiceItem);
+    InvoiceItem save( Integer invoiceId,InvoiceItem invoiceItem, Integer productInfoId);
     InvoiceItem update(Integer invoiceId, InvoiceItem invoiceItem);
     void delete(Integer invoiceItemId);
 
