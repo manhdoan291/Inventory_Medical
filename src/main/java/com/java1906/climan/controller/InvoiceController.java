@@ -22,15 +22,15 @@ public class InvoiceController {
     }
 
     //get  byid
-    @GetMapping("/{id}")
+    @GetMapping("/invoice/{id}")
     @HasRole({"STAFF", "ADMIN"})
     public ResponseEntity<Object> getInvoiceById(@PathVariable("id") Integer id) {
         return new ResponseEntity<>(invoiceService.findById(id),HttpStatus.OK);
     }
   // create invoice
-    @PostMapping("/invoice/{productInfoId}")
+    @PostMapping("/invoice/")
     @HasRole({"STAFF", "ADMIN", "DOCTOR"})
-    public ResponseEntity<Invoice> createInvoce(@PathVariable(value = "productInfoId") int productInfoId, @RequestBody Invoice invoice){
+    public ResponseEntity<Invoice> createInvoce(@RequestBody Invoice invoice){
         return new ResponseEntity<>(invoiceService.save(invoice),HttpStatus.CREATED);
     }
     //update invoice

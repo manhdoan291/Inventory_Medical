@@ -2,7 +2,6 @@ package com.java1906.climan.services.impl;
 
 import com.java1906.climan.controller.ResourceNotFoundException;
 import com.java1906.climan.data.model.Invoice;
-import com.java1906.climan.data.model.ProductInfo;
 import com.java1906.climan.data.repo.InvoiceRepository;
 import com.java1906.climan.data.repo.ProductInfoRepository;
 import com.java1906.climan.services.IInvoiceService;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -45,6 +43,9 @@ private ProductInfoRepository productInfoRepository;
 
     @Override
     public Invoice save(Invoice invoice) {
+        invoice.setCreatedDate(new Date());
+        invoice.setUpdatedDate(new Date());
+        
         return invoiceRepository.save(invoice);
     }
 

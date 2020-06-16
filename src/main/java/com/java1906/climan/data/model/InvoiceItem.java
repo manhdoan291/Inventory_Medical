@@ -18,7 +18,7 @@ public class InvoiceItem implements Serializable {
     private ProductInfo productInfo ;
 
     @ManyToOne
-    @JoinColumn(name = "invoice_id")
+    @JoinColumn(name ="invoice_id")
     @JsonIgnore
     private Invoice invoice;
 
@@ -45,6 +45,14 @@ public class InvoiceItem implements Serializable {
         this.id = id;
     }
 
+
+    public ProductInfo getProductInfo() {
+        return productInfo;
+    }
+
+    public void setProductInfo(ProductInfo productInfo) {
+        this.productInfo = productInfo;
+    }
 
     public Invoice getInvoice() {
         return invoice;
@@ -100,9 +108,5 @@ public class InvoiceItem implements Serializable {
 
     public void setUnit(Unit unit) {
         this.unit = unit;
-    }
-
-    public void setProductInfo(ProductInfo productInfo) {
-        this.productInfo = productInfo;
     }
 }

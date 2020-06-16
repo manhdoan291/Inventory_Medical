@@ -1,7 +1,6 @@
 package com.java1906.climan.services.impl;
 
 import com.java1906.climan.controller.ResourceNotFoundException;
-import com.java1906.climan.data.model.CategoryValue;
 import com.java1906.climan.data.model.Invoice;
 import com.java1906.climan.data.model.InvoiceItem;
 import com.java1906.climan.data.model.ProductInfo;
@@ -48,12 +47,12 @@ public class InvoiceItemServiceImpl implements IInvoiceItemService {
     }
 
     @Override
-    public InvoiceItem save(Integer invoiceId, InvoiceItem invoiceItem, Integer productInfoId) {
+    public InvoiceItem save(int invoiceId, InvoiceItem invoiceItem, int productId) {
         List<InvoiceItem> invoiceItems = new ArrayList<>();
-        Invoice invoice = new Invoice();
+
 
         Optional<Invoice> invoiceOptional = invoiceRepository.findById(invoiceId);
-        Optional<ProductInfo> productInfoOptional = productInfoRepository.findById(productInfoId);
+//        Optional<ProductInfo> productInfoOptional = productInfoRepository.findById(productInfoId);
         if(!invoiceOptional.isPresent()){
             try {
                 throw new ResourceNotFoundException("Invoice with id "+invoiceId+ "does not exist");
@@ -61,15 +60,16 @@ public class InvoiceItemServiceImpl implements IInvoiceItemService {
                 e.printStackTrace();
             }
         }
+        Optional<ProductInfo> productInfoOptional = productInfoRepository.findById(productId);
+        ProductInfo productInfo = productInfoOptional.get();
         Invoice invoice1 = invoiceOptional.get();
         invoiceItem.setInvoice(invoice1);
-        ProductInfo productInfo1 = productInfoOptional.get();
-        invoiceItem.setProductInfo(productInfo1);
+        invoiceItem.setProductInfo(productInfo);
         invoiceItem.setPriceInTotal(invoiceItem.getQty()*invoiceItem.getPriceIn());
         invoiceItem.setPriceOutTotal(invoiceItem.getQty()*invoiceItem.getPriceOut());
         InvoiceItem invoiceItem1 = invoiceItemRepository.save(invoiceItem);
         invoiceItems.add(invoiceItem1);
-        invoice.setInvoiceItem(invoiceItems);
+        invoice1.setInvoiceItems(invoiceItems);
         return invoiceItem1;
     }
 
@@ -99,6 +99,29 @@ public class InvoiceItemServiceImpl implements IInvoiceItemService {
 
     @Override
     public void delete(Integer invoiceItemId) {
+        if (!invoiceItemRepository.existsById(invoiceItemId)) {
+            try {
+                throw new ResourceNotFoundException("Invoice Item with id " + invoiceItemId + " not found");
+            } catch (ResourceNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        invoiceItemRepository.deleteById(invoiceItemId);
+    }
 
+    @Override
+    public List<InvoiceItem> findAllByInvoiceId(int invoiceId) {
+        List <InvoiceItem> invoiceItemList = invoiceItemRepository.findAll();
+        Optional<Invoice> invoiceOptional = invoiceRepository.findById(invoiceId);
+        Invoice invoice = invoiceOptional.get();
+        List<InvoiceItem> invoiceItemByInvoiceId = new ArrayList<>();
+        for (InvoiceItem invoiceItem : invoiceItemList)
+        {
+            if (invoiceItem.getInvoice() == invoice )
+            {
+                invoiceItemByInvoiceId.add(invoiceItem);
+            }
+        }
+        return invoiceItemByInvoiceId;
     }
 }
