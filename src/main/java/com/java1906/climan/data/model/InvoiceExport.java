@@ -5,21 +5,21 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class InvoiceIssue  {
+public class InvoiceExport implements Serializable  {
 
     @Id
     @GeneratedValue
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    public InvoiceIssue() {
+    public InvoiceExport() {
     }
 
     public Invoice getInvoice() {

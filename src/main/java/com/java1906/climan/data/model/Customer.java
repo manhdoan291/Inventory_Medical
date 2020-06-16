@@ -17,7 +17,7 @@ public class Customer {
     private String email;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private  List<InvoiceIssue> invoiceIssue;
+    private  List<InvoiceExport> invoiceExport;
 
     public Customer() {
     }
@@ -26,12 +26,12 @@ public class Customer {
         return customerId;
     }
 
-    public List<InvoiceIssue> getInvoiceIssue() {
-        return invoiceIssue;
+    public List<InvoiceExport> getInvoiceExport() {
+        return invoiceExport;
     }
 
-    public void setInvoiceIssue(List<InvoiceIssue> invoiceExports) {
-        this.invoiceIssue = invoiceExports;
+    public void setInvoiceExport(List<InvoiceExport> invoiceExports) {
+        this.invoiceExport = invoiceExports;
     }
 
     public void setCustomerId(int customerId) {

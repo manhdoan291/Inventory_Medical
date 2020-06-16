@@ -4,21 +4,21 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class InvoiceReceipt {
+public class InvoiceImport implements Serializable{
     @Id
     @GeneratedValue
     private Integer id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "invoice_id")
 
     private Invoice invoice;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    public InvoiceReceipt() {
+    public InvoiceImport() {
     }
 
     public Invoice getInvoice() {

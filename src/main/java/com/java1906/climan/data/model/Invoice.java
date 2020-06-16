@@ -20,10 +20,10 @@ public class Invoice {
     private List<InvoiceItem> invoiceItems;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private  List<InvoiceIssue> invoiceIssues ;
+    private  List<InvoiceExport> invoiceExports;
 
     @OneToMany(fetch = FetchType.LAZY)
-    private  List<InvoiceReceipt> invoiceReceipts ;
+    private  List<InvoiceImport> invoiceImports;
 
     public Invoice() {
     }
@@ -92,19 +92,19 @@ public class Invoice {
         this.invoiceItems = invoiceItems;
     }
 
-    public List<InvoiceIssue> getInvoiceIssues() {
-        return invoiceIssues;
+    public List<InvoiceExport> getInvoiceExports() {
+        return invoiceExports;
     }
 
-    public void setInvoiceIssues(List<InvoiceIssue> invoiceIssues) {
-        this.invoiceIssues = invoiceIssues;
+    public void setInvoiceExports(List<InvoiceExport> invoiceExports) {
+        this.invoiceExports = invoiceExports;
     }
 
-    public List<InvoiceReceipt> getInvoiceReceipts() {
-        return invoiceReceipts;
+    public List<InvoiceImport> getInvoiceImports() {
+        return invoiceImports;
     }
 
-    public void setInvoiceReceipts(List<InvoiceReceipt> invoiceReceipts) {
-        this.invoiceReceipts = invoiceReceipts;
+    public void setInvoiceImports(List<InvoiceImport> invoiceImports) {
+        this.invoiceImports = invoiceImports;
     }
 }
