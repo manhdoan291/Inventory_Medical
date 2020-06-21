@@ -30,6 +30,9 @@ public class ProductInfo implements Serializable {
     @OneToMany(fetch = FetchType.LAZY)
     private  List<InvoiceItem> invoiceItem ;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private  List<ProductInStock> productInStocks ;
+
     public ProductInfo() {
     }
 public ProductInfo(String name,String description,String img_url,int activeFlag, Date createDate,Date updateDate,List<CategoryValue> categoryValues){
@@ -112,5 +115,13 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
 
     public void setInvoiceItem(List<InvoiceItem> invoiceItem) {
         this.invoiceItem = invoiceItem;
+    }
+
+    public List<ProductInStock> getProductInStocks() {
+        return productInStocks;
+    }
+
+    public void setProductInStocks(List<ProductInStock> productInStocks) {
+        this.productInStocks = productInStocks;
     }
 }

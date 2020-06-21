@@ -13,6 +13,9 @@ public class Unit {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "unit")
     private List<InvoiceItem> invoiceItem;
 
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<ProductInStock> productInStocks;
+
     public Unit() {
     }
 
@@ -38,5 +41,13 @@ public class Unit {
 
     public void setInvoiceItem(List<InvoiceItem> invoiceItem) {
         this.invoiceItem = invoiceItem;
+    }
+
+    public List<ProductInStock> getProductInStocks() {
+        return productInStocks;
+    }
+
+    public void setProductInStocks(List<ProductInStock> productInStocks) {
+        this.productInStocks = productInStocks;
     }
 }
