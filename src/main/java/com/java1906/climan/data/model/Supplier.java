@@ -10,31 +10,32 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    private int supplierId;
+    private Integer supplierId;
     private String supplierName;
     private String supplierAddress;
     private String numberPhone;
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "supplier")
-        private List<Invoice_Enter> invoiceEnters;
+    @OneToMany(fetch = FetchType.LAZY)
+    private  List<InvoiceImport> invoiceImports;
+
 
     public Supplier() {
     }
 
-    public List<Invoice_Enter> getInvoiceEnters() {
-        return invoiceEnters;
+    public List<InvoiceImport> getInvoiceImports() {
+        return invoiceImports;
     }
 
-    public void setInvoiceEnters(List<Invoice_Enter> invoiceEnters) {
-        this.invoiceEnters = invoiceEnters;
+    public void setInvoiceImports(List<InvoiceImport> invoiceImports) {
+        this.invoiceImports = invoiceImports;
     }
 
     public int getSupplierId() {
         return supplierId;
     }
 
-    public void setSupplierId(int supplierId) {
+    public void setSupplierId(Integer supplierId) {
         this.supplierId = supplierId;
     }
 

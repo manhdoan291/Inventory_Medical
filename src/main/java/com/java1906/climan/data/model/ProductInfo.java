@@ -4,12 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "product_info")
-public class ProductInfo {
-
+public class ProductInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
@@ -27,21 +27,14 @@ public class ProductInfo {
             inverseJoinColumns = {@JoinColumn(name = "categoryValue_id")})
     private List<CategoryValue> categoryValues;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinTable(name = "productInfo_invoiceEnter", joinColumns = { @JoinColumn(name = "ProductInfo_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "invoiceEnter_id") })
-    private List<Invoice_Enter> invoiceEnters;
+    @OneToMany(fetch = FetchType.LAZY)
+    private  List<InvoiceItem> invoiceItem ;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-    @JoinTable(name = "productInfo_invoiceExport", joinColumns = { @JoinColumn(name = "ProductInfo_id") }, inverseJoinColumns = {
-            @JoinColumn(name = "invoiceExport_id") })
-    private List<Invoice_Export> invoiceExports;
+    @OneToMany(fetch = FetchType.LAZY)
+    private  List<ProductInStock> productInStocks ;
 
     public ProductInfo() {
     }
-
 public ProductInfo(String name,String description,String img_url,int activeFlag, Date createDate,Date updateDate,List<CategoryValue> categoryValues){
             this.name =name;
             this.description =description;
@@ -52,15 +45,6 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
             this.categoryValues =categoryValues;
 
 }
-
-    public List<Invoice_Enter> getInvoiceEnters() {
-        return invoiceEnters;
-    }
-
-    public void setInvoiceEnters(List<Invoice_Enter> invoiceEnters) {
-        this.invoiceEnters = invoiceEnters;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -125,4 +109,19 @@ public ProductInfo(String name,String description,String img_url,int activeFlag,
         this.categoryValues = categoryValues;
     }
 
+    public List<InvoiceItem> getInvoiceItem() {
+        return invoiceItem;
+    }
+
+    public void setInvoiceItem(List<InvoiceItem> invoiceItem) {
+        this.invoiceItem = invoiceItem;
+    }
+
+    public List<ProductInStock> getProductInStocks() {
+        return productInStocks;
+    }
+
+    public void setProductInStocks(List<ProductInStock> productInStocks) {
+        this.productInStocks = productInStocks;
+    }
 }

@@ -49,6 +49,7 @@ public class CategoryController {
                                                  @RequestBody Category category) throws Exception {
             return new ResponseEntity<Category>(categoryService.update(categoryId,category),HttpStatus.NOT_FOUND);
     }
+
     // Delete category
     @DeleteMapping("/category/{categoryId}")
     @HasRole({"STAFF", "ADMIN"})
@@ -56,4 +57,5 @@ public class CategoryController {
         categoryService.delete(categoryId);
         return new ResponseEntity<String>("delete_ok",HttpStatus.OK);
     }
+
 }

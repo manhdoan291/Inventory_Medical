@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -64,7 +65,7 @@ public class CategoryServiceImpl implements ICategoryService {
         category1.setName(category.getName());
         category1.setDescription(category.getDescription());
         category1.setCreateDate(category1.getCreateDate());
-        category1.setUpdateDate(category.getUpdateDate());
+        category1.setUpdateDate(new Date());
         return categoryRepository.save(category1);
     }
     @Override

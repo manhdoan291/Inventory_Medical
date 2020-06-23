@@ -26,6 +26,10 @@ const routes: Routes = [
         data: { roles: [Role.ADMIN] }
     },
     {
+      path: 'login',
+      component: LoginComponent
+    },
+    {
         path: 'category',
         component: CategoryComponent,
         canActivate: [AuthGuard],

@@ -2,19 +2,19 @@ package com.java1906.climan.services;
 
 
 
-import com.java1906.climan.data.model.Invoice_Enter;
+import com.java1906.climan.data.model.Invoice;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface IInvoiceService {
-        List<Invoice_Enter> finAllInvoice();
+        List<Invoice> finAllInvoice();
 
-        Optional<Invoice_Enter> findById(int invoiceId);
+        Optional<Invoice> findById(Integer invoiceId);
 
-        Invoice_Enter save(int productInfoId, Invoice_Enter invoice);
+        Invoice save(Invoice invoice);
 
-         Invoice_Enter update(int invoiceId, Invoice_Enter invoice);
+         Invoice update(int invoiceId, Invoice invoice);
 
         void delete(int invoiceId);
 //    void save(ProductInfo productInfo);
