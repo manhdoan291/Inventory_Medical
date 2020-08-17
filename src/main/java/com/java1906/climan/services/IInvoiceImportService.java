@@ -1,7 +1,6 @@
 package com.java1906.climan.services;
 
 import com.java1906.climan.data.model.Category;
-import com.java1906.climan.data.model.CategoryValue;
 import com.java1906.climan.data.model.InvoiceImport;
 
 import java.util.List;

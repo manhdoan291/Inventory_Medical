@@ -15,15 +15,19 @@ public class Invoice {
     private int activeFlag;
     private Date createdDate;
     private Date updatedDate;
+    private int supplierId;
+    private int customerId;
 
     @OneToMany(fetch = FetchType.LAZY)
     private List<InvoiceItem> invoiceItems;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private  List<InvoiceExport> invoiceExports;
+    @OneToOne
+    @JoinColumn(name = "invoice_export_id")
+    private InvoiceExport invoiceExport;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    private  List<InvoiceImport> invoiceImports;
+    @OneToOne
+    @JoinColumn(name = "invoice_import_id")
+    private InvoiceImport invoiceImport;
 
     public Invoice() {
     }
@@ -92,19 +96,35 @@ public class Invoice {
         this.invoiceItems = invoiceItems;
     }
 
-    public List<InvoiceExport> getInvoiceExports() {
-        return invoiceExports;
+    public InvoiceExport getInvoiceExport() {
+        return invoiceExport;
     }
 
-    public void setInvoiceExports(List<InvoiceExport> invoiceExports) {
-        this.invoiceExports = invoiceExports;
+    public void setInvoiceExport(InvoiceExport invoiceExport) {
+        this.invoiceExport = invoiceExport;
     }
 
-    public List<InvoiceImport> getInvoiceImports() {
-        return invoiceImports;
+    public InvoiceImport getInvoiceImport() {
+        return invoiceImport;
     }
 
-    public void setInvoiceImports(List<InvoiceImport> invoiceImports) {
-        this.invoiceImports = invoiceImports;
+    public void setInvoiceImport(InvoiceImport invoiceImport) {
+        this.invoiceImport = invoiceImport;
+    }
+
+    public int getSupplierId() {
+        return supplierId;
+    }
+
+    public void setSupplierId(int supplierId) {
+        this.supplierId = supplierId;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 }

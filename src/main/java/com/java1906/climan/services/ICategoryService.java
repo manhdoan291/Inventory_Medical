@@ -10,9 +10,9 @@ public interface ICategoryService {
 
     Optional<Category> findById(Integer id);
 
-    Category save(Category category);
+    void save(Category category);
 
-    Category update(int categoryId , Category category) throws Exception;
+    void update(int categoryId , Category category) throws Exception;
 
     void delete(Integer categoryId);
 

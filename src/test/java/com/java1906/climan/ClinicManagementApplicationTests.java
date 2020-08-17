@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Arrays;
-
 @SpringBootTest
 class ClinicManagementApplicationTests {
 
@@ -27,14 +25,14 @@ class ClinicManagementApplicationTests {
         userInfoRepository.deleteAll();
 
         User user01 = new User();
-        user01.setUsername("hieudv");
+        user01.setUsername("hieupv");
         user01.setPassword("123456");
         user01.setRole(RoleType.ADMIN);
         user01 = userRepository.save(user01);
 
         UserInfo userInfo = new UserInfo();
-        userInfo.setEmail("hieudv@email.com");
-        userInfo.setName("dev DoanHieu");
+        userInfo.setEmail("hieupv@email.com");
+        userInfo.setName("Hieu");
         userInfo.setPhone("123123123");
         userInfo.setId(user01.getId());
         userInfoRepository.save(userInfo);

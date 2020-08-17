@@ -19,6 +19,9 @@ public class CategoryServiceImpl implements ICategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private ICategoryService categoryService;
+
 
 
     @Override
@@ -39,12 +42,34 @@ public class CategoryServiceImpl implements ICategoryService {
     }
 
     @Override
-    public Category save(Category category) {
-        return categoryRepository.save(category);
+    public void save(Category category) {
+        if(category.getId()!=null && category.getId()!=0) {
+            try {
+
+                categoryService.update(category.getId(),category);
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+
+            }
+
+        }else {
+            try {
+                category.setCreateDate(new Date());
+                category.setUpdateDate(new Date());
+                categoryRepository.save(category);
+
+            } catch (Exception e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+
+            }
+        }
     }
 
     @Override
-    public Category update(int categoryId, Category category){
+    public void update(int categoryId, Category category){
         if (!categoryRepository.existsById(categoryId)) {
             try {
                 throw new ResourceNotFoundException("Author with id " + categoryId + " not found");
@@ -66,7 +91,7 @@ public class CategoryServiceImpl implements ICategoryService {
         category1.setDescription(category.getDescription());
         category1.setCreateDate(category1.getCreateDate());
         category1.setUpdateDate(new Date());
-        return categoryRepository.save(category1);
+       categoryRepository.save(category1);
     }
     @Override
     public void delete(Integer categoryId) {
